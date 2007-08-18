@@ -1,0 +1,68 @@
+<!DOCTYPE KontrollerLab>
+<PROJECT VERSION="0.1" >
+  <FILES>
+    <FILE SHOWN="TRUE" NAME="main.c" />
+    <FILE SHOWN="FALSE" NAME="nokia_driver.h" />
+    <FILE SHOWN="TRUE" NAME="rtc_ds1302.h" />
+    <FILE SHOWN="TRUE" NAME="nokia_driver.c" />
+    <FILE SHOWN="TRUE" NAME="rtc_ds1302.c" />
+    <FILE SHOWN="TRUE" NAME="bit_field.h" />
+    <FILE SHOWN="TRUE" NAME="date.h" />
+    <FILE SHOWN="FALSE" NAME="types.h" />
+    <FILE SHOWN="TRUE" NAME="menus.c" />
+    <FILE SHOWN="TRUE" NAME="menus.h" />
+    <FILE SHOWN="TRUE" NAME="lcd.h" />
+    <FILE SHOWN="TRUE" NAME="keyboard.h" />
+    <FILE SHOWN="TRUE" NAME="keyboard.c" />
+    <FILE SHOWN="TRUE" NAME="lcd.c" />
+    <FILE SHOWN="TRUE" NAME="windowmanager.c" />
+    <FILE SHOWN="TRUE" NAME="windowmanager.h" />
+    <FILE SHOWN="TRUE" NAME="application.h" />
+    <FILE SHOWN="TRUE" NAME="app_date.c" />
+    <FILE SHOWN="TRUE" NAME="rtc.h" />
+    <FILE SHOWN="TRUE" NAME="app_date.h" />
+    <FILE SHOWN="TRUE" NAME="app_lcd.c" />
+    <FILE SHOWN="TRUE" NAME="app_lcd.h" />
+  </FILES>
+  <SETTINGS>
+    <ASSEMBLER_COMMAND VALUE="avr-gcc" />
+    <CLOCK VALUE="8e+06" />
+    <COMPILER_CALL_PROLOGUES VALUE="TRUE" />
+    <COMPILER_COMMAND VALUE="avr-gcc -pedantic -funsigned-bitfields -fpack-struct -fshort-enums -std=gnu99 " />
+    <COMPILER_F_CPU VALUE="TRUE" />
+    <COMPILER_GDEBUG VALUE="FALSE" />
+    <COMPILER_OPT_LEVEL VALUE="s" />
+    <COMPILER_STRICT_PROTOTYPES VALUE="TRUE" />
+    <COMPILER_WALL VALUE="TRUE" />
+    <CPU VALUE="ATMega8535" />
+    <HEX_FILE VALUE="hideo.hex" />
+    <LINKER_COMMAND VALUE="avr-gcc -Wa,-mmcu=atmega8535" />
+    <LINKER_FLAGS VALUE="" />
+    <MAP_FILE VALUE="project.map" />
+    <OBJCOPY_COMMAND VALUE="avr-objcopy" />
+  </SETTINGS>
+  <PROGRAMMERCONFIG>
+    <AVRDUDE_COUNT_ERASE VALUE="FALSE" />
+    <AVRDUDE_DISABLE_AUTO_ERASE VALUE="FALSE" />
+    <AVRDUDE_OVERRIDE_INVALID_SIGNATURE VALUE="FALSE" />
+    <AVRDUDE_TEST_MODE VALUE="FALSE" />
+    <PROGRAMMER_COMMAND VALUE="uisp" />
+    <PROGRAMMER_NAME VALUE="UISP" />
+    <UISP_PARALLEL_AT89S VALUE="FALSE" />
+    <UISP_PARALLEL_DISABLE_RETRIES VALUE="FALSE" />
+    <UISP_PARALLEL_EEPROM_MAX_WRITE_DELAY VALUE="7250" />
+    <UISP_PARALLEL_FLASH_MAX_WRITE_DELAY VALUE="4125" />
+    <UISP_PARALLEL_NO_DATA_POLLING VALUE="FALSE" />
+    <UISP_PARALLEL_PORT VALUE="/dev/parport0" />
+    <UISP_PARALLEL_RESET_HIGH_TIME VALUE="0" />
+    <UISP_PARALLEL_SCK_HIGH_LOW_TIME VALUE="0" />
+    <UISP_PARALLEL_VOLTAGE VALUE="5" />
+    <UISP_PROGRAMMER_TYPE VALUE="stk200" />
+    <UISP_SERIAL_PORT VALUE="" />
+    <UISP_SERIAL_SPEED VALUE="9600" />
+    <UISP_STK500_AREF_VOLTAGE VALUE="0" />
+    <UISP_STK500_OSCILLATOR_FREQUENCY VALUE="14.1" />
+    <UISP_STK500_USE_HIGH_VOLTAGE VALUE="FALSE" />
+    <UISP_STK500_VTARGET_VOLTAGE VALUE="0" />
+  </PROGRAMMERCONFIG>
+</PROJECT>
