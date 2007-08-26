@@ -3,26 +3,18 @@
 #include "lcd.h"
 #include "keyboard.h"
 
-#include "menus.h"
-
-void windowmanager_init(void)
+void windowmanager_init(const menu_t *menu)
 {
 	lcd_init();
 	keyboard_init();
 	menus_init();
-}
 
-void windowmanager_record_application(const t_application app)
-{
-	menus_add_submenu(app.menu);
-}
-
-uint8 windowmanager_get_id(void)
-{
-	return 0;
+	menus_enter_menu(menu);
 }
 
 void windowmanager_process_events(void)
 {
-	menus_process();
+	byte key = keyboard_key();
+	if(key != KEYBOARD_NONE)
+		menus_process_key(key);
 }

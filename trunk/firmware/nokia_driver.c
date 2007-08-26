@@ -4,6 +4,9 @@
 
 #include "date.h"
 
+#define _NOK_MODE_NORMAL   0x00
+#define _NOK_MODE_INVERTED 0xFF
+
 /////////////////////////////////////////////////////////////////////////////////
 
 
@@ -101,51 +104,57 @@ const prog_uchar ascii_table[128][5] = {
 	{ 0x44, 0x64, 0x54, 0x4C, 0x44 }    // z
 };
 
-//////////////////////////////////////////////////////////////////////////////////
+static uint8 reverse_mode = _NOK_MODE_NORMAL;
+static uint8 printed_cols = 0;
+
+/** @fn void nokia_init(void)
+		@brief nokia LCD initialisation
+*/
 void nokia_init(void)
 {
-	// nokia LCD init
-	NOK_DC=1;	// unsigned chars are stored in the display data ram, address counter, incremented automatically
-	NOK_CS=1;	// chip disabled
+	NOK_DDR = 0xFF;
+	NOK_DC=1;
+	NOK_CS=1;					// chip disabled
 	_delay_us(80);
-	NOK_RES=0;	// reset chip during 250ms
-	_delay_us(5000);
+	NOK_RES=0;				// reset chip during 250ms
+	_delay_us(96);		// max (in us) = 768 / F_CPU (in Mhz) => at 8Mhz, 96 us
 	NOK_RES=1;
 
+	/** @note nokia 3210 LCD use pcd8544 controller with LPH7366-1, LPH7779 or LPH7677 LCD matrix
+	*/
 	nokia_send_command(0x21);     // Active the LCD. set extended instruction set ; in function set
-
 	nokia_send_command(0xC5);     // Set LCD Vop (Contrast). Vop  was 0xC5 // better is 0xa0  ; vop set
-//	nokia_send_command(0x07);     // Temperature compensation
 	nokia_send_command(0x13);     // LCD bias system 1:48.
 
-	nokia_send_command(0x20);     // horizontal mode from left to right, X axe are incremented automatically , 0x22 for vertical addressing ,back on normal instruction set too
-	nokia_send_command(0x09);     // all on ; display control
-
-	_delay_us(400);
-	nokia_build_DDRAM();          // reset DDRAM, otherwise the lcd is blurred with random pixels
-	_delay_us(80);
-	nokia_send_command(0x08);     // mod control blank change (all off)
-	_delay_us(80);
-	nokia_send_command(0x0C);     // mod control normal change
-
-	nokia_gotoxy(0,0);
+	/** @note unsigned chars are stored in the display data ram, address counter, incremented automatically
+	*/
+	nokia_send_command(0x20);			// 0x20 for horizontal mode from left to right, X axe are incremented automatically,
+																// 0x22 for vertical addressing ,back on normal instruction set too
+	nokia_send_command(0x09);			// all on ; display control
 
 //  	nokia_send_command(0x41);    // ??
 //  	nokia_send_command(0x90);    // ??
 //  	nokia_send_command(0x20);    // ??
-	nokia_send_command(0x40);	// x init
-	nokia_send_command(0x80);	// y init
 
-
+	nokia_clear();
 	nokia_gotoxy(0,0);
 }
 
-void nokia_send_command(unsigned char command)
+void nokia_send_command(const unsigned char command)
 {
 	NOK_DC=0;	// unsigned char is a command it is read with the eight SCLK pulse
 	NOK_CS=0;	// chip enabled
 	nokia_write(command);
 	NOK_CS=1;	// chip disabled
+}
+
+void nokia_send_data(const unsigned char data)
+{
+	NOK_DC=1;
+	NOK_CS=0;	// chip enabled
+	nokia_write(data  ^ reverse_mode);
+	NOK_CS=1;	// chip disabled
+	printed_cols++;
 }
 
 void nokia_write(unsigned char data)
@@ -167,22 +176,15 @@ void nokia_write(unsigned char data)
 	}
 }
 
-/////////////////////////////////////////////////////////////////////////////////
-void nokia_send_data(unsigned char data)
-{
-	NOK_DC=1;
-	NOK_CS=0;	// chip enabled
-	nokia_write(data);
-	NOK_CS=1;	// chip disabled
-}
-
-//////////////////////////////////////////////////////////////////////////////////
-void nokia_build_DDRAM(void)	// clear all DDRAM (set all bits to zero)
+/** @fn void nokia_reset_DDRAM(void)
+		@brief reset all DDRAM (set all bits to zero)
+*/
+void nokia_reset_DDRAM(void)
 {
 	signed char dch ;
 	signed char dcm ;
 	signed char dcl ;
-	NOK_SDA=0;
+	NOK_SDA=0;		// all data bits will be always set with 0
 	NOK_DC=1;
 	NOK_CS=0;
 	for (dch=6;dch>0;dch--) {				// 6 rows
@@ -201,20 +203,21 @@ void nokia_gotoxy (const unsigned char x, const unsigned char y)	// Nokia LCD Po
 {
 	nokia_send_command(0x40|( y & 0x07 )),    // Y axe initialisation: 0100 0yyy	
 	nokia_send_command(0x80|( x & 0x7F ));    // X axe initialisation: 1xxx xxxx
+	printed_cols = x * 6;
 }
 
 //////////////////////////////////////////////////////////////////////////////////
-void nokia_display_char( unsigned char ascii )
+void nokia_display_char(const unsigned char ascii)
 {
 	unsigned char data[5];
 	memcpy_P( data, ascii_table[ascii-32], 5 );
 
+	nokia_send_data(0x00);  // Display a blank vertical line
 	nokia_send_data(data[0]);
 	nokia_send_data(data[1]);
 	nokia_send_data(data[2]);
 	nokia_send_data(data[3]);
 	nokia_send_data(data[4]);
-	nokia_send_data(0x00);       // Display a blank vertical line
 }
 
 /////////////////////////////////////////////////////////////////////////////////
@@ -228,12 +231,28 @@ void nokia_display_string(const char *string)
 ////////////////////////////////////////////////////////////////////////////////
 void nokia_clear(void)
 {
-	nokia_build_DDRAM();	// reset DDRAM, otherwise the lcd is blurred with random pixels
+	nokia_reset_DDRAM();	// reset DDRAM, otherwise the lcd is blurred with random pixels
 
-	_delay_us(80);           // 80s
+// 	_delay_us(80);           // 80s
 	nokia_send_command(0x08);    // mod control blank change (all off)
-	_delay_us(80);           // 80s
+// 	_delay_us(80);           // 80s
 	nokia_send_command(0x0c);    // mod control normal change
-	_delay_us(80);           // 80s
+// 	_delay_us(80);           // 80s
+	printed_cols = 0;
 }
 
+void
+nokia_set_mode(uint8 mode)
+{
+	reverse_mode = (mode) ? _NOK_MODE_INVERTED : _NOK_MODE_NORMAL ;
+}
+
+void
+nokia_finish_line(void)
+{
+	if (reverse_mode == _NOK_MODE_INVERTED) {
+		while (printed_cols < 84) {
+			nokia_send_data(0x00);
+		}
+  }
+}

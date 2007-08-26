@@ -4,10 +4,8 @@
 #include "types.h"
 #include "menus.h"
 
-typedef struct t_application {
-	uint8 id;
-	t_menu menu;
+typedef struct {
 	PGM_P * title;
-} t_application;
+} application_t;
 
 #endif

@@ -1,12 +1,9 @@
 #include <avr/io.h>
-#include <avr/pgmspace.h>
-#include <util/delay.h>
 
-//#include "rtc.h"
+#include "windowmanager.h"
+#include "menus.h"
 
-//#include "app_date.h"
-
-#include "nokia_driver.h"
+#include "lcd.h"
 
 /** relay.h */
 #include <avr/io.h>
@@ -15,48 +12,54 @@
 #define RELAY0    GET_BIT(PORTA).bit5
 /** EOF **/
 
+// XXX
+#define LED0    GET_BIT(PORTB).bit2
+#define LED1    GET_BIT(PORTB).bit3
+
+menu_t main_menu;
+menu_t foo_menu;
+
+uint8 foo(void *user_data)
+{
+	menus_enter_menu(&foo_menu);
+	return 0;
+}
+
+uint8 bar(void *user_data)
+{
+	return 0;
+}
+
 int main (void)
 {
-	DDRA = 0xFF; //met le port A en sortie
-	DDRB = 0x00;
+	menu_item_t main_menu_items[] = {
+		{ PSTR("foo"), foo, NULL },
+		{ PSTR("bar"), bar, NULL }
+	};
+	
+	menu_item_t foo_menu_items[] = {
+		{ PSTR("plop"), bar, NULL },
+		{ PSTR("toglut"), bar, NULL},
+		{ PSTR("kartaglutek"), bar, NULL }
+	};
 
-	nokia_init();
+	main_menu.menu_items = main_menu_items;
+	main_menu.item_count = sizeof(main_menu_items)/sizeof(menu_item_t);
 
-	nokia_clear();
-/*	nokia_display_char('H');
-	nokia_display_string(PSTR("RTC"));*/
-// 	nokia_gotoxy(0,1);
-	nokia_display_string(PSTR("HIDEO"));
-//	windowmanager_init();
-//	app_date_init();
+	foo_menu.menu_items = foo_menu_items;
+	foo_menu.item_count = sizeof(foo_menu_items)/sizeof(menu_item_t);
 
+	DDRB = 0xFF; // XXX
+	LED0 = LED1 = 1;
 
-	while (1)
-	{
-/*		nokia_gotoxy(0,4);
-		rtc_datetime now = rtc_read_datetime();
-		display_rtc_date( now );
-		nokia_gotoxy(0,5);
-		display_rtc_time( now );
-		_delay_us(25);
-*/
-//		windowmanager_process_events();
-/*		uint8 i;
-		uint8 j;
+	RELAY0 = 1;
 
-		for( i=0; i < 10; i++) {
-			for( j=0; j < 100; j++) {
-				_delay_us(1000);
-			}
-		}
-		RELAY0 = 0;
-		for( i=0; i < 10; i++) {
-			for( j=0; j < 100; j++) {
-				_delay_us(1000);
-			}
-		}
-		RELAY0 = 1;*/
+	windowmanager_init(&main_menu);
+
+	for(;;) {
+		windowmanager_process_events();
 	}
+
 	return 1;
 }
 
