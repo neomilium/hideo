@@ -3,9 +3,7 @@
   <FILES>
     <FILE SHOWN="TRUE" NAME="main.c" />
     <FILE SHOWN="FALSE" NAME="nokia_driver.h" />
-    <FILE SHOWN="TRUE" NAME="rtc_ds1302.h" />
     <FILE SHOWN="TRUE" NAME="nokia_driver.c" />
-    <FILE SHOWN="TRUE" NAME="rtc_ds1302.c" />
     <FILE SHOWN="TRUE" NAME="bit_field.h" />
     <FILE SHOWN="TRUE" NAME="date.h" />
     <FILE SHOWN="FALSE" NAME="types.h" />
@@ -18,15 +16,19 @@
     <FILE SHOWN="TRUE" NAME="windowmanager.c" />
     <FILE SHOWN="TRUE" NAME="windowmanager.h" />
     <FILE SHOWN="TRUE" NAME="application.h" />
-    <FILE SHOWN="TRUE" NAME="app_date.c" />
     <FILE SHOWN="TRUE" NAME="rtc.h" />
-    <FILE SHOWN="TRUE" NAME="app_date.h" />
     <FILE SHOWN="TRUE" NAME="app_lcd.c" />
     <FILE SHOWN="TRUE" NAME="app_lcd.h" />
+    <FILE SHOWN="TRUE" NAME="ds1307.c" />
+    <FILE SHOWN="TRUE" NAME="ds1307.h" />
+    <FILE SHOWN="TRUE" NAME="i2c.h" />
+    <FILE SHOWN="TRUE" NAME="i2cconf.h" />
+    <FILE SHOWN="TRUE" NAME="global.h" />
+    <FILE SHOWN="TRUE" NAME="i2c.c" />
   </FILES>
   <SETTINGS>
     <ASSEMBLER_COMMAND VALUE="avr-gcc" />
-    <CLOCK VALUE="8e+06" />
+    <CLOCK VALUE="1e+06" />
     <COMPILER_CALL_PROLOGUES VALUE="TRUE" />
     <COMPILER_COMMAND VALUE="avr-gcc -pedantic -funsigned-bitfields -fpack-struct -fshort-enums -std=gnu99 " />
     <COMPILER_F_CPU VALUE="TRUE" />
@@ -36,7 +38,7 @@
     <COMPILER_WALL VALUE="TRUE" />
     <CPU VALUE="ATMega8535" />
     <HEX_FILE VALUE="hideo.hex" />
-    <LINKER_COMMAND VALUE="avr-gcc -Wa,-mmcu=atmega8535" />
+    <LINKER_COMMAND VALUE="avr-gcc -Wa" />
     <LINKER_FLAGS VALUE="" />
     <MAP_FILE VALUE="project.map" />
     <OBJCOPY_COMMAND VALUE="avr-objcopy" />
@@ -45,9 +47,10 @@
     <AVRDUDE_COUNT_ERASE VALUE="FALSE" />
     <AVRDUDE_DISABLE_AUTO_ERASE VALUE="FALSE" />
     <AVRDUDE_OVERRIDE_INVALID_SIGNATURE VALUE="FALSE" />
+    <AVRDUDE_PROGRAMMER_TYPE VALUE="stk200" />
     <AVRDUDE_TEST_MODE VALUE="FALSE" />
-    <PROGRAMMER_COMMAND VALUE="uisp" />
-    <PROGRAMMER_NAME VALUE="UISP" />
+    <PROGRAMMER_COMMAND VALUE="avrdude" />
+    <PROGRAMMER_NAME VALUE="AVRDUDE" />
     <UISP_PARALLEL_AT89S VALUE="FALSE" />
     <UISP_PARALLEL_DISABLE_RETRIES VALUE="FALSE" />
     <UISP_PARALLEL_EEPROM_MAX_WRITE_DELAY VALUE="7250" />
