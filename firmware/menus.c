@@ -2,58 +2,60 @@
 
 #include "lcd.h"
 #include "keyboard.h"
-#include "rtc_ds1302.h"
 
-#define MENUS_SIZE    2
+#define MENU_MAX_DEPTH 3
 
-t_menu menus[MENUS_SIZE];
+typedef struct {
+	menu_item_t *menu_items;
+	uint8 item_count;
+	uint8 active_line;
+} menu_stack_t;
 
-/*************************** ROOT MENU ****************************/
-const char m_root_menu_date_text[] PROGMEM = "Date";
-const char m_root_menu_lcd_text[] PROGMEM = "LCD";
-const char m_root_menu_exit_text[] PROGMEM = "Quitter";
+static menu_stack_t _menus[MENU_MAX_DEPTH];
+static sint8 _current_depth = -1;
 
-#define MENUS_MAX_ENTRIES 2
-PGM_P m_root_menu[MENUS_MAX_ENTRIES] PROGMEM = {
-	m_root_menu_date_text,
-//	m_root_menu_lcd_text,
-	m_root_menu_exit_text
-};
-void (*m_root_functions[MENUS_MAX_ENTRIES]) (void);
-uint8 m_root_submenus[MENUS_MAX_ENTRIES];
+void menus_enter_menu(const menu_t *menu)
+{
+	++_current_depth;
+	_menus[_current_depth].menu_items  = menu->menu_items;
+	_menus[_current_depth].item_count  = menu->item_count;
+	_menus[_current_depth].active_line = 0;
 
-uint8 menus_current_line;
-uint8 menus_current_menu;
-uint8 menus_count;
-uint8 root_menu_entries_count;
+	menus_display(MENUS_DISPLAY_MODE_FULL);
+}
 
-#define MENUS_DISPLAY_MODE_FULL         0
-#define MENUS_DISPLAY_MODE_CURSOR_LINE  1
+void menus_leave_menu(void)
+{
+	if (0 != _current_depth) {
+		--_current_depth;
+		menus_display(MENUS_DISPLAY_MODE_FULL);
+	}
+}
 
 void menus_display(byte mode)
 {
 	uint8 i;
-	uint8 line_count = menus[menus_current_menu].line_count;
-
+/*
 	switch(mode) {
 		case MENUS_DISPLAY_MODE_FULL: {
-				PGM_P line;
-
+*/
 				lcd_clear();
-				for(i=0; i<line_count; i++) {
+				for(i=0; i<_menus[_current_depth].item_count; i++) {
 					lcd_gotoxy(0,i);
-					memcpy_P(&line, &(menus[menus_current_menu].lines)[i], sizeof(PGM_P));
-					if(i==menus_current_line)
-						lcd_display_char( '>' );
-					else
-						lcd_display_char( ' ' );
-					lcd_display_string( line );
+
+					if(i==_menus[_current_depth].active_line) {
+						lcd_set_mode(LCD_MODE_INVERTED);
+					}
+					lcd_display_string(_menus[_current_depth].menu_items[i].title);
+					lcd_finish_line();
+					lcd_set_mode(LCD_MODE_NORMAL);
 				}
+/*
 				break;
 			case MENUS_DISPLAY_MODE_CURSOR_LINE:
-				for(i=0; i<line_count; i++) {
+				for(i=0; i<_menus[_current_depth].item_count; i++) {
 					lcd_gotoxy(0,i);
-					if(i==menus_current_line)
+					if(i==_menus[_current_depth].active_line)
 						lcd_display_char( '>' );
 					else
 						lcd_display_char( ' ' );
@@ -61,30 +63,11 @@ void menus_display(byte mode)
 			}
 			break;
 	}
-	lcd_gotoxy(0,5);
-	lcd_display_string( PSTR("m") );
-	lcd_display_number( menus_current_menu );
-	lcd_display_string( PSTR(",M") );
-	lcd_display_number( menus_count );
-	lcd_display_string( PSTR(",l") );
-	lcd_display_number( menus_current_line );
-	lcd_display_string( PSTR(",L") );
-	lcd_display_number( line_count );
+*/
 }
 
 void menus_init(void)
 {
-	/*** ROOT MENU ***/
-	menus[MENU_ROOT].level = 0;
-	menus[MENU_ROOT].lines = m_root_menu;
-	menus[MENU_ROOT].line_count = 1;
-	menus[MENU_ROOT].functions = m_root_functions;
-	menus[MENU_ROOT].submenus = m_root_submenus;
-
-	root_menu_entries_count = 1; // "Quitter"
-	menus_count = 1; // root_menu
-	menus_current_line = 0;
-	menus_current_menu = MENU_ROOT;
 }
 
 void menus_shutdown_lcd(void)
@@ -92,54 +75,26 @@ void menus_shutdown_lcd(void)
 	lcd_clear();
 }
 
-void menus_add_submenu(const t_menu submenu)
+void menus_process_key(const byte key)
 {
-	const uint8 free_entry = root_menu_entries_count;
-	root_menu_entries_count++;
-
-//	m_root_menu[free_entry] = text;
-	m_root_functions[free_entry] = NULL;
-	m_root_submenus[free_entry] = menus_count;
-	menus[menus_count] = submenu;
-	menus_count++;
-
-	menus[MENU_ROOT].line_count = root_menu_entries_count;
-//	m_root_menu[menus_count] = m_root_menu_exit_text;
-	m_root_functions[root_menu_entries_count - 1] = menus_shutdown_lcd;
-	m_root_submenus[root_menu_entries_count - 1] = MENU_ROOT;
-
-	menus_display(MENUS_DISPLAY_MODE_FULL);
-}
-
-void menus_process(void)
-{
-	byte key = keyboard_key();
-
-	uint8 line_count = menus[menus_current_menu].line_count;
 	switch(key) {
 		case KEYBOARD_NONE:
 			break;
 		case KEYBOARD_UP:
-				menus_current_line = ( menus_current_line - 1 + line_count ) % line_count;
-				menus_display(MENUS_DISPLAY_MODE_CURSOR_LINE);
+			_menus[_current_depth].active_line = ( _menus[_current_depth].active_line - 1 + _menus[_current_depth].item_count ) % _menus[_current_depth].item_count;
+			menus_display(MENUS_DISPLAY_MODE_CURSOR_LINE);
 			break;
 		case KEYBOARD_DOWN:
-				menus_current_line = ( menus_current_line + 1 ) % line_count;
-				menus_display(MENUS_DISPLAY_MODE_CURSOR_LINE);
+			_menus[_current_depth].active_line = ( _menus[_current_depth].active_line + 1 ) % _menus[_current_depth].item_count;
+			menus_display(MENUS_DISPLAY_MODE_CURSOR_LINE);
 			break;
-		case KEYBOARD_OK:
-				if(menus[menus_current_menu].functions[menus_current_line] != NULL)  {
-					/* There is a function to execute */
-					menus[menus_current_menu].functions[menus_current_line]();
-				} else {
-					menus_current_menu = menus[menus_current_menu].submenus[menus_current_line];
-					menus_current_line = 0;
-					menus_display(MENUS_DISPLAY_MODE_FULL);
-				}
+		case KEYBOARD_MENU_LEFT:
+			menus_leave_menu();
 			break;
-/*		case KEYBOARD_CANCEL:
-			break;*/
+		case KEYBOARD_MENU_RIGHT:
+			_menus[_current_depth].menu_items[_menus[_current_depth].active_line].function(_menus[_current_depth].menu_items[_menus[_current_depth].active_line].user_data);
+			break;
 		default:
-			menus_display(MENUS_DISPLAY_MODE_FULL);
+			42;
 	}
 }
