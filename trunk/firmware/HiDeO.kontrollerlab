@@ -6,7 +6,7 @@
     <FILE SHOWN="TRUE" NAME="nokia_driver.c" />
     <FILE SHOWN="TRUE" NAME="bit_field.h" />
     <FILE SHOWN="TRUE" NAME="date.h" />
-    <FILE SHOWN="FALSE" NAME="types.h" />
+    <FILE SHOWN="TRUE" NAME="types.h" />
     <FILE SHOWN="TRUE" NAME="menus.c" />
     <FILE SHOWN="TRUE" NAME="menus.h" />
     <FILE SHOWN="TRUE" NAME="lcd.h" />
@@ -25,6 +25,8 @@
     <FILE SHOWN="TRUE" NAME="i2cconf.h" />
     <FILE SHOWN="TRUE" NAME="global.h" />
     <FILE SHOWN="TRUE" NAME="i2c.c" />
+    <FILE SHOWN="TRUE" NAME="app_date.h" />
+    <FILE SHOWN="TRUE" NAME="app_date.c" />
   </FILES>
   <SETTINGS>
     <ASSEMBLER_COMMAND VALUE="avr-gcc" />
@@ -43,6 +45,7 @@
     <MAP_FILE VALUE="project.map" />
     <OBJCOPY_COMMAND VALUE="avr-objcopy" />
   </SETTINGS>
+  <DEBUGGER_SETTINGS/>
   <PROGRAMMERCONFIG>
     <AVRDUDE_COUNT_ERASE VALUE="FALSE" />
     <AVRDUDE_DISABLE_AUTO_ERASE VALUE="FALSE" />
