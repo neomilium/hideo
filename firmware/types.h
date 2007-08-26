@@ -7,5 +7,6 @@ typedef unsigned char uint8;
 typedef signed char sint8;
 
 typedef unsigned char byte;
+typedef unsigned char bcd_byte;
 
 #endif
