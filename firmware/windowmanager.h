@@ -3,10 +3,10 @@
 
 #include "types.h"
 
-#include "menus.h"
+#include "application.h"
 
-// void windowmanager_init(void);
-void windowmanager_init(const menu_t *menu);
+void windowmanager_init(void);
 void windowmanager_process_events(void);
+void windowmanager_launch(const application_t *app);
 
 #endif

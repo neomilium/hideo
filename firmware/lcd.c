@@ -10,24 +10,23 @@ MODULO %
 21347 % 100 = 47 / 10 = 4 aff 4
 21347 % 10 = 7 aff 7
 */
-void lcd_display_number( const signed char n )
+void lcd_display_number( sint16 number )
 {
-  signed char number;
-  number = n;
-
   if ( number < 0 ) {
     lcd_display_char( '-' );
-    number = 0-number;
-    }
+  	number = -number;
+  }
 
-  if( number > 99 ){
-    lcd_display_char( ( number / 100 ) + '0' );
-    number = number % 100;
-  }
-  if( number > 9 ){
-    lcd_display_char( ( number / 10 ) + '0' );
-    number = number % 10;
-  }
+	sint16 modulo = 10000;
+	char display = 0; /* Don't ignore 0 after first displayed digits */
+	while (modulo != 1) {
+		if (display || (number / modulo)) {
+			lcd_display_char( ( number / modulo ) + '0' );
+			display = 1;
+		}
+		number %= modulo;
+		modulo /= 10;
+	}
   lcd_display_char( ( number ) + '0' );
 }
 

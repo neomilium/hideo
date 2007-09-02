@@ -2,7 +2,7 @@
 <PROJECT VERSION="0.1" >
   <FILES>
     <FILE SHOWN="TRUE" NAME="main.c" />
-    <FILE SHOWN="FALSE" NAME="nokia_driver.h" />
+    <FILE SHOWN="TRUE" NAME="nokia_driver.h" />
     <FILE SHOWN="TRUE" NAME="nokia_driver.c" />
     <FILE SHOWN="TRUE" NAME="bit_field.h" />
     <FILE SHOWN="TRUE" NAME="date.h" />
@@ -26,7 +26,13 @@
     <FILE SHOWN="TRUE" NAME="global.h" />
     <FILE SHOWN="TRUE" NAME="i2c.c" />
     <FILE SHOWN="TRUE" NAME="app_date.h" />
-    <FILE SHOWN="TRUE" NAME="app_date.c" />
+    <FILE SHOWN="TRUE" NAME="app_mainmenu.c" />
+    <FILE SHOWN="TRUE" NAME="app_mainmenu.h" />
+    <FILE SHOWN="TRUE" NAME="event.h" />
+    <FILE SHOWN="TRUE" NAME="a2d.c" />
+    <FILE SHOWN="TRUE" NAME="a2d.h" />
+    <FILE SHOWN="TRUE" NAME="app_temperature.h" />
+    <FILE SHOWN="TRUE" NAME="app_temperature.c" />
   </FILES>
   <SETTINGS>
     <ASSEMBLER_COMMAND VALUE="avr-gcc" />

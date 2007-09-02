@@ -12,8 +12,8 @@
 #define KEYBOARD_DOWN					2
 #define KEYBOARD_LEFT					3
 #define KEYBOARD_RIGHT				4
-#define KEYBOARD_MENU_RIGHT		5
-#define KEYBOARD_MENU_LEFT		6
+#define KEYBOARD_MENU_LEFT		5
+#define KEYBOARD_MENU_RIGHT		6
 
 #include "types.h"
 
