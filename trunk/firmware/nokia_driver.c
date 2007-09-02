@@ -241,14 +241,12 @@ void nokia_clear(void)
 	printed_cols = 0;
 }
 
-void
-nokia_set_mode(uint8 mode)
+void nokia_set_mode(uint8 mode)
 {
 	reverse_mode = (mode) ? _NOK_MODE_INVERTED : _NOK_MODE_NORMAL ;
 }
 
-void
-nokia_finish_line(void)
+void nokia_finish_line(void)
 {
 	if (reverse_mode == _NOK_MODE_INVERTED) {
 		while (printed_cols < 84) {

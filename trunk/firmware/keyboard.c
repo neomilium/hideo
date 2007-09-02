@@ -1,6 +1,6 @@
 #include "keyboard.h"
 
-static volatile _current_key = KEYBOARD_NONE;
+static uint8 _current_key = KEYBOARD_NONE;
 
 void keyboard_init(void)
 {

@@ -17,44 +17,38 @@
 #define LED0    GET_BIT(PORTB).bit2
 #define LED1    GET_BIT(PORTB).bit3
 
-#include "app_date.h"
-
-menu_t main_menu;
-menu_t foo_menu;
-
-uint8 bar(void *user_data)
-{
-	return 0;
-}
+#include "app_mainmenu.h"
+#include "app_temperature.h"
+// #include "app_date.h"
 
 int main (void)
 {
-	app_date_init();
-
-	menu_item_t foo_menu_items[] = {
-		{ PSTR("plop"), bar, NULL },
-		{ PSTR("toglut"), bar, NULL},
-		{ PSTR("kartaglutek"), bar, NULL }
-	};
-
-	foo_menu.menu_items = foo_menu_items;
-	foo_menu.item_count = sizeof(foo_menu_items)/sizeof(menu_item_t);
-
-	menu_item_t main_menu_items[] = {
-		{ PSTR("date"), menus_enter_menu, &date_menu },
-		{ PSTR("foo"), menus_enter_menu, &foo_menu },
-		{ PSTR("bar"), bar, NULL }
-	};
 	
-	main_menu.menu_items = main_menu_items;
-	main_menu.item_count = sizeof(main_menu_items)/sizeof(menu_item_t);
+// 	menu_t foo_menu;
+// 	/// app_foo
+// 	menu_item_t foo_menu_items[] = {
+// 		{ PSTR("plop"), &app_bar },
+// 		{ PSTR("toglut"), &app_bar },
+// 		{ PSTR("kartaglutek"), &app_bar }
+// 	};
+// 	foo_menu.menu_items = foo_menu_items;
+// 	foo_menu.item_count = sizeof(foo_menu_items)/sizeof(menu_item_t);
+// 	application_t app_foo = { NULL, (void*)&foo_menu, NULL };
+
+	/// app_date
+// 	app_date_init();
+//	app_mainmenu_init();
+
+	app_temperature_init();
 
 	DDRB = 0xFF; // XXX
 	LED0 = LED1 = 1;
 
 	RELAY0 = 1;
 
-	windowmanager_init(&main_menu);
+	windowmanager_init();
+	menus_init();
+	windowmanager_launch(&app_temperature);
 
 	for(;;) {
 		windowmanager_process_events();
