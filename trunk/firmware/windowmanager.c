@@ -26,7 +26,7 @@ void windowmanager_process_events(void)
 	}*/
 }
 
-void windowmanager_launch(const application_t *app)
+void windowmanager_launch(application_t *app)
 {
 		++_current_depth;
 	_application_stack[_current_depth] = app;
