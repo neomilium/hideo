@@ -1,0 +1,33 @@
+
+PROG= hideo.out
+SRCS= app_lcd.c app_temperature.c ds1307.c i2c.c keyboard.c lcd.c main.c menus.c nokia_driver.c windowmanager.c ps2.c
+
+HEX= ${PROG:R}.hex
+
+LDFLAGS= -Wa
+
+CC= avr-gcc
+CFLAGS= -funsigned-bitfields -fpack-struct -fshort-enums -std=gnu99 -mmcu=atmega8535 -mcall-prologues -Wall -Os -DF_CPU=1000000UL
+
+NO_MAN=
+
+###########################################
+
+AVRDUDE=avrdude
+
+PROGRAMMER= stk200
+MCU= m8535
+
+###########################################
+
+SUDO= sudo
+
+all: ${HEX}
+
+${HEX}:  hideo.out
+	avr-objcopy -R .eeprom -O ihex ${.ALLSRC} ${.TARGET}
+
+flash: ${HEX}
+	${SUDO} ${AVRDUDE} -p ${MCU} -c ${PROGRAMMER} -U flash:w:${HEX}
+
+.include <bsd.prog.mk>

@@ -7,6 +7,6 @@
 
 void windowmanager_init(void);
 void windowmanager_process_events(void);
-void windowmanager_launch(const application_t *app);
+void windowmanager_launch(application_t *app);
 
 #endif
