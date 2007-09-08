@@ -18,8 +18,7 @@ void menus_display(const menu_t *menu, const uint8 current_menu_item)
 		if(i==current_menu_item) {
 			lcd_set_mode(LCD_MODE_INVERTED);
 		}
-		lcd_display_string(menu->menu_items[i].title);
-		lcd_finish_line();
+		lcd_display_line(menu->menu_items[i].title);
 		lcd_set_mode(LCD_MODE_NORMAL);
 	}
 }

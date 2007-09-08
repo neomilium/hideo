@@ -1,6 +1,7 @@
 #ifndef __LCD_H__
 #define __LCD_H__
 
+#include <avr/pgmspace.h>
 #include "nokia_driver.h"
 
 #define lcd_init() nokia_init()
@@ -13,8 +14,7 @@
 #define LCD_MODE_INVERTED 1
 #define lcd_set_mode(mode) nokia_set_mode(mode)
 
-#define lcd_finish_line() nokia_finish_line()
-
+#define lcd_display_line( X ) nokia_display_string( X ); nokia_finish_line()
 
 void lcd_display_number( sint16 number );
 void lcd_display_hex( const byte hex );
