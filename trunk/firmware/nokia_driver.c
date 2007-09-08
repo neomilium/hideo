@@ -248,9 +248,7 @@ void nokia_set_mode(uint8 mode)
 
 void nokia_finish_line(void)
 {
-	if (reverse_mode == _NOK_MODE_INVERTED) {
-		while (printed_cols < 84) {
-			nokia_send_data(0x00);
-		}
-  }
+	while (printed_cols < 84) {
+		nokia_send_data(reverse_mode);
+	}
 }

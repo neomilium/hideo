@@ -1,3 +1,4 @@
+#include <avr/interrupt.h>
 #include <avr/io.h>
 #include <util/delay.h>
 
@@ -18,8 +19,9 @@
 #define LED1    GET_BIT(PORTB).bit3
 
 #include "app_mainmenu.h"
-#include "app_temperature.h"
+//#include "app_temperature.h"
 // #include "app_date.h"
+#include "app_mouse.h"
 
 int main (void)
 {
@@ -39,7 +41,8 @@ int main (void)
 // 	app_date_init();
 //	app_mainmenu_init();
 
-	app_temperature_init();
+//	app_temperature_init();
+	app_mouse_init();
 
 	DDRB = 0xFF; // XXX
 	LED0 = LED1 = 1;
@@ -47,8 +50,12 @@ int main (void)
 	RELAY0 = 1;
 
 	windowmanager_init();
-	menus_init();
-	windowmanager_launch(&app_temperature);
+	//menus_init();
+	//windowmanager_launch(&app_temperature);
+
+	sei();     /* Enable interrupts */
+
+	windowmanager_launch(&app_mouse);
 
 	for(;;) {
 		windowmanager_process_events();
