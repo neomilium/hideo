@@ -154,7 +154,9 @@ void nokia_send_data(const unsigned char data)
 	NOK_CS=0;	// chip enabled
 	nokia_write(data  ^ reverse_mode);
 	NOK_CS=1;	// chip disabled
-	printed_cols++;
+	if (printed_cols++ > NOK_SCREEN_WIDTH) {
+		printed_cols = 2;
+	}
 }
 
 void nokia_write(unsigned char data)
@@ -188,7 +190,7 @@ void nokia_reset_DDRAM(void)
 	NOK_DC=1;
 	NOK_CS=0;
 	for (dch=6;dch>0;dch--) {				// 6 rows
-		for (dcm=84;dcm>0;dcm--) {			// 84 columns
+		for (dcm=NOK_SCREEN_WIDTH;dcm>0;dcm--) {			// columns
 			for (dcl=8;dcl>0;dcl--) {		// 8 pixels
 				NOK_SCLK=0;
 				NOK_SCLK=1;
@@ -248,7 +250,8 @@ void nokia_set_mode(uint8 mode)
 
 void nokia_finish_line(void)
 {
-	while (printed_cols < 84) {
+	while (printed_cols < NOK_SCREEN_WIDTH) {
 		nokia_send_data(reverse_mode);
 	}
+	printed_cols = 0;
 }

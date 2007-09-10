@@ -12,6 +12,8 @@
 #define NOK_CS      GET_BIT(PORTA).bit1		// nokia lcd !cs
 #define NOK_RES     GET_BIT(PORTA).bit0		// nokia lcd !res
 
+#define NOK_SCREEN_WIDTH 84
+
 #include "types.h"
 
 // Fonctions qui concernent les manipulations hardware (ceci est le driver)
