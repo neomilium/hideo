@@ -25,6 +25,7 @@
 
 int main (void)
 {
+	cli();
 	
 // 	menu_t foo_menu;
 // 	/// app_foo
