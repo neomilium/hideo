@@ -18,8 +18,10 @@
 #define data_set(value)  do { PS2_DDR_DATA  = 1; PS2_DATA  = value; } while (0)
 #define clock_set(value) do { PS2_DDR_CLK = 1; PS2_CLK = value; } while (0)
 
-#define data_get()  (PS2_DDR_DATA  = 0, PS2_DATA = 0, PS2_DATA)
-#define clock_get() (PS2_DDR_CLK = 0, PS2_CLK = 0, PS2_CLK)
+#define data_get()      (PS2_DDR_DATA  = 0, PS2_DATA = 0, PS2_DATA)
+#define data_release()  (PS2_DDR_DATA  = 0, PS2_DATA = 0)
+#define clock_get()     (PS2_DDR_CLK = 0, PS2_CLK = 0, PS2_CLK)
+#define clock_release() (PS2_DDR_CLK = 0, PS2_CLK = 0)
 
 
 static volatile uint8 _data;                 /* Byte being read */
@@ -132,13 +134,24 @@ ps2_write(uint8 d)
 
 	GICR &= ~INT2;              /* Disable interrupt */
 
+	data_get();	
 	clock_set(0);
-	/* XXX wait_ms(100); */
 	_delay_us(60);
 	_delay_us(60);
-	data_set(0)
-;
-	_delay_us(5);
+	data_set(0);
+	_delay_us(60);
+	_delay_us(60);
+	clock_release();
+
+
+
+// 	clock_set(0);
+// 	/* XXX wait_ms(100); */
+// 	_delay_us(60);
+// 	_delay_us(60);
+// 	data_set(0);
+// 	_delay_us(5);
+
 	/* start */
 	lcd_display_string(PSTR("S"));
 	while (clock_get()) ;
@@ -159,14 +172,17 @@ ps2_write(uint8 d)
 	/* parity */
 	lcd_display_string(PSTR("P"));
 	data_set(parity);
+	lcd_display_string(PSTR("L"));
 	while(!clock_get());
+	lcd_display_string(PSTR("H"));
 	while(clock_get());
 
 	/* stop */
 	lcd_display_string(PSTR("s"));
-	data_set(0);
-	while(!data_get());
+	//data_set(0);
 	while(!clock_get());
+	while(clock_get());
+	/* data_get() should return 0 */
 
 	/* ack */
 	lcd_display_string(PSTR("A"));
