@@ -35,7 +35,6 @@
     <FILE SHOWN="TRUE" NAME="app_temperature.c" />
     <FILE SHOWN="TRUE" NAME="ps2.c" />
     <FILE SHOWN="TRUE" NAME="ps2.h" />
-    <FILE SHOWN="TRUE" NAME="iom8535.h" />
     <FILE SHOWN="TRUE" NAME="app_mouse.c" />
     <FILE SHOWN="TRUE" NAME="app_mouse.h" />
   </FILES>
