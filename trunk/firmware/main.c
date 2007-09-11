@@ -45,8 +45,8 @@ int main (void)
 //	app_temperature_init();
 	app_mouse_init();
 
-	DDRB = 0xFF; // XXX
-	LED0 = LED1 = 1;
+	//DDRB = 0xFF; // XXX
+	//LED0 = LED1 = 1;
 
 	RELAY0 = 1;
 
