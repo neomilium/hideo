@@ -37,6 +37,10 @@
     <FILE SHOWN="TRUE" NAME="ps2.h" />
     <FILE SHOWN="TRUE" NAME="app_mouse.c" />
     <FILE SHOWN="TRUE" NAME="app_mouse.h" />
+    <FILE SHOWN="TRUE" NAME="ps2_mouse.c" />
+    <FILE SHOWN="TRUE" NAME="ps2_mouse.h" />
+    <FILE SHOWN="TRUE" NAME="clist.h" />
+    <FILE SHOWN="TRUE" NAME="clist.c" />
   </FILES>
   <SETTINGS>
     <ASSEMBLER_COMMAND VALUE="avr-gcc" />
