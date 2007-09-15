@@ -6,6 +6,7 @@
 
 #include "types.h"
 #include "ps2.h"
+#include "clist.h"
 
 #include "lcd.h"
 
@@ -25,17 +26,13 @@
 #define clock_get()     (PS2_CLK_DDR  = 0, PS2_CLK_OUT = 0, PS2_CLK_IN)
 #define clock_release() (PS2_CLK_DDR  = 0, PS2_CLK_OUT = 0)
 
-#define BUFFER_SIZE 20
-#define BUFFER_NEXT(i) ((i + 1) % BUFFER_SIZE)
-
-static volatile byte _buffer[BUFFER_SIZE];
-static volatile byte _buffer_w, _buffer_r;
-
 static volatile byte _data;                  /* Byte being read */
 static volatile uint8 _bit_read;             /* Number of bits already read in _data */
 static volatile uint8 _bit_write;            /* Number of bits already wrote in _data */
 static volatile uint8 _parity;               /* Received bit parity */
 static volatile uint8 _cparity;              /* Computed parity bit */
+
+DECLARE_CLIST(ps2, 20);
 
 static volatile enum {PS_RX_START, PS_RX_DATA, PS_RX_PARITY, PS_RX_STOP, PS_TX_START, PS_TX_DATA, PS_TX_PARITY, PS_TX_STOP, PS_TX_ACK} ps2_state = PS_RX_START;
 
@@ -44,48 +41,6 @@ inline void ps2_bit_available(void);
 inline void ps2_inhib(void);
 inline void ps2_send_bit(void);
 
-
-
-
-/**
- * @fn ps2_buffer_write(uint8 data)
- *
- * @param uint8 *data Data to write to buffer.
- *
- * @return 1 on success, 0 otherwise.
- */
-uint8
-ps2_buffer_write(byte data)
-{
-	if (BUFFER_NEXT(_buffer_w) == _buffer_r) {
-		/* Out of space ! */
-		return(0);
-	}
-	_buffer[_buffer_w] = data;
-	_buffer_w = BUFFER_NEXT(_buffer_w);
-
-	return(1);
-}
-
-/**
- * @fn ps2_buffer_read(uint8 *data)
- *
- * @param uint8 *data Data read from buffer.
- *
- * @return 1 on success, 0 otherwise.
- */
-uint8
-ps2_buffer_read(byte *data)
-{
-	if (_buffer_w == _buffer_r) {
-		return(0);
-	}
-
-	*data = _buffer[_buffer_r];
-	_buffer_r = BUFFER_NEXT(_buffer_r);
-
-	return(1);
-}
 
 ISR(INT2_vect) {
 	if (ps2_state < PS_TX_START) {
@@ -143,7 +98,7 @@ ps2_bit_available(void)
 		case PS_RX_STOP:
 			if ((1 == bit) && (_parity == _cparity)) {
 				/* Send byte */
-				ps2_buffer_write(_data);
+				clist_write(ps2, _data);
 			} else {
 				/* Transmission error. Resend */
 				ps2_write(0xFE);
@@ -199,12 +154,20 @@ ps2_inhib(void)
 }
 
 uint8
+ps2_read(uint8 *data)
+{
+	return(clist_read(ps2, data));
+}
+
+void
+ps2_flush(void)
+{
+	clist_flush(ps2);
+}
+
+uint8
 ps2_write(uint8 data)
 {
-	uint8 current_bit = 8;
-	uint8 parity = 1;
-	uint8 ack;
-
 	GICR &= ~(1 << INT2);              /* Disable interrupt */
 
 	data_release();	

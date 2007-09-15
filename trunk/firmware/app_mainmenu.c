@@ -28,7 +28,5 @@ void _app_mainmenu_event_handler(const event_t event)
 		case E_KEY_MENU_RIGHT:
 // 			windowmanager_launch(_current_menu.menu_items[_current_menu_item].application);
 			break;
-		default:
-			42;
 	}
 }
