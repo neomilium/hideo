@@ -4,6 +4,10 @@
 #include "ps2.h"
 #include "lcd.h"
 
+#include "keyboard.h"
+
+static int _received_bytes = 0;
+
 void
 _app_mouse_data_read(uint8 data)
 { /* XXX REMOVE THIS */
@@ -26,9 +30,23 @@ _app_mouse_init(void)
 	//lcd_display_line(PSTR("Done :P"));
 	for (;;) {
 		int data;
+		ps2_debug();
+
+		lcd_gotoxy(0, 2);
 		if (ps2_buffer_read(&data)) {
+			lcd_display_number(++_received_bytes );
+			lcd_display_char(':');
 			lcd_display_hex(data);
 			lcd_display_string(PSTR(";"));
+		}
+
+		byte key = keyboard_key();
+		if(key != KEYBOARD_NONE) {
+			if (ps2_write(0xF4, 0)) {
+				lcd_display_string(PSTR("=1"));
+			} else {
+				lcd_display_string(PSTR("=0"));
+			}
 		}
 	}
 }
