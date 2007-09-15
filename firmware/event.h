@@ -1,6 +1,38 @@
 #ifndef __EVENT_H__
 #define __EVENT_H__
 
-typedef enum {E_NONE, E_KEY_UP, E_KEY_DOWN, E_KEY_LEFT, E_KEY_RIGHT, E_KEY_MENU_LEFT, E_KEY_MENU_RIGHT, E_MOUSE_MOTION, E_MOUSE_CLICK} event_t;
+#include "clist.h"
+
+typedef enum {
+		E_NONE,
+
+		E_KEY_PRESSED,
+		E_KEY_RELEASE,
+
+		E_MOUSE_X_OVERFLOW,
+		E_MOUSE_Y_OVERFLOW,
+
+		E_MOUSE_BUTTON_PRESSED,
+		E_MOUSE_BUTTON_RELEASED,
+
+		E_MOUSE_X_REV,
+		E_MOUSE_X_FWD,
+
+		E_MOUSE_Y_REV,
+		E_MOUSE_Y_FWD
+} event_code_t;
+
+typedef struct {
+	event_code_t code;
+	byte data;
+} event_t;
+
+#define EVENT_QUEUE_LENGHT	15
+
+void event_push( const event_t event );
+event_t event_pop(void);
+void event_add_polling_fct( void (*fct)(void) );
+void event_poll(void);
+
 
 #endif

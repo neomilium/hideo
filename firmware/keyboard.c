@@ -1,40 +1,39 @@
 #include "keyboard.h"
 
-static uint8 _current_key = KEYBOARD_NONE;
+#include "event.h"
 
-void keyboard_init(void)
+static uint8 _keyboard_status = 0x00;
+
+void
+keyboard_init(void)
 {
 	KEYBOARD_DDR = 0x00;
+	event_add_polling_fct(keyboard_poll);
 }
 
-byte keyboard_key(void)
+void
+keyboard_poll(void)
 {
-	byte key = KEYBOARD_NONE;
-	if( !(KEYBOARD_PORT & 0x01) ){
-		key = KEYBOARD_LEFT;
-	} else if( !(KEYBOARD_PORT & 0x02) ){
-		key = KEYBOARD_MENU_LEFT;
-	} else if( !(KEYBOARD_PORT & 0x10) ){
-		key = KEYBOARD_MENU_RIGHT;
-	} else if( !(KEYBOARD_PORT & 0x20) ){
-		key = KEYBOARD_UP;
-	} else if( !(KEYBOARD_PORT & 0x40) ){
-		key = KEYBOARD_DOWN;
-	} else if( !(KEYBOARD_PORT & 0x80) ){
-		key = KEYBOARD_RIGHT;
-	}
-
- /* else if( !(KEYBOARD_PORT & 0x40) ){
-		//	key = KEYBOARD_UP;
-	} else if( !(KEYBOARD_PORT & 0x80) ){
-		//	key = KEYBOARD_UP;
-	}
-	*/
-
-	if( _current_key != key ) {
-		_current_key = key;
-		return key;
-	} else {
-		return KEYBOARD_NONE;
+	if( (KEYBOARD_PORT & KEYBOARD_PORT_MASK) != _keyboard_status ) {
+		event_t event = {
+			.code = E_NONE,
+			.data = 0x00
+		};
+		for(uint8 i=0; i<8; i++) {
+			uint8 current_key_mask = (1 << i);
+			if( KEYBOARD_PORT_MASK & current_key_mask ) {
+				if( (KEYBOARD_PORT & current_key_mask) && !(_keyboard_status & current_key_mask) ) {
+					event.code = E_KEY_PRESSED;
+					event.data = current_key_mask;
+					event_push(event);
+				}
+				if( !(KEYBOARD_PORT & current_key_mask) && (_keyboard_status & current_key_mask) ) {
+					event.code = E_KEY_PRESSED;
+					event.data = current_key_mask;
+					event_push(event);
+				}
+			}
+		}
+		_keyboard_status = KEYBOARD_PORT & KEYBOARD_PORT_MASK;
 	}
 }
