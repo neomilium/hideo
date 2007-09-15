@@ -16,14 +16,12 @@ void windowmanager_init(void)
 
 void windowmanager_process_events(void)
 {
-	byte key = keyboard_key();
-	if(key != KEYBOARD_NONE) {
-		_application_stack[_current_depth]->fn_event_handler(key);
-	}
+	event_poll();
 
-/*	if(0 == _application_stack[_current_depth]->fn_exec(_application_stack[_current_depth]->user_data)) {
-		windowmanager_exit_current_application();
-	}*/
+	event_t event = event_pop();
+	if(event.code != E_NONE) {
+		_application_stack[_current_depth]->fn_event_handler(event);
+	}
 }
 
 void windowmanager_launch(application_t *app)

@@ -19,7 +19,6 @@ _clist_write(clist_t *clist, byte data)
 		return(0);
 	}
 	clist->items[clist->w] = data;
-	clist_next_w(clist);
 	clist->w = clist_next_w(clist);
 
 	return(1);

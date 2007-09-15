@@ -200,12 +200,17 @@ void nokia_reset_DDRAM(void)
 	NOK_CS=1;
 }
 
+/** @fn void nokia_gotoxy (const unsigned char x, const unsigned char y)
+		@brief Move cursor position to (x,y)
+		@param x x position in pixels
+		@param y y position in lines
+*/
 //////////////////////////////////////////////////////////////////////////////////
 void nokia_gotoxy (const unsigned char x, const unsigned char y)	// Nokia LCD Position cursor
 {
 	nokia_send_command(0x40|( y & 0x07 )),    // Y axe initialisation: 0100 0yyy	
 	nokia_send_command(0x80|( x & 0x7F ));    // X axe initialisation: 1xxx xxxx
-	printed_cols = x * 6;
+	printed_cols = x;
 }
 
 //////////////////////////////////////////////////////////////////////////////////

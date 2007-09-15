@@ -4,20 +4,25 @@
 #include <avr/io.h>
 #include "bit_field.h"
 
-#define KEYBOARD_PORT    PINB
-#define KEYBOARD_DDR     DDRB
-
-#define KEYBOARD_NONE					0
-#define KEYBOARD_UP						1
-#define KEYBOARD_DOWN					2
-#define KEYBOARD_LEFT					3
-#define KEYBOARD_RIGHT				4
-#define KEYBOARD_MENU_LEFT		5
-#define KEYBOARD_MENU_RIGHT		6
-
 #include "types.h"
 
+#define KEYBOARD_PORT_MASK     0xF3
+
+#define KEYBOARD_PORT          PINB
+#define KEYBOARD_DDR           DDRB
+
+
+
+#define KEYBOARD_UP            0x20
+#define KEYBOARD_DOWN          0x40
+#define KEYBOARD_LEFT          0x01
+#define KEYBOARD_RIGHT         0x80
+
+#define KEYBOARD_MENU_LEFT     0x02
+#define KEYBOARD_MENU_RIGHT    0x10
+
+
 void keyboard_init(void);
-byte keyboard_key(void);
+void keyboard_poll(void);
 
 #endif
