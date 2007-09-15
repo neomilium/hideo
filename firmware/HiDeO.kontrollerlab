@@ -40,7 +40,8 @@
   </FILES>
   <SETTINGS>
     <ASSEMBLER_COMMAND VALUE="avr-gcc" />
-    <CLOCK VALUE="1e+06" />
+    <BUILD_SYSTEM VALUE="BUILT_IN_BUILD" />
+    <CLOCK VALUE="8e+06" />
     <COMPILER_CALL_PROLOGUES VALUE="TRUE" />
     <COMPILER_COMMAND VALUE="avr-gcc -pedantic -funsigned-bitfields -fpack-struct -fshort-enums -std=gnu99 " />
     <COMPILER_F_CPU VALUE="TRUE" />
@@ -52,6 +53,9 @@
     <HEX_FILE VALUE="hideo.hex" />
     <LINKER_COMMAND VALUE="avr-gcc -Wa" />
     <LINKER_FLAGS VALUE="" />
+    <MAKE_CLEAN_TARGET VALUE="clean" />
+    <MAKE_COMMAND VALUE="make" />
+    <MAKE_DEFAULT_TARGET VALUE="all" />
     <MAP_FILE VALUE="project.map" />
     <OBJCOPY_COMMAND VALUE="avr-objcopy" />
   </SETTINGS>

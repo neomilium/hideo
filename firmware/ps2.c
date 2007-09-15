@@ -33,17 +33,21 @@ static volatile uint8 _buffer_w, _buffer_r;
 
 static volatile uint8 _data;                 /* Byte being read */
 static volatile uint8 _bit_read;             /* Number of bits already read in _data */
+static volatile uint8 _bit_write;             /* Number of bits already read in _data */
 static volatile uint8 _parity;               /* Received bit parity */
 static volatile uint8 _cparity;              /* Computed parity bit */
 static ps2_data_read_t _data_read;  /* Function to call when _data is complete */
 
-static volatile char _dump[] = "XXXXXXXXXXXXY\0";
+static volatile char _dump[] = "XXXXXXXXXXXXYA\0";
 
-static volatile enum {PS_START, PS_DATA, PS_PARITY, PS_STOP} ps2_state = PS_START;
+static volatile enum {PS_RX_START, PS_RX_DATA, PS_RX_PARITY, PS_RX_STOP, PS_TX_START, PS_TX_DATA, PS_TX_PARITY, PS_TX_STOP, PS_TX_ACK} ps2_state = PS_RX_START;
 
 /* Private members */
 inline void ps2_bit_available(void);
 inline void ps2_inhib(void);
+inline void ps2_send_bit(void);
+
+
 
 
 /**
@@ -62,6 +66,7 @@ ps2_buffer_write(uint8 data)
 	}
 	_buffer[_buffer_w] = data;
 	_buffer_w = BUFFER_NEXT(_buffer_w);
+
 	return(1);
 }
 
@@ -86,8 +91,13 @@ ps2_buffer_read(uint8 *data)
 }
 
 ISR(INT2_vect) {
-	//lcd_display_string(PSTR("I"));
-	ps2_bit_available();
+	if (ps2_state < PS_TX_START) {
+		// RX mode
+		ps2_bit_available();
+	} else {
+		// TX mode
+		ps2_send_bit();
+	}
 	GIFR &= ~(1 << INT2); /* XXX This is not used to disable interrupt !! */
 }
 
@@ -125,57 +135,89 @@ inline void
 ps2_bit_available(void)
 {
 	uint8 bit;
-	_dump[12] = 'i';
 
   bit = data_get();
 
 	switch (ps2_state) {
-		case PS_START:
-			_dump[0] = bit + '0';
+		case PS_RX_START:
 			if (0 == bit) {
 				/* Prepare for reading next byte */
 				_data     = 0;
 				_bit_read = 0;
 				_cparity  = 1;
-				ps2_state = PS_DATA;
+				ps2_state = PS_RX_DATA;
 			}
 			break;
-		case PS_DATA:
+		case PS_RX_DATA:
 			/* Least significant bits first */
 			_data |= (bit << _bit_read);
 			_bit_read++;
   		_cparity ^= bit;
-			_dump[_bit_read] = bit + '0';
 			if (8 == _bit_read) {
-				ps2_state = PS_PARITY;
+				ps2_state = PS_RX_PARITY;
 			}
 			break;
-		case PS_PARITY:
+		case PS_RX_PARITY:
 			_parity = bit;
-			_dump[9] = bit + '0';
-			ps2_state = PS_STOP;
+			ps2_state = PS_RX_STOP;
 			break;
-		case PS_STOP:
-			_dump[10] = bit + '0';
+		case PS_RX_STOP:
 			if ((1 == bit) && (_parity == _cparity)) {
 				/* Send byte */
-/* XXX
-				if (_data_read) {
-					_data_read(_data);
-				}
-*/
 				ps2_buffer_write(_data);
-				_dump[11] = ' ';
 			} else {
+/*
 				if (!bit) {
 					_dump[11] = 'S';
 				} else {
 					_dump[11] = 'P';
 				}
-				//ps2_write(0xFE, 1); /* Same player shoot again */
+				//ps2_write(0xFE, 1);
+*/
 			}
-			ps2_state = PS_START;
+			ps2_state = PS_RX_START;
 			break;
+	}
+}
+
+inline void
+ps2_send_bit(void)
+{
+	uint8 bit;
+
+	switch (ps2_state) {
+		case PS_TX_START:
+			_bit_write = 0;
+			_cparity  = 1;
+			_dump[0] = 's';
+			ps2_state = PS_TX_DATA;
+			break;
+		case PS_TX_DATA:
+			/* Least significant bits first */
+			bit = (_data >> (_bit_write)) & 0x01;
+			data_set(bit);
+			_dump[_bit_write+1] = bit + '0';
+			_cparity ^= bit;
+			_bit_write++;
+
+			if (8 == _bit_write) {
+				ps2_state = PS_TX_PARITY;
+			}
+			break;
+		case PS_TX_PARITY:
+			data_set(_cparity);
+			_dump[9] = _cparity + '0';
+			ps2_state = PS_TX_STOP;
+			break;
+		case PS_TX_STOP:
+			data_release();
+			_dump[10] = 'S';
+			ps2_state = PS_TX_ACK;
+			break;
+		case PS_TX_ACK:
+			bit = data_get();
+			_dump[11] = bit + '0';
+			ps2_state = PS_RX_START;
 	}
 }
 
@@ -195,56 +237,20 @@ ps2_write(uint8 d, uint8 from_int)
 	uint8 parity = 1;
 	uint8 ack;
 
+	GICR &= ~(1 << INT2);              /* Disable interrupt */
 
-	if (!from_int) {
-		GICR &= ~(1 << INT2);              /* Disable interrupt */
-	}
-
-	data_get();	
+	data_release();	
 	clock_set(0);
-	_delay_us(60);
+	_delay_ms(1);
 	data_set(0);
-	_delay_us(60);
+	_delay_us(50);
+	_delay_us(50);
 	clock_release();
 
-	/* start */
-	while (clock_get()) ;
+	_data = d;
+	ps2_state = PS_TX_START;
 
-	/* PS2_DATA */
-	while (current_bit) {
-		uint8 bit = (d >> (current_bit - 1)) & 0x01;
-		data_set(bit);
-		parity ^= bit;
-		while(!clock_get());
-		while(clock_get());
-		current_bit--;
-	}
+	GICR |= (1 << INT2);               /* Enable interrupt */
 
-	/* parity */
-	data_set(parity);
-	while(!clock_get());
-	while(clock_get());
-
-	/* stop */
-	data_release();
-	while(!clock_get());
-	while(clock_get());
-
-
-	/* ack */
-	while(!clock_get());
-	while(clock_get());
-	/* data_get() should return 0 */
-	ack = data_get();
-	
-	while(clock_get() || data_get());
-
-// 	lcd_display_string(PSTR("w"));
-
-	if (!from_int) {
-		GICR |= (1 << INT2);               /* Enable interrupt */
-	}
-
-	return(!ack);
+	return(0);
 }
-
