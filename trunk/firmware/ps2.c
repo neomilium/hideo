@@ -28,17 +28,14 @@
 #define BUFFER_SIZE 20
 #define BUFFER_NEXT(i) ((i + 1) % BUFFER_SIZE)
 
-static volatile uint8 _buffer[BUFFER_SIZE];
-static volatile uint8 _buffer_w, _buffer_r;
+static volatile byte _buffer[BUFFER_SIZE];
+static volatile byte _buffer_w, _buffer_r;
 
-static volatile uint8 _data;                 /* Byte being read */
+static volatile byte _data;                  /* Byte being read */
 static volatile uint8 _bit_read;             /* Number of bits already read in _data */
-static volatile uint8 _bit_write;             /* Number of bits already read in _data */
+static volatile uint8 _bit_write;            /* Number of bits already wrote in _data */
 static volatile uint8 _parity;               /* Received bit parity */
 static volatile uint8 _cparity;              /* Computed parity bit */
-static ps2_data_read_t _data_read;  /* Function to call when _data is complete */
-
-static volatile char _dump[] = "XXXXXXXXXXXXYA\0";
 
 static volatile enum {PS_RX_START, PS_RX_DATA, PS_RX_PARITY, PS_RX_STOP, PS_TX_START, PS_TX_DATA, PS_TX_PARITY, PS_TX_STOP, PS_TX_ACK} ps2_state = PS_RX_START;
 
@@ -58,7 +55,7 @@ inline void ps2_send_bit(void);
  * @return 1 on success, 0 otherwise.
  */
 uint8
-ps2_buffer_write(uint8 data)
+ps2_buffer_write(byte data)
 {
 	if (BUFFER_NEXT(_buffer_w) == _buffer_r) {
 		/* Out of space ! */
@@ -78,7 +75,7 @@ ps2_buffer_write(uint8 data)
  * @return 1 on success, 0 otherwise.
  */
 uint8
-ps2_buffer_read(uint8 *data)
+ps2_buffer_read(byte *data)
 {
 	if (_buffer_w == _buffer_r) {
 		return(0);
@@ -102,33 +99,15 @@ ISR(INT2_vect) {
 }
 
 void
-ps2_debug(void)
-{
-	char *c = _dump;
-	lcd_gotoxy(0,0);
-	while (*c) {
-		lcd_display_char(*c);
-		c++;
-	}
-}
-
-void
 ps2_init(void)
 {
 	/* Set up an interrupt for calling ps2_bit_available when clk 1 -> 0 */
 	GICR   &= ~(1 << INT2);            /* Disable interrupt */
 	clock_release();
 	data_release();
-	//ps2_write(0xFF, 1);
 	MCUCSR &= ~(1 << ISC2);            /* Falling edge trigger interrupt */
 	GICR   |=  (1 << INT2);            /* Enable interrupt */
 	GIFR &= ~(1 << INT2);
-}
-
-void
-ps2_set_data_read(ps2_data_read_t data_read)
-{
-  _data_read = data_read;
 }
 
 inline void
@@ -166,14 +145,8 @@ ps2_bit_available(void)
 				/* Send byte */
 				ps2_buffer_write(_data);
 			} else {
-/*
-				if (!bit) {
-					_dump[11] = 'S';
-				} else {
-					_dump[11] = 'P';
-				}
-				//ps2_write(0xFE, 1);
-*/
+				/* Transmission error. Resend */
+				ps2_write(0xFE);
 			}
 			ps2_state = PS_RX_START;
 			break;
@@ -189,14 +162,12 @@ ps2_send_bit(void)
 		case PS_TX_START:
 			_bit_write = 0;
 			_cparity  = 1;
-			_dump[0] = 's';
 			ps2_state = PS_TX_DATA;
 			break;
 		case PS_TX_DATA:
 			/* Least significant bits first */
 			bit = (_data >> (_bit_write)) & 0x01;
 			data_set(bit);
-			_dump[_bit_write+1] = bit + '0';
 			_cparity ^= bit;
 			_bit_write++;
 
@@ -206,17 +177,14 @@ ps2_send_bit(void)
 			break;
 		case PS_TX_PARITY:
 			data_set(_cparity);
-			_dump[9] = _cparity + '0';
 			ps2_state = PS_TX_STOP;
 			break;
 		case PS_TX_STOP:
 			data_release();
-			_dump[10] = 'S';
 			ps2_state = PS_TX_ACK;
 			break;
 		case PS_TX_ACK:
 			bit = data_get();
-			_dump[11] = bit + '0';
 			ps2_state = PS_RX_START;
 	}
 }
@@ -231,7 +199,7 @@ ps2_inhib(void)
 }
 
 uint8
-ps2_write(uint8 d, uint8 from_int)
+ps2_write(uint8 data)
 {
 	uint8 current_bit = 8;
 	uint8 parity = 1;
@@ -247,7 +215,7 @@ ps2_write(uint8 d, uint8 from_int)
 	_delay_us(50);
 	clock_release();
 
-	_data = d;
+	_data = data;
 	ps2_state = PS_TX_START;
 
 	GICR |= (1 << INT2);               /* Enable interrupt */
