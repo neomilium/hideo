@@ -1,7 +1,6 @@
 #include "event.h"
 #include "types.h"
 #include "ps2.h"
-#include "lcd.h"
 
 #include "ps2_mouse.h"
 

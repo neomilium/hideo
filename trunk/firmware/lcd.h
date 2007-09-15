@@ -9,6 +9,7 @@
 #define lcd_display_char( X ) nokia_display_char( X )
 #define lcd_display_string( X ) nokia_display_string( X )
 #define lcd_gotoxy( X, Y ) nokia_gotoxy( X, Y )
+#define lcd_finish_line() nokia_finish_line()
 
 #define LCD_MODE_NORMAL   0
 #define LCD_MODE_INVERTED 1
