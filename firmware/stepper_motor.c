@@ -77,13 +77,13 @@ stepper_motor_move(sint16 steps)
 	if ( steps >= 0 ) {
 		for(sint16 i=steps; i>0; i--) {
 			stepper_motor_increment();
-			for(uint8 d=0; d<75; d++)
+			for(uint8 d=0; d<100; d++)
 				_delay_us(10);
 		}
 	} else {
 		for(sint16 i=steps; i<0; i++) {
 			stepper_motor_decrement();
-			for(uint8 d=0; d<75; d++)
+			for(uint8 d=0; d<100; d++)
 				_delay_us(10);
 		}
 	}

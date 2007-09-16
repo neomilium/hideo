@@ -105,7 +105,7 @@ const prog_uchar ascii_table[128][5] = {
 };
 
 static uint8 reverse_mode = _NOK_MODE_NORMAL;
-static uint8 printed_cols = 0;
+static uint8 _nokia_current_x = 0;
 
 /** @fn void nokia_init(void)
 		@brief nokia LCD initialisation
@@ -154,9 +154,9 @@ void nokia_send_data(const unsigned char data)
 	NOK_CS=0;	// chip enabled
 	nokia_write(data  ^ reverse_mode);
 	NOK_CS=1;	// chip disabled
-	if (printed_cols++ > NOK_SCREEN_WIDTH) {
-		printed_cols = 2;
-	}
+
+	_nokia_current_x++;
+	_nokia_current_x %= NOK_SCREEN_WIDTH;
 }
 
 void nokia_write(unsigned char data)
@@ -210,7 +210,7 @@ void nokia_gotoxy (const unsigned char x, const unsigned char y)	// Nokia LCD Po
 {
 	nokia_send_command(0x40|( y & 0x07 )),    // Y axe initialisation: 0100 0yyy	
 	nokia_send_command(0x80|( x & 0x7F ));    // X axe initialisation: 1xxx xxxx
-	printed_cols = x;
+	_nokia_current_x = x;
 }
 
 //////////////////////////////////////////////////////////////////////////////////
@@ -245,7 +245,7 @@ void nokia_clear(void)
 // 	_delay_us(80);           // 80s
 	nokia_send_command(0x0c);    // mod control normal change
 // 	_delay_us(80);           // 80s
-	printed_cols = 0;
+	_nokia_current_x = 0;
 }
 
 void nokia_set_mode(uint8 mode)
@@ -255,8 +255,7 @@ void nokia_set_mode(uint8 mode)
 
 void nokia_finish_line(void)
 {
-	while (printed_cols < NOK_SCREEN_WIDTH) {
-		nokia_send_data(reverse_mode);
+	while (0 != _nokia_current_x) {
+		nokia_send_data(0x00);
 	}
-	printed_cols = 0;
 }
