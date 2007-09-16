@@ -42,6 +42,10 @@
     <FILE SHOWN="TRUE" NAME="clist.h" />
     <FILE SHOWN="TRUE" NAME="clist.c" />
     <FILE SHOWN="TRUE" NAME="event.c" />
+    <FILE SHOWN="TRUE" NAME="stepper_motor.h" />
+    <FILE SHOWN="TRUE" NAME="stepper_motor.c" />
+    <FILE SHOWN="TRUE" NAME="app_motor.c" />
+    <FILE SHOWN="TRUE" NAME="app_motor.h" />
   </FILES>
   <SETTINGS>
     <ASSEMBLER_COMMAND VALUE="avr-gcc" />
