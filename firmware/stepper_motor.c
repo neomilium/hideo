@@ -5,9 +5,12 @@
 
 #include "bit_field.h"
 
+// #include "lcd.h"
+
 #define STEPPER_MOTOR_PORT        PORTC
 #define STEPPER_MOTOR_DDR         DDRC
-#define STEPPER_MOTOR_MASK        0x3C | 0xC0
+#define STEPPER_ELECTROMAGNETS_MASK        0x3C
+#define STEPPER_MOTORS_ENABLE_MASK         0xC0
 
 /* 0b00000100 */
 #define STEPPER_ELECTROMAGNETS_POSITION1		0x04
@@ -47,20 +50,24 @@ stepper_motor_init(void)
 {
 	STEPPER_MOTOR_1_ENABLE = 1;
 	STEPPER_MOTOR_2_ENABLE = 1;
-	STEPPER_MOTOR_DDR = STEPPER_MOTOR_MASK;
+	STEPPER_MOTOR_DDR = (STEPPER_ELECTROMAGNETS_MASK | STEPPER_MOTORS_ENABLE_MASK);
 }
 
 void
 stepper_motor_increment(void)
 {
-	STEPPER_MOTOR_PORT = _stepper_motor_positions[_stepper_motor_current_position];
+	byte port = STEPPER_MOTOR_PORT & (~STEPPER_ELECTROMAGNETS_MASK);
+	port |= ( (_stepper_motor_positions[_stepper_motor_current_position]) & STEPPER_ELECTROMAGNETS_MASK);
+	STEPPER_MOTOR_PORT = port;
 	_stepper_motor_current_position = (_stepper_motor_current_position + 1) % 8;
 }
 
 void
 stepper_motor_decrement(void)
 {
-	STEPPER_MOTOR_PORT = _stepper_motor_positions[_stepper_motor_current_position];
+	byte port = STEPPER_MOTOR_PORT & (~STEPPER_ELECTROMAGNETS_MASK);
+	port |= ((_stepper_motor_positions[_stepper_motor_current_position]) & STEPPER_ELECTROMAGNETS_MASK);
+	STEPPER_MOTOR_PORT = port;
 	_stepper_motor_current_position = (_stepper_motor_current_position + 8 - 1) % 8;
 }
 
@@ -68,14 +75,27 @@ void
 stepper_motor_move(sint16 steps)
 {
 	if ( steps >= 0 ) {
-		for(uint8 i=steps; i>0; i--) {
+		for(sint16 i=steps; i>0; i--) {
 			stepper_motor_increment();
-			_delay_ms(1);
+			for(uint8 d=0; d<75; d++)
+				_delay_us(10);
 		}
 	} else {
-		for(uint8 i=steps; i<0; i++) {
+		for(sint16 i=steps; i<0; i++) {
 			stepper_motor_decrement();
-			_delay_ms(1);
+			for(uint8 d=0; d<75; d++)
+				_delay_us(10);
 		}
 	}
+/*
+	lcd_gotoxy(0,2);
+	lcd_display_string(PSTR("Port:"));
+	lcd_display_hex(STEPPER_MOTOR_PORT);
+	lcd_gotoxy(0,3);
+	lcd_display_string(PSTR("Pos:"));
+	lcd_display_number(_stepper_motor_current_position);
+	lcd_gotoxy(0,4);
+	lcd_display_string(PSTR("DDR:"));
+	lcd_display_hex(STEPPER_MOTOR_DDR);
+*/
 }
