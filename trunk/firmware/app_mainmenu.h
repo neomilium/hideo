@@ -6,9 +6,9 @@
 
 #define app_mainmenu_init()		menu_t mainmenu;																		\
 															menu_item_t mainmenu_items[] = {										\
-																{ PSTR("bar"), NULL },														\
-																{ PSTR("foo"), NULL },														\
-																{ PSTR("date"), NULL }														\
+																{ PSTR("Mouse"), &app_mouse },										\
+																{ PSTR("Date"), NULL },														\
+																{ PSTR("Motor"), &app_motor }											\
 															};																									\
 															mainmenu.menu_items = mainmenu_items;								\
 															mainmenu.item_count = sizeof(mainmenu_items)/sizeof(menu_item_t);													\

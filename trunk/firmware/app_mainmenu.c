@@ -2,6 +2,7 @@
 #include "menus.h"
 #include "keyboard.h"
 
+#include "windowmanager.h"
 static uint8 _menu_current_item = 0;
 
 static menu_t* _menu;
@@ -25,10 +26,10 @@ void _app_mainmenu_event_handler(const event_t event)
 				menus_display(_menu, _menu_current_item);
 				break;
 			case KEYBOARD_MENU_LEFT:
-	// 			windowmanager_exit_current_application();
+				windowmanager_exit();
 				break;
 			case KEYBOARD_MENU_RIGHT:
-	// 			windowmanager_launch(_current_menu.menu_items[_current_menu_item].application);
+				windowmanager_launch(_menu->menu_items[_menu_current_item].application);
 				break;
 		}
 	}

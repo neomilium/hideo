@@ -6,12 +6,15 @@
 
 #include "keyboard.h"
 
+#include "windowmanager.h"
+
 static sint16 _mouse_x = 0;
 static sint16 _mouse_y = 0;
 
 void
-_app_mouse_init(void)
+_app_mouse_init(void* data)
 {
+	lcd_clear();
 	ps2_mouse_init();
 }
 
@@ -64,27 +67,34 @@ _app_mouse_event_handler(const event_t event)
 			}
 		break;
 		case E_MOUSE_X_REV:
-			_mouse_x += event.data;
+			_mouse_x += (unsigned)event.data;
 			lcd_gotoxy(12,2);
 			lcd_display_number(_mouse_x);
 			lcd_finish_line();
 		break;
 		case E_MOUSE_X_FWD:
-			_mouse_x -= event.data;
+			_mouse_x -= (unsigned)event.data;
 			lcd_gotoxy(12,2);
 			lcd_display_number(_mouse_x);
 			lcd_finish_line();
 		break;
 		case E_MOUSE_Y_REV:
-			_mouse_y += event.data;
+			_mouse_y += (unsigned)event.data;
 			lcd_gotoxy(12,3);
 			lcd_display_number(_mouse_y);
 			lcd_finish_line();
 		break;
 		case E_MOUSE_Y_FWD:
-			_mouse_y -= event.data;
+			_mouse_y -= (unsigned)event.data;
 			lcd_gotoxy(12,3);
 			lcd_display_number(_mouse_y);
+			lcd_finish_line();
+		break;
+		case E_KEY_PRESSED:
+			switch(event.data) {
+				case KEYBOARD_MENU_LEFT:
+					windowmanager_exit();
+			}
 		break;
 	}
 }

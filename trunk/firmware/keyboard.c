@@ -9,6 +9,7 @@ keyboard_init(void)
 {
 	KEYBOARD_DDR = 0x00;
 	event_add_polling_fct(keyboard_poll);
+	_keyboard_status = KEYBOARD_PORT & KEYBOARD_PORT_MASK;
 }
 
 void
