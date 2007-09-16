@@ -97,7 +97,7 @@ ps2_mouse_poll(void)
 
 	/* Y axis handling */
 	if( _mouse_packet[2] != 0x00 ) {
-		if ( _mouse_packet[0] & 0x10 ) {
+		if ( _mouse_packet[0] & 0x20 ) {
 			event.code = E_MOUSE_Y_REV;
 			event.data = ~_mouse_packet[2];
 		} else {

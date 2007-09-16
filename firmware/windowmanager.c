@@ -26,14 +26,17 @@ void windowmanager_process_events(void)
 
 void windowmanager_launch(application_t *app)
 {
-		++_current_depth;
-	_application_stack[_current_depth] = app;
-	_application_stack[_current_depth]->fn_init(_application_stack[_current_depth]->user_data);
+	if( NULL != app ) {
+			++_current_depth;
+		_application_stack[_current_depth] = app;
+		_application_stack[_current_depth]->fn_init(_application_stack[_current_depth]->user_data);
+	}
 }
 
-void windowmanager_exit_current_application(void)
+void windowmanager_exit(void)
 {
 	if (0 != _current_depth) {
 		--_current_depth;
+		_application_stack[_current_depth]->fn_init(_application_stack[_current_depth]->user_data);
 	}
 }
