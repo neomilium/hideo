@@ -2,6 +2,7 @@
 
 #include "lcd.h"
 #include "keyboard.h"
+#include "event.h"
 
 #define WM_MAX_APPLICATION_STACK_DEPTH 3
 
@@ -10,6 +11,9 @@ static uint8 _current_depth = -1;
 
 void windowmanager_init(void)
 {
+	// event_init() must be called before all modules that use events...
+	event_init();
+
 	lcd_init();
 	keyboard_init();
 }

@@ -4,10 +4,10 @@
 #include "clist.h"
 
 typedef enum {
-		E_NONE,
+		E_NONE = 0x00,
 
 		E_KEY_PRESSED,
-		E_KEY_RELEASE,
+		E_KEY_RELEASED,
 
 		E_MOUSE_X_OVERFLOW,
 		E_MOUSE_Y_OVERFLOW,
@@ -27,8 +27,9 @@ typedef struct {
 	byte data;
 } event_t;
 
-#define EVENT_QUEUE_LENGHT	15
+#define EVENT_QUEUE_LENGTH	15
 
+void event_init(void);
 void event_push( const event_t event );
 event_t event_pop(void);
 void event_add_polling_fct( void (*fct)(void) );

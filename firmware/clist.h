@@ -9,19 +9,19 @@ typedef struct {
 	uint8 items[1];
 } clist_t;
 
-#define DECLARE_CLIST(name, s)   \
-\
-struct name##_clist_t {   \
-	uint8 size;                 \
-	uint8 r;                    \
-	uint8 w;                    \
-	uint8 items[s];                \
-}; \
-\
-struct name##_clist_t name##_clist = {          \
-	.size        = s,         \
-	.r           = 0,         \
-	.w           = 0         \
+#define DECLARE_CLIST(name, s)						\
+																					\
+struct name##_clist_t {										\
+	uint8 size;															\
+	uint8 r;																\
+	uint8 w;																\
+	uint8 items[s];													\
+};																				\
+																					\
+struct name##_clist_t name##_clist = {		\
+	.size        = s,												\
+	.r           = 0,												\
+	.w           = 0												\
 }
 
 uint8 _clist_read(clist_t *clist, byte *data);
