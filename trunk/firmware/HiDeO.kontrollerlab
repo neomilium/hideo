@@ -10,10 +10,10 @@
     <FILE SHOWN="FALSE" NAME="menus.c" />
     <FILE SHOWN="FALSE" NAME="menus.h" />
     <FILE SHOWN="FALSE" NAME="lcd.h" />
-    <FILE VIEWS="4,33,400,300,4," SHOWN="TRUE" NAME="keyboard.h" />
+    <FILE SHOWN="FALSE" NAME="keyboard.h" />
     <FILE SHOWN="FALSE" NAME="keyboard.c" />
     <FILE SHOWN="FALSE" NAME="lcd.c" />
-    <FILE VIEWS="66,95,1331,710,4," SHOWN="TRUE" NAME="windowmanager.c" />
+    <FILE SHOWN="FALSE" NAME="windowmanager.c" />
     <FILE SHOWN="FALSE" NAME="windowmanager.h" />
     <FILE SHOWN="FALSE" NAME="application.h" />
     <FILE SHOWN="FALSE" NAME="rtc.h" />
@@ -47,7 +47,7 @@
     <FILE SHOWN="FALSE" NAME="app_motor.c" />
     <FILE SHOWN="FALSE" NAME="app_motor.h" />
     <FILE SHOWN="FALSE" NAME="relay.h" />
-    <FILE VIEWS="0,0,1331,710,5," SHOWN="TRUE" NAME="app_keyboard.c" />
+    <FILE SHOWN="FALSE" NAME="app_keyboard.c" />
     <FILE SHOWN="FALSE" NAME="app_keyboard.h" />
   </FILES>
   <SETTINGS>

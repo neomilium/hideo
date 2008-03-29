@@ -25,12 +25,12 @@ keyboard_poll(void)
 			uint8 current_key_mask = (1 << i);
 			if( KEYBOARD_MASK & current_key_mask ) {
 				if( (KEYBOARD_PIN & current_key_mask) && !(_keyboard_status & current_key_mask) ) {
-					event.code = E_KEY_PRESSED;
+					event.code = E_KEY_RELEASED;
 					event.data = current_key_mask;
 					event_push(event);
 				}
 				if( !(KEYBOARD_PIN & current_key_mask) && (_keyboard_status & current_key_mask) ) {
-					event.code = E_KEY_RELEASED;
+					event.code = E_KEY_PRESSED;
 					event.data = current_key_mask;
 					event_push(event);
 				}

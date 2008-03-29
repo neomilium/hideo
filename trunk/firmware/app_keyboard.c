@@ -18,18 +18,11 @@ _app_keyboard_init(void* data)
 void
 _app_keyboard_event_handler(const event_t event)
 {
-	lcd_gotoxy(0,1);
-	lcd_display_string(PSTR("CODE:"));
-	lcd_display_hex(event.code);
-	lcd_finish_line();
+	lcd_clear();
+	lcd_gotoxy(0,0);
+	lcd_display_string(PSTR("KEY "));
 
-	lcd_display_string(PSTR("DATA:"));
-	lcd_display_hex(event.data);
-	lcd_finish_line();
-
-// 	lcd_display_string(PSTR("KEY "));
-
-// 	switch(event.code) {
+	switch(event.code) {
 /*
 		case E_MOUSE_X_REV:
 			_keyboard_x += (unsigned)event.data;
@@ -56,7 +49,7 @@ _app_keyboard_event_handler(const event_t event)
 			lcd_finish_line();
 		break;
 */
-/*
+
 		case E_KEY_PRESSED:
 			lcd_display_string(PSTR("P:"));
 			switch(event.data) {
@@ -105,5 +98,4 @@ _app_keyboard_event_handler(const event_t event)
 			}
 		break;
 	}
-*/
 }
