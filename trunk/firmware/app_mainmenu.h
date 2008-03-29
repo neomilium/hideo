@@ -6,7 +6,6 @@
 
 #define app_mainmenu_init()		menu_t mainmenu;																		\
 															menu_item_t mainmenu_items[] = {										\
-																{ PSTR("Mouse"), &app_mouse },										\
 																{ PSTR("Date"), NULL },														\
 																{ PSTR("Motor"), &app_motor }											\
 															};																									\

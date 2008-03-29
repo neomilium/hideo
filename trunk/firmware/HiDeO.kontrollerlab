@@ -1,51 +1,54 @@
 <!DOCTYPE KontrollerLab>
-<PROJECT VERSION="0.1" >
+<PROJECT VERSION="0.8.0-beta1" >
   <FILES>
-    <FILE SHOWN="TRUE" NAME="main.c" />
-    <FILE SHOWN="TRUE" NAME="nokia_driver.h" />
-    <FILE SHOWN="TRUE" NAME="nokia_driver.c" />
-    <FILE SHOWN="TRUE" NAME="bit_field.h" />
-    <FILE SHOWN="TRUE" NAME="date.h" />
-    <FILE SHOWN="TRUE" NAME="types.h" />
-    <FILE SHOWN="TRUE" NAME="menus.c" />
-    <FILE SHOWN="TRUE" NAME="menus.h" />
-    <FILE SHOWN="TRUE" NAME="lcd.h" />
-    <FILE SHOWN="TRUE" NAME="keyboard.h" />
-    <FILE SHOWN="TRUE" NAME="keyboard.c" />
-    <FILE SHOWN="TRUE" NAME="lcd.c" />
-    <FILE SHOWN="TRUE" NAME="windowmanager.c" />
-    <FILE SHOWN="TRUE" NAME="windowmanager.h" />
-    <FILE SHOWN="TRUE" NAME="application.h" />
-    <FILE SHOWN="TRUE" NAME="rtc.h" />
-    <FILE SHOWN="TRUE" NAME="app_lcd.c" />
-    <FILE SHOWN="TRUE" NAME="app_lcd.h" />
-    <FILE SHOWN="TRUE" NAME="ds1307.c" />
-    <FILE SHOWN="TRUE" NAME="ds1307.h" />
-    <FILE SHOWN="TRUE" NAME="i2c.h" />
-    <FILE SHOWN="TRUE" NAME="i2cconf.h" />
-    <FILE SHOWN="TRUE" NAME="global.h" />
-    <FILE SHOWN="TRUE" NAME="i2c.c" />
-    <FILE SHOWN="TRUE" NAME="app_date.h" />
-    <FILE SHOWN="TRUE" NAME="app_mainmenu.c" />
-    <FILE SHOWN="TRUE" NAME="app_mainmenu.h" />
-    <FILE SHOWN="TRUE" NAME="event.h" />
-    <FILE SHOWN="TRUE" NAME="a2d.c" />
-    <FILE SHOWN="TRUE" NAME="a2d.h" />
-    <FILE SHOWN="TRUE" NAME="app_temperature.h" />
-    <FILE SHOWN="TRUE" NAME="app_temperature.c" />
-    <FILE SHOWN="TRUE" NAME="ps2.c" />
-    <FILE SHOWN="TRUE" NAME="ps2.h" />
-    <FILE SHOWN="TRUE" NAME="app_mouse.c" />
-    <FILE SHOWN="TRUE" NAME="app_mouse.h" />
-    <FILE SHOWN="TRUE" NAME="ps2_mouse.c" />
-    <FILE SHOWN="TRUE" NAME="ps2_mouse.h" />
-    <FILE SHOWN="TRUE" NAME="clist.h" />
-    <FILE SHOWN="TRUE" NAME="clist.c" />
-    <FILE SHOWN="TRUE" NAME="event.c" />
-    <FILE SHOWN="TRUE" NAME="stepper_motor.h" />
-    <FILE SHOWN="TRUE" NAME="stepper_motor.c" />
-    <FILE SHOWN="TRUE" NAME="app_motor.c" />
-    <FILE SHOWN="TRUE" NAME="app_motor.h" />
+    <FILE SHOWN="FALSE" NAME="main.c" />
+    <FILE SHOWN="FALSE" NAME="nokia_driver.h" />
+    <FILE SHOWN="FALSE" NAME="nokia_driver.c" />
+    <FILE SHOWN="FALSE" NAME="bit_field.h" />
+    <FILE SHOWN="FALSE" NAME="date.h" />
+    <FILE SHOWN="FALSE" NAME="types.h" />
+    <FILE SHOWN="FALSE" NAME="menus.c" />
+    <FILE SHOWN="FALSE" NAME="menus.h" />
+    <FILE SHOWN="FALSE" NAME="lcd.h" />
+    <FILE VIEWS="4,33,400,300,4," SHOWN="TRUE" NAME="keyboard.h" />
+    <FILE SHOWN="FALSE" NAME="keyboard.c" />
+    <FILE SHOWN="FALSE" NAME="lcd.c" />
+    <FILE VIEWS="66,95,1331,710,4," SHOWN="TRUE" NAME="windowmanager.c" />
+    <FILE SHOWN="FALSE" NAME="windowmanager.h" />
+    <FILE SHOWN="FALSE" NAME="application.h" />
+    <FILE SHOWN="FALSE" NAME="rtc.h" />
+    <FILE SHOWN="FALSE" NAME="app_lcd.c" />
+    <FILE SHOWN="FALSE" NAME="app_lcd.h" />
+    <FILE SHOWN="FALSE" NAME="ds1307.c" />
+    <FILE SHOWN="FALSE" NAME="ds1307.h" />
+    <FILE SHOWN="FALSE" NAME="i2c.h" />
+    <FILE SHOWN="FALSE" NAME="i2cconf.h" />
+    <FILE SHOWN="FALSE" NAME="global.h" />
+    <FILE SHOWN="FALSE" NAME="i2c.c" />
+    <FILE SHOWN="FALSE" NAME="app_date.h" />
+    <FILE SHOWN="FALSE" NAME="app_mainmenu.c" />
+    <FILE SHOWN="FALSE" NAME="app_mainmenu.h" />
+    <FILE SHOWN="FALSE" NAME="event.h" />
+    <FILE SHOWN="FALSE" NAME="a2d.c" />
+    <FILE SHOWN="FALSE" NAME="a2d.h" />
+    <FILE SHOWN="FALSE" NAME="app_temperature.h" />
+    <FILE SHOWN="FALSE" NAME="app_temperature.c" />
+    <FILE SHOWN="FALSE" NAME="ps2.c" />
+    <FILE SHOWN="FALSE" NAME="ps2.h" />
+    <FILE SHOWN="FALSE" NAME="app_mouse.c" />
+    <FILE SHOWN="FALSE" NAME="app_mouse.h" />
+    <FILE SHOWN="FALSE" NAME="ps2_mouse.c" />
+    <FILE SHOWN="FALSE" NAME="ps2_mouse.h" />
+    <FILE SHOWN="FALSE" NAME="clist.h" />
+    <FILE SHOWN="FALSE" NAME="clist.c" />
+    <FILE SHOWN="FALSE" NAME="event.c" />
+    <FILE SHOWN="FALSE" NAME="stepper_motor.h" />
+    <FILE SHOWN="FALSE" NAME="stepper_motor.c" />
+    <FILE SHOWN="FALSE" NAME="app_motor.c" />
+    <FILE SHOWN="FALSE" NAME="app_motor.h" />
+    <FILE SHOWN="FALSE" NAME="relay.h" />
+    <FILE VIEWS="0,0,1331,710,5," SHOWN="TRUE" NAME="app_keyboard.c" />
+    <FILE SHOWN="FALSE" NAME="app_keyboard.h" />
   </FILES>
   <SETTINGS>
     <ASSEMBLER_COMMAND VALUE="avr-gcc" />

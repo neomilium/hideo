@@ -4,7 +4,7 @@
 
 #define EVENT_MAX_POLLING_FCT 10
 
-DECLARE_CLIST(event_queue, EVENT_QUEUE_LENGHT*2);
+DECLARE_CLIST(event_queue, EVENT_QUEUE_LENGTH*2);
 
 typedef void (*_event_polling_fct)(void);
 
