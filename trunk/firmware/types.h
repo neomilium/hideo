@@ -10,5 +10,6 @@ typedef unsigned char byte;
 typedef unsigned char bcd_byte;
 
 typedef signed short sint16;
+typedef unsigned short uint16;
 
 #endif

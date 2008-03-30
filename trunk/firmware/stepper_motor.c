@@ -7,11 +7,6 @@
 
 // #include "lcd.h"
 
-#define STEPPER_MOTOR_PORT        PORTC
-#define STEPPER_MOTOR_DDR         DDRC
-#define STEPPER_ELECTROMAGNETS_MASK        0x3C
-#define STEPPER_MOTORS_ENABLE_MASK         0xC0
-
 /* 0b00000100 */
 #define STEPPER_ELECTROMAGNETS_POSITION1		0x04
 /* 0b00001100 */
@@ -42,15 +37,13 @@ static const byte _stepper_motor_positions[] = {
 
 static uint8 _stepper_motor_current_position = 0;
 
-#define STEPPER_MOTOR_1_ENABLE         GET_BIT(PORTC).bit6
-#define STEPPER_MOTOR_2_ENABLE         GET_BIT(PORTC).bit7
+#define STEPPER_MOTOR_ENABLE         GET_BIT(PORTC).bit6
 
 void
 stepper_motor_init(void)
 {
-	STEPPER_MOTOR_1_ENABLE = 1;
-	STEPPER_MOTOR_2_ENABLE = 1;
 	STEPPER_MOTOR_DDR = (STEPPER_ELECTROMAGNETS_MASK | STEPPER_MOTORS_ENABLE_MASK);
+	STEPPER_MOTOR_ENABLE = 0;
 }
 
 void
@@ -74,6 +67,7 @@ stepper_motor_decrement(void)
 void
 stepper_motor_move(sint16 steps)
 {
+	STEPPER_MOTOR_ENABLE = 1;
 	if ( steps >= 0 ) {
 		for(sint16 i=steps; i>0; i--) {
 			stepper_motor_increment();
@@ -98,4 +92,5 @@ stepper_motor_move(sint16 steps)
 	lcd_display_string(PSTR("DDR:"));
 	lcd_display_hex(STEPPER_MOTOR_DDR);
 */
+	STEPPER_MOTOR_ENABLE = 0;
 }
