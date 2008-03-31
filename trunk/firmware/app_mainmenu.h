@@ -2,7 +2,7 @@
 #define __APP_MAINMENU_H__
 
 #include "application.h"
-#include "event.h"
+#include "eventmanager.h"
 
 #define app_mainmenu_init()		menu_t mainmenu;																		\
 															menu_item_t mainmenu_items[] = {										\

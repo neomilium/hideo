@@ -1,6 +1,6 @@
 #include "keyboard.h"
 
-#include "event.h"
+#include "eventmanager.h"
 
 static uint8 _keyboard_status = 0x00;
 
@@ -9,7 +9,7 @@ keyboard_init(void)
 {
 	KEYBOARD_DDR = 0x00;
 	KEYBOARD_PORT = 0xFF;
-	event_add_polling_fct(keyboard_poll);
+	eventmanager_add_polling_fct(keyboard_poll);
 	_keyboard_status = KEYBOARD_PORT & KEYBOARD_MASK;
 }
 
@@ -27,12 +27,12 @@ keyboard_poll(void)
 				if( (KEYBOARD_PIN & current_key_mask) && !(_keyboard_status & current_key_mask) ) {
 					event.code = E_KEY_RELEASED;
 					event.data = current_key_mask;
-					event_push(event);
+					eventmanager_push(event);
 				}
 				if( !(KEYBOARD_PIN & current_key_mask) && (_keyboard_status & current_key_mask) ) {
 					event.code = E_KEY_PRESSED;
 					event.data = current_key_mask;
-					event_push(event);
+					eventmanager_push(event);
 				}
 			}
 		}

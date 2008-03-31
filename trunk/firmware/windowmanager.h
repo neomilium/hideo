@@ -5,8 +5,10 @@
 
 #include "application.h"
 
+#include "eventmanager.h"
+
 void windowmanager_init(void);
-void windowmanager_process_events(void);
+void windowmanager_process_events(const event_t event);
 void windowmanager_launch(application_t *app);
 void windowmanager_exit(void);
 

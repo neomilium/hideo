@@ -2,7 +2,7 @@
 #define _APP_MOUSE_H_
 
 #include "application.h"
-#include "event.h"
+#include "eventmanager.h"
 
 #define app_mouse_init()	application_t app_mouse = { &_app_mouse_init, &_app_mouse_event_handler, NULL }
 

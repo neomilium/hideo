@@ -3,7 +3,7 @@
 
 #include "menus.h"
 
-#include "event.h"
+#include "eventmanager.h"
 
 menu_t date_menu;
 

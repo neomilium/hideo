@@ -13,15 +13,15 @@ void
 _app_motor_init(void* data)
 {
 	lcd_clear();
-// 	stepper_motor_init();
-	dc_motor_init();
+	stepper_motor_init();
+//	dc_motor_init();
 }
 
 void
 _app_motor_event_handler(const event_t event)
 {
 	lcd_gotoxy(0,0);
-	lcd_display_line(PSTR("DC MOTOR: "));
+	lcd_display_line(PSTR("STEPPER MOTOR: "));
 
 	switch(event.code) {
 /*
@@ -54,15 +54,15 @@ _app_motor_event_handler(const event_t event)
 			switch(event.data) {
 				case KEYBOARD_UP:
 					lcd_display_line(PSTR("FORWARD"));
-					dc_motor_move(50);
+					stepper_motor_move(50);
 				break;
 				case KEYBOARD_DOWN:
 					lcd_display_line(PSTR("REVERSE"));
-					dc_motor_move(-30);
+					stepper_motor_move(-30);
 				break;
 				case KEYBOARD_MENU_RIGHT:
 					lcd_display_line(PSTR("STOP"));
-					dc_motor_stop();
+					//dc_motor_stop();
 				break;
 				case KEYBOARD_MENU_LEFT:
 					windowmanager_exit();

@@ -2,7 +2,7 @@
 #define __APPLICATION_H__
 
 #include "types.h"
-#include "event.h"
+#include "eventmanager.h"
 
 typedef struct {
 	void (*fn_init)(void *);

@@ -1,4 +1,4 @@
-#include "event.h"
+#include "eventmanager.h"
 #include "types.h"
 #include "ps2.h"
 
@@ -23,7 +23,7 @@ _ps2_mouse_write(byte data)
 void
 ps2_mouse_init(void)
 {
-	event_add_polling_fct(ps2_mouse_poll);
+	eventmanager_add_polling_fct(ps2_mouse_poll);
 
 	ps2_init();
 	/* FIXME Wait for mouse to start up */
@@ -64,7 +64,7 @@ ps2_mouse_poll(void)
 		if ( (_mouse_packet[0] & 0x40) != 0x00 )	{
 			event.code = E_MOUSE_X_OVERFLOW;
 		}
-		event_push( event );
+		eventmanager_push( event );
 	}
 
 	/* Mouse buttons handling */
@@ -77,7 +77,7 @@ ps2_mouse_poll(void)
 				} else {
 					event.code = E_MOUSE_BUTTON_RELEASED;
 				}
-				event_push(event);
+				eventmanager_push(event);
 			}
 		}
 		_mouse_button_status = _mouse_packet[0];
@@ -92,7 +92,7 @@ ps2_mouse_poll(void)
 			event.code = E_MOUSE_X_FWD;
 			event.data = _mouse_packet[1];
 		}
-		event_push( event );
+		eventmanager_push( event );
 	}
 
 	/* Y axis handling */
@@ -104,6 +104,6 @@ ps2_mouse_poll(void)
 			event.code = E_MOUSE_Y_FWD;
 			event.data = _mouse_packet[2];
 		}
-		event_push( event );
+		eventmanager_push( event );
 	}
 }

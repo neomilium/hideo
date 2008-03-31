@@ -2,6 +2,7 @@
 #include <avr/io.h>
 #include <util/delay.h>
 
+#include "eventmanager.h"
 #include "windowmanager.h"
 #include "menus.h"
 
@@ -34,14 +35,18 @@ int main (void)
 
 	RELAY0 = 1;
 
+	// eventmanager_init() must be called before all modules that use events...
+	eventmanager_init();
+
 	windowmanager_init();
 
 	sei();     /* Enable interrupts */
 
 	windowmanager_launch(&app_mainmenu);
+	eventmanager_add_handling_fct(windowmanager_process_events);
 
 	for(;;) {
-		windowmanager_process_events();
+		eventmanager_process();
 	}
 
 	return 1;
