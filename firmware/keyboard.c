@@ -7,8 +7,8 @@ static uint8 _keyboard_status = 0x00;
 void
 keyboard_init(void)
 {
-	KEYBOARD_DDR = 0x00;
-	KEYBOARD_PORT = 0xFF;
+	KEYBOARD_DDR = 0x00;		/* Set keyboard port in input */
+	KEYBOARD_PORT = KEYBOARD_MASK;		/* Set internal pull-up resistances */
 	eventmanager_add_polling_fct(keyboard_poll);
 	_keyboard_status = KEYBOARD_PORT & KEYBOARD_MASK;
 }

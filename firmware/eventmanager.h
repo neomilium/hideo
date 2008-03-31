@@ -30,7 +30,7 @@ typedef struct {
 #define EVENTMANAGER_QUEUE_LENGTH	15
 
 void eventmanager_init(void);
-void eventmanager_push( const event_t event );
+void eventmanager_push(const event_t event);
 event_t eventmanager_pop(void);
 
 void eventmanager_add_polling_fct( void (*fct)(void) );
