@@ -43,12 +43,16 @@
     <FILE SHOWN="FALSE" NAME="clist.c" />
     <FILE SHOWN="FALSE" NAME="event.c" />
     <FILE SHOWN="FALSE" NAME="stepper_motor.h" />
-    <FILE SHOWN="FALSE" NAME="stepper_motor.c" />
-    <FILE SHOWN="FALSE" NAME="app_motor.c" />
+    <FILE VIEWS="0,0,1331,710,5," SHOWN="TRUE" NAME="stepper_motor.c" />
+    <FILE VIEWS="4,33,400,300,4," SHOWN="TRUE" NAME="app_motor.c" />
     <FILE SHOWN="FALSE" NAME="app_motor.h" />
     <FILE SHOWN="FALSE" NAME="relay.h" />
     <FILE SHOWN="FALSE" NAME="app_keyboard.c" />
     <FILE SHOWN="FALSE" NAME="app_keyboard.h" />
+    <FILE SHOWN="FALSE" NAME="dc-motor.c" />
+    <FILE SHOWN="FALSE" NAME="dc-motor.h" />
+    <FILE SHOWN="FALSE" NAME="pwm.c" />
+    <FILE SHOWN="FALSE" NAME="pwm.h" />
   </FILES>
   <SETTINGS>
     <ASSEMBLER_COMMAND VALUE="avr-gcc" />
