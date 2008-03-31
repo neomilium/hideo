@@ -15,7 +15,12 @@ void
 _app_mouse_init(void* data)
 {
 	lcd_clear();
+	lcd_gotoxy(0,0);
+	lcd_display_line(PSTR("PS2 MOUSE"));
 	ps2_mouse_init();
+	lcd_display_line(PSTR("INITIALIZED"));
+	ps2_mouse_poll();
+	lcd_display_line(PSTR("POLLED"));
 }
 
 void

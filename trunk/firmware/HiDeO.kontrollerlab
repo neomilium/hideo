@@ -1,7 +1,7 @@
 <!DOCTYPE KontrollerLab>
 <PROJECT VERSION="0.8.0-beta1" >
   <FILES>
-    <FILE SHOWN="FALSE" NAME="main.c" />
+    <FILE VIEWS="4,33,400,300,4," SHOWN="TRUE" NAME="main.c" />
     <FILE SHOWN="FALSE" NAME="nokia_driver.h" />
     <FILE SHOWN="FALSE" NAME="nokia_driver.c" />
     <FILE SHOWN="FALSE" NAME="bit_field.h" />
@@ -11,7 +11,7 @@
     <FILE SHOWN="FALSE" NAME="menus.h" />
     <FILE SHOWN="FALSE" NAME="lcd.h" />
     <FILE SHOWN="FALSE" NAME="keyboard.h" />
-    <FILE SHOWN="FALSE" NAME="keyboard.c" />
+    <FILE VIEWS="35,64,1331,710,4," SHOWN="TRUE" NAME="keyboard.c" />
     <FILE SHOWN="FALSE" NAME="lcd.c" />
     <FILE SHOWN="FALSE" NAME="windowmanager.c" />
     <FILE SHOWN="FALSE" NAME="windowmanager.h" />
@@ -28,23 +28,21 @@
     <FILE SHOWN="FALSE" NAME="app_date.h" />
     <FILE SHOWN="FALSE" NAME="app_mainmenu.c" />
     <FILE SHOWN="FALSE" NAME="app_mainmenu.h" />
-    <FILE SHOWN="FALSE" NAME="event.h" />
     <FILE SHOWN="FALSE" NAME="a2d.c" />
     <FILE SHOWN="FALSE" NAME="a2d.h" />
     <FILE SHOWN="FALSE" NAME="app_temperature.h" />
     <FILE SHOWN="FALSE" NAME="app_temperature.c" />
-    <FILE SHOWN="FALSE" NAME="ps2.c" />
+    <FILE VIEWS="0,0,1331,710,5," SHOWN="TRUE" NAME="ps2.c" />
     <FILE SHOWN="FALSE" NAME="ps2.h" />
-    <FILE SHOWN="FALSE" NAME="app_mouse.c" />
-    <FILE SHOWN="FALSE" NAME="app_mouse.h" />
-    <FILE SHOWN="FALSE" NAME="ps2_mouse.c" />
+    <FILE VIEWS="128,157,1331,710,4," SHOWN="TRUE" NAME="app_mouse.c" />
+    <FILE VIEWS="159,188,1331,710,4," SHOWN="TRUE" NAME="app_mouse.h" />
+    <FILE VIEWS="66,95,1331,710,4," SHOWN="TRUE" NAME="ps2_mouse.c" />
     <FILE SHOWN="FALSE" NAME="ps2_mouse.h" />
     <FILE SHOWN="FALSE" NAME="clist.h" />
     <FILE SHOWN="FALSE" NAME="clist.c" />
-    <FILE SHOWN="FALSE" NAME="event.c" />
     <FILE SHOWN="FALSE" NAME="stepper_motor.h" />
-    <FILE VIEWS="0,0,1331,710,5," SHOWN="TRUE" NAME="stepper_motor.c" />
-    <FILE VIEWS="4,33,400,300,4," SHOWN="TRUE" NAME="app_motor.c" />
+    <FILE SHOWN="FALSE" NAME="stepper_motor.c" />
+    <FILE SHOWN="FALSE" NAME="app_motor.c" />
     <FILE SHOWN="FALSE" NAME="app_motor.h" />
     <FILE SHOWN="FALSE" NAME="relay.h" />
     <FILE SHOWN="FALSE" NAME="app_keyboard.c" />
@@ -53,6 +51,10 @@
     <FILE SHOWN="FALSE" NAME="dc-motor.h" />
     <FILE SHOWN="FALSE" NAME="pwm.c" />
     <FILE SHOWN="FALSE" NAME="pwm.h" />
+    <FILE SHOWN="FALSE" NAME="eventmanager.c" />
+    <FILE SHOWN="FALSE" NAME="eventmanager.h" />
+    <FILE SHOWN="FALSE" NAME="servo-motor.c" />
+    <FILE SHOWN="FALSE" NAME="servo-motor.h" />
   </FILES>
   <SETTINGS>
     <ASSEMBLER_COMMAND VALUE="avr-gcc" />

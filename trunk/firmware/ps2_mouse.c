@@ -2,6 +2,8 @@
 #include "types.h"
 #include "ps2.h"
 
+#include <avr/delay.h>
+
 #include "ps2_mouse.h"
 
 #define MOUSE_PACKET_SIZE 3
@@ -23,12 +25,12 @@ _ps2_mouse_write(byte data)
 void
 ps2_mouse_init(void)
 {
-	eventmanager_add_polling_fct(ps2_mouse_poll);
+	//eventmanager_add_polling_fct(ps2_mouse_poll);
 
 	ps2_init();
 	/* FIXME Wait for mouse to start up */
 
-	//_ps2_mouse_write(0xF4);       /* Enable Data Reporting */
+	// _ps2_mouse_write(0xF4);       /* Enable Data Reporting */
 }
 
 void
