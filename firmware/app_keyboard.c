@@ -97,5 +97,7 @@ _app_keyboard_event_handler(const event_t event)
 				break;
 			}
 		break;
+    default:
+    break;
 	}
 }

@@ -105,6 +105,8 @@ ps2_bit_available(void)
 			}
 			ps2_state = PS_RX_START;
 			break;
+    default:
+      break;
 	}
 }
 
@@ -141,6 +143,9 @@ ps2_send_bit(void)
 		case PS_TX_ACK:
 			bit = data_get();
 			ps2_state = PS_RX_START;
+      break;
+    default:
+      break;
 	}
 }
 

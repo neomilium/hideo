@@ -12,7 +12,6 @@
 #define LED0    GET_BIT(PORTD).bit7
 
 #include "app_mainmenu.h"
-#include "app_date.h"
 #include "app_mouse.h"
 #include "app_motor.h"
 // #include "app_keyboard.h"
@@ -25,7 +24,6 @@ int main (void)
 	// eventmanager_init() must be called before all modules that use events...
 	eventmanager_init();
 
-	app_date_init();
 //	app_keyboard_init();
 //	app_temperature_init();
 	app_motor_init();
