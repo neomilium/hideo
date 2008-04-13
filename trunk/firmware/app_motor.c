@@ -68,5 +68,7 @@ _app_motor_event_handler(const event_t event)
 					windowmanager_exit();
 			}
 		break;
+    default:
+		break;
 	}
 }

@@ -2,7 +2,7 @@
 #include "types.h"
 #include "ps2.h"
 
-#include <avr/delay.h>
+#include <util/delay.h>
 
 #include "ps2_mouse.h"
 

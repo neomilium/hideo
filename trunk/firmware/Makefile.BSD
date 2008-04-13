@@ -1,13 +1,15 @@
 
 PROG= hideo.out
-SRCS= app_lcd.c app_temperature.c ds1307.c i2c.c keyboard.c lcd.c main.c menus.c nokia_driver.c windowmanager.c ps2.c
+SRCS=	a2d.c app_keyboard.c app_lcd.c app_mainmenu.c app_motor.c app_mouse.c app_temperature.c buffer.c clist.c dc-motor.c ds1307.c eventmanager.c i2c.c keyboard.c lcd.c main.c menus.c nokia_driver.c ps2.c ps2_mouse.c pwm.c rprintf.c stepper_motor.c windowmanager.c
+
+CTAGS=	ctags
 
 HEX= ${PROG:R}.hex
 
 LDFLAGS= -Wa
 
 CC= avr-gcc
-CFLAGS= -funsigned-bitfields -fpack-struct -fshort-enums -std=gnu99 -mmcu=atmega8535 -mcall-prologues -Wall -Os -DF_CPU=1000000UL
+CFLAGS= -fgnu89-inline -funsigned-bitfields -fpack-struct -fshort-enums -std=gnu99 -mmcu=atmega8535 -mcall-prologues -Wall -Os -DF_CPU=8000000UL
 
 NO_MAN=
 
