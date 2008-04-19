@@ -4,3 +4,4 @@ all:
 
 clean:
 	find . -regex '.*\(\.out\|\.hex\|~\|\.o\|\.map\)$$' -exec rm '{}' ';'
+	rm -f .lock .hfuse .lfuse
