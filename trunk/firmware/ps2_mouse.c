@@ -89,7 +89,7 @@ ps2_mouse_poll(void)
 	if( _mouse_packet[1] != 0x00 ) {
 		if ( _mouse_packet[0] & 0x10 ) {
 			event.code = E_MOUSE_X_REV;
-			event.data = ~_mouse_packet[1];
+			event.data = ~_mouse_packet[1] + 1;
 		} else {
 			event.code = E_MOUSE_X_FWD;
 			event.data = _mouse_packet[1];
@@ -101,7 +101,7 @@ ps2_mouse_poll(void)
 	if( _mouse_packet[2] != 0x00 ) {
 		if ( _mouse_packet[0] & 0x20 ) {
 			event.code = E_MOUSE_Y_REV;
-			event.data = ~_mouse_packet[2];
+			event.data = ~_mouse_packet[2] + 1;
 		} else {
 			event.code = E_MOUSE_Y_FWD;
 			event.data = _mouse_packet[2];
