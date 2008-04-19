@@ -8,8 +8,6 @@
 #include "ps2.h"
 #include "clist.h"
 
-#include "lcd.h"
-
 #define PS2_DATA_IN     GET_BIT(PINB).bit3
 #define PS2_DATA_OUT    GET_BIT(PORTB).bit3
 #define PS2_DATA_DDR    GET_BIT(DDRB).bit3
@@ -50,7 +48,7 @@ ISR(INT2_vect) {
 		// TX mode
 		ps2_send_bit();
 	}
-	GIFR &= ~(1 << INT2); /* XXX This is not used to disable interrupt !! */
+	GIFR &= ~(1 << INT2); /* Reset interrupt flag */
 }
 
 void
@@ -62,7 +60,7 @@ ps2_init(void)
 	data_release();
 	MCUCSR &= ~(1 << ISC2);            /* Falling edge trigger interrupt */
 	GICR   |=  (1 << INT2);            /* Enable interrupt */
-	GIFR &= ~(1 << INT2);
+	GIFR &= ~(1 << INT2);              /* Reset interrupt flag */
 }
 
 inline void
