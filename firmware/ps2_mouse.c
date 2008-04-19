@@ -25,7 +25,7 @@ _ps2_mouse_write(byte data)
 void
 ps2_mouse_init(void)
 {
-	//eventmanager_add_polling_fct(ps2_mouse_poll);
+	eventmanager_add_polling_fct(ps2_mouse_poll);
 
 	ps2_init();
 	/* FIXME Wait for mouse to start up */
