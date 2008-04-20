@@ -25,7 +25,7 @@
     <FILE SHOWN="FALSE" NAME="i2cconf.h" />
     <FILE SHOWN="FALSE" NAME="global.h" />
     <FILE SHOWN="FALSE" NAME="i2c.c" />
-    <FILE SHOWN="FALSE" NAME="app_mainmenu.c" />
+    <FILE SHOWN="TRUE" NAME="app_mainmenu.c" />
     <FILE SHOWN="FALSE" NAME="app_mainmenu.h" />
     <FILE SHOWN="FALSE" NAME="a2d.c" />
     <FILE SHOWN="FALSE" NAME="a2d.h" />
@@ -35,7 +35,7 @@
     <FILE SHOWN="FALSE" NAME="ps2.h" />
     <FILE SHOWN="TRUE" NAME="app_mouse.c" />
     <FILE SHOWN="TRUE" NAME="app_mouse.h" />
-    <FILE SHOWN="FALSE" NAME="ps2_mouse.c" />
+    <FILE SHOWN="TRUE" NAME="ps2_mouse.c" />
     <FILE SHOWN="FALSE" NAME="ps2_mouse.h" />
     <FILE SHOWN="FALSE" NAME="clist.h" />
     <FILE SHOWN="FALSE" NAME="clist.c" />
@@ -44,7 +44,7 @@
     <FILE SHOWN="FALSE" NAME="app_motor.c" />
     <FILE SHOWN="FALSE" NAME="app_motor.h" />
     <FILE SHOWN="FALSE" NAME="relay.h" />
-    <FILE SHOWN="FALSE" NAME="app_keyboard.c" />
+    <FILE SHOWN="TRUE" NAME="app_keyboard.c" />
     <FILE SHOWN="FALSE" NAME="app_keyboard.h" />
     <FILE SHOWN="FALSE" NAME="dc-motor.c" />
     <FILE SHOWN="FALSE" NAME="dc-motor.h" />
@@ -55,6 +55,8 @@
     <FILE SHOWN="FALSE" NAME="daemon.h" />
     <FILE SHOWN="TRUE" NAME="lens_control.h" />
     <FILE SHOWN="TRUE" NAME="lens_control.c" />
+    <FILE SHOWN="TRUE" NAME="app_lens.c" />
+    <FILE SHOWN="FALSE" NAME="app_lens.h" />
   </FILES>
   <SETTINGS>
     <ASSEMBLER_COMMAND VALUE="avr-gcc" />

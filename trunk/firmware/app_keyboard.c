@@ -23,33 +23,6 @@ _app_keyboard_event_handler(const event_t event)
 	lcd_display_string(PSTR("KEY "));
 
 	switch(event.code) {
-/*
-		case E_MOUSE_X_REV:
-			_keyboard_x += (unsigned)event.data;
-			lcd_gotoxy(12,2);
-			lcd_display_number(_keyboard_x);
-			lcd_finish_line();
-		break;
-		case E_MOUSE_X_FWD:
-			_keyboard_x -= (unsigned)event.data;
-			lcd_gotoxy(12,2);
-			lcd_display_number(_keyboard_x);
-			lcd_finish_line();
-		break;
-		case E_MOUSE_Y_REV:
-			_keyboard_y += (unsigned)event.data;
-			lcd_gotoxy(12,3);
-			lcd_display_number(_keyboard_y);
-			lcd_finish_line();
-		break;
-		case E_MOUSE_Y_FWD:
-			_keyboard_y -= (unsigned)event.data;
-			lcd_gotoxy(12,3);
-			lcd_display_number(_keyboard_y);
-			lcd_finish_line();
-		break;
-*/
-
 		case E_KEY_PRESSED:
 			lcd_display_string(PSTR("P:"));
 			switch(event.data) {
