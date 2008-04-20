@@ -9,7 +9,7 @@
 void pwm_init(void)
 {
 	TCCR1A = 0xA2;		//
-	TCCR1B = 0x1A;		//
+	TCCR1B = 0x1B;		//
 
 	ICR1 = PWM_PERIOD;			// period
 	OCR1A = 0x0000;		// Up time for OC1A
