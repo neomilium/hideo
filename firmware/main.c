@@ -17,49 +17,51 @@
 #include "app_lens.h"
 
 #include "lens_control.h"
-#include "dc-motor.h"
-#include "stepper_motor.h"
-#include "ps2_mouse.h"
+#include "drv_dc-motor.h"
+#include "drv_stepper-motor.h"
+#include "drv_ps2_mouse.h"
 
-int main (void)
+int
+main(void)
 {
 	cli();
 
-	// eventmanager_init() must be called before all modules that use events...
+	/*
+	 * eventmanager_init() must be called before all modules that use
+	 * events...
+	 */
 	eventmanager_init();
 
-	// Devices part
+	/* Devices part */
 	ps2_mouse_init();
-//	stepper_motor_init();
+/* stepper_motor_init(); */
 	dc_motor_init();
 
-	// Daemons part
+	/* Daemons part */
 	lens_init();
 
-	// Applications part
-//	app_keyboard_init();
-//	app_temperature_init();
+	/* Applications part */
+/* app_keyboard_init(); */
+/* app_temperature_init(); */
 	app_motor_init();
 	app_mouse_init();
 	app_lens_init();
 
 	app_mainmenu_init();
 
-	//DDRB = 0xFF; // XXX
 	LED0 = 1;
 	RELAY0 = 1;
 
 	windowmanager_init();
 
-	sei();     /* Enable interrupts */
+	sei();			/* Enable interrupts */
 
 	windowmanager_launch(&app_mainmenu);
 	eventmanager_add_handling_fct(windowmanager_process_events);
 
-	for(;;) {
+	for (;;) {
 		eventmanager_process();
 	}
 
 	return 1;
 }
-

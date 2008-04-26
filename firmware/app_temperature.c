@@ -6,13 +6,13 @@
 #include "lcd.h"
 #include "types.h"
 
-sint16 _temperature = -32000;
+sint16		_temperature = -32000;
 
 void
 _app_temperature_display(void)
 {
 	lcd_clear();
-	lcd_gotoxy(0,0);
+	lcd_gotoxy(0, 0);
 	lcd_display_string(PSTR("T: "));
 	lcd_display_number(_temperature);
 }

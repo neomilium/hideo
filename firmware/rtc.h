@@ -11,7 +11,7 @@ typedef struct {
 	bcd_byte year;
 } rtc_datetime;
 
-#include "ds1307.h"
+#include "drv_ds1307.h"
 
 #define rtc_init() ds1307_init()
 #define rtc_write( X ) ds1307_write( X )
