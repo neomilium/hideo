@@ -7,7 +7,7 @@
 #define app_template_init()	application_t app_template = { &_app_template_init, &_app_template_event_handler, NULL }
 
 
-void _app_template_init(void *data);
-void _app_template_event_handler(const event_t event);
+void		_app_template_init(void *data);
+void		_app_template_event_handler(const event_t event);
 
-#endif /* !_APP_TEMPLATE_H_ */
+#endif				/* !_APP_TEMPLATE_H_ */

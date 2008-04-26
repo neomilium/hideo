@@ -14,10 +14,10 @@ _app_date_init(void *data)
 void
 _app_date_event_handler(const event_t event)
 {
-	switch(event.code) {
-		case E_KEY_PRESSED:
-			switch(event.data) {
-				case KEYBOARD_MENU_LEFT:
+	switch (event.code) {
+			case E_KEY_PRESSED:
+			switch (event.data) {
+					case KEYBOARD_MENU_LEFT:
 					windowmanager_exit();
 					break;
 				default:
@@ -34,7 +34,7 @@ void
 app_date_show_datetime(void)
 {
 	lcd_clear();
-	lcd_gotoxy(0,0);
+	lcd_gotoxy(0, 0);
 
 	const rtc_datetime_t datetime = rtc_read();
 

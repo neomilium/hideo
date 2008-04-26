@@ -2,13 +2,13 @@
 #define __RTC_H__
 
 struct rtc_datetime {
-	bcd_byte seconds;
-	bcd_byte minutes;
-	bcd_byte hours;
-	bcd_byte day;
-	bcd_byte date;
-	bcd_byte month;
-	bcd_byte year;
+	bcd_byte	seconds;
+	bcd_byte	minutes;
+	bcd_byte	hours;
+	bcd_byte	day;
+	bcd_byte	date;
+	bcd_byte	month;
+	bcd_byte	year;
 };
 
 typedef struct rtc_datetime rtc_datetime_t;
@@ -20,4 +20,3 @@ typedef struct rtc_datetime rtc_datetime_t;
 #define rtc_read() drv_ds1307_read()
 
 #endif
-

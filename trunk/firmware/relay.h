@@ -7,4 +7,4 @@
 #define RELAY0    GET_BIT(PORTD).bit2
 #define RELAY1    GET_BIT(PORTD).bit3
 
-#endif /* !_RELAY_H_ */
+#endif				/* !_RELAY_H_ */

@@ -6,8 +6,8 @@
 
 #include "types.h"
 
-void dc_motor_init(void);
-void dc_motor_move(sint8 speed);
-void dc_motor_stop(void);
+void		dc_motor_init(void);
+void		dc_motor_move(sint8 speed);
+void		dc_motor_stop(void);
 
 #endif

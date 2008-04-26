@@ -9,7 +9,7 @@
 #define STEPPER_MOTORS_ENABLE_MASK		0x40
 
 
-void stepper_motor_init(void);
-void stepper_motor_move(sint16 steps);
+void		stepper_motor_init(void);
+void		stepper_motor_move(sint16 steps);
 
-#endif /* !__STEPPER_MOTOR_H__ */
+#endif				/* !__STEPPER_MOTOR_H__ */

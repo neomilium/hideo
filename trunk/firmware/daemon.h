@@ -4,8 +4,8 @@
 #include "types.h"
 
 typedef struct {
-	void (*fn_init)(void *);
-	void (*fn_poll)(void);
-} daemon_t;
+	void            (*fn_init) (void *);
+	void            (*fn_poll) (void);
+}		daemon_t;
 
 #endif

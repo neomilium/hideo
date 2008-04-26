@@ -32,7 +32,7 @@ static uint8	_stepper_motor_current_position = 0;
 void
 stepper_motor_init(void)
 {
-	register_set( STEPPER_MOTOR_DDR, 0xFF, STEPPER_ELECTROMAGNETS_MASK | STEPPER_MOTORS_ENABLE_MASK );
+	register_set(STEPPER_MOTOR_DDR, 0xFF, STEPPER_ELECTROMAGNETS_MASK | STEPPER_MOTORS_ENABLE_MASK);
 	STEPPER_MOTOR_ENABLE = 0;
 }
 

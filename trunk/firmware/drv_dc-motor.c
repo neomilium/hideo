@@ -15,8 +15,8 @@
 void
 dc_motor_init(void)
 {
-	register_set( DC_MOTOR_DDR, DC_MOTOR_DDR_CONFIG, DC_MOTOR_MASK );
-	register_set( DC_MOTOR_PORT, 0x00, DC_MOTOR_MASK );
+	register_set(DC_MOTOR_DDR, DC_MOTOR_DDR_CONFIG, DC_MOTOR_MASK);
+	register_set(DC_MOTOR_PORT, 0x00, DC_MOTOR_MASK);
 
 	pwm_init();
 	pwm_A_set(0);
@@ -26,10 +26,10 @@ void
 dc_motor_move(sint8 speed)
 {
 	if (speed < 0) {
-		register_set( DC_MOTOR_PORT, 0x20, DC_MOTOR_MASK );
+		register_set(DC_MOTOR_PORT, 0x20, DC_MOTOR_MASK);
 		speed = -speed;
 	} else {
-		register_set( DC_MOTOR_PORT, 0x04, DC_MOTOR_MASK );
+		register_set(DC_MOTOR_PORT, 0x04, DC_MOTOR_MASK);
 	}
 	pwm_A_set(speed);
 }
@@ -37,6 +37,6 @@ dc_motor_move(sint8 speed)
 void
 dc_motor_stop(void)
 {
-	register_set( DC_MOTOR_PORT, 0x00, DC_MOTOR_MASK );
+	register_set(DC_MOTOR_PORT, 0x00, DC_MOTOR_MASK);
 	pwm_A_set(0);
 }
