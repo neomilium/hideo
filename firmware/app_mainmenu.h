@@ -1,12 +1,12 @@
-#ifndef __APP_MAINMENU_H__
-#define __APP_MAINMENU_H__
+#ifndef _APP_MAINMENU_H_
+#define _APP_MAINMENU_H_
 
 #include "application.h"
 #include "eventmanager.h"
 
 #define app_mainmenu_init()		menu_t mainmenu;																		\
 															menu_item_t mainmenu_items[] = {										\
-																{ PSTR("Date"), NULL },														\
+																{ PSTR("Date"), &app_date },														\
 																{ PSTR("Motor"), &app_motor },											\
 																{ PSTR("Lens"), &app_lens },											\
 																{ PSTR("Mouse"), &app_mouse },											\

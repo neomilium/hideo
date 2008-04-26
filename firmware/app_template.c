@@ -12,7 +12,7 @@ static sint16 _mouse_x = 0;
 static sint16 _mouse_y = 0;
 
 void
-_app_template_init(void* data)
+_app_template_init(void *data)
 {
 	lcd_clear();
 	ps2_mouse_init();
@@ -39,64 +39,67 @@ _app_template_event_handler(const event_t event)
 				case MOUSE_BUTTON_LEFT:
 					lcd_gotoxy(12,0);
 					lcd_display_char('1');
-				break;
+					break;
 				case MOUSE_BUTTON_MIDDLE:
 					lcd_gotoxy(36,0);
 					lcd_display_char('1');
-				break;
+					break;
 				case MOUSE_BUTTON_RIGHT:
 					lcd_gotoxy(60,0);
 					lcd_display_char('1');
-				break;
+					break;
 			}
-		break;
+			break;
 		case E_MOUSE_BUTTON_RELEASED:
 			switch(event.data) {
 				case MOUSE_BUTTON_LEFT:
 					lcd_gotoxy(12,0);
 					lcd_display_char('0');
-				break;
+					break;
 				case MOUSE_BUTTON_MIDDLE:
 					lcd_gotoxy(36,0);
 					lcd_display_char('0');
-				break;
+					break;
 				case MOUSE_BUTTON_RIGHT:
 					lcd_gotoxy(60,0);
 					lcd_display_char('0');
-				break;
+					break;
 			}
-		break;
+			break;
 		case E_MOUSE_X_REV:
 			_mouse_x += (unsigned)event.data;
 			lcd_gotoxy(12,2);
 			lcd_display_number(_mouse_x);
 			lcd_finish_line();
-		break;
+			break;
 		case E_MOUSE_X_FWD:
 			_mouse_x -= (unsigned)event.data;
 			lcd_gotoxy(12,2);
 			lcd_display_number(_mouse_x);
 			lcd_finish_line();
-		break;
+			break;
 		case E_MOUSE_Y_REV:
 			_mouse_y += (unsigned)event.data;
 			lcd_gotoxy(12,3);
 			lcd_display_number(_mouse_y);
 			lcd_finish_line();
-		break;
+			break;
 		case E_MOUSE_Y_FWD:
 			_mouse_y -= (unsigned)event.data;
 			lcd_gotoxy(12,3);
 			lcd_display_number(_mouse_y);
 			lcd_finish_line();
-		break;
+			break;
 		case E_KEY_PRESSED:
 			switch(event.data) {
 				case KEYBOARD_MENU_LEFT:
 					windowmanager_exit();
+					break;
+				default:
+					break;
 			}
-		break;
-    default:
-		break;
+			break;
+		default:
+			break;
 	}
 }

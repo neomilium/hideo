@@ -1,5 +1,7 @@
-#ifndef __BIT_FIELD_H__
-#define __BIT_FIELD_H__
+#ifndef _HIDEO_H_
+#define _HIDEO_H_
+
+#define register_set( REGISTER, VALUE, MASK ) do { REGISTER = ( ((REGISTER) & ~(MASK)) | (VALUE) ); } while (0)
 
 // Define the bits in the port
 typedef struct
@@ -16,6 +18,6 @@ typedef struct
 
 // Define macro to get the value of each bit
 #define GET_BIT(port) (*(volatile bit_field *) (_SFR_ADDR(port)))
-///////////////////////////////////////////////////
 
-#endif
+#endif /* !_HIDEO_H_ */
+
