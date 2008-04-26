@@ -1,14 +1,16 @@
-#ifndef __DATE_H__
-#define __DATE_H__
+#ifndef _DATE_H_
+#define _DATE_H_
 
-typedef struct t_datetime {
+struct datetime {
 	unsigned char hour;
 	unsigned char min;
 	unsigned char sec;
 	unsigned char day;
 	unsigned char month;
 	unsigned char year;
-} t_datetime;
+};
+
+typedef struct datetime datetime_t;
 
 #endif
 

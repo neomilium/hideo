@@ -2,7 +2,7 @@
 #define __LCDNOKIA_H_DRIVER__
 
 #include <avr/io.h>
-#include "bit_field.h"
+#include "hideo.h"
 
 #define NOK_DDR			DDRA
 

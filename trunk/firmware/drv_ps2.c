@@ -2,7 +2,7 @@
 #include <avr/interrupt.h>
 #include <avr/io.h>
 #include <util/delay.h>
-#include "bit_field.h"
+#include "hideo.h"
 
 #include "types.h"
 #include "drv_ps2.h"

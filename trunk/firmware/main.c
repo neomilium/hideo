@@ -15,11 +15,13 @@
 #include "app_mouse.h"
 #include "app_motor.h"
 #include "app_lens.h"
+#include "app_date.h"
 
 #include "lens_control.h"
 #include "drv_dc-motor.h"
 #include "drv_stepper-motor.h"
 #include "drv_ps2_mouse.h"
+#include "rtc.h"
 
 int
 main(void)
@@ -36,9 +38,10 @@ main(void)
 	ps2_mouse_init();
 /* stepper_motor_init(); */
 	dc_motor_init();
+	rtc_init();
 
 	/* Daemons part */
-	lens_init();
+	lens_init(); /* /!\ Require dc_motor_init(), ps2_mouse_init() */
 
 	/* Applications part */
 /* app_keyboard_init(); */
@@ -46,6 +49,7 @@ main(void)
 	app_motor_init();
 	app_mouse_init();
 	app_lens_init();
+	app_date_init();
 
 	app_mainmenu_init();
 

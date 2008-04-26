@@ -2,7 +2,7 @@
 #define __KEYBOARD_H__
 
 #include <avr/io.h>
-#include "bit_field.h"
+#include "hideo.h"
 
 #include "types.h"
 
