@@ -41,7 +41,8 @@ main(void)
 	rtc_init();
 
 	/* Daemons part */
-	lens_init(); /* /!\ Require dc_motor_init(), ps2_mouse_init() */
+	lens_init();		/* /!\ Require dc_motor_init(),
+				 * ps2_mouse_init() */
 
 	/* Applications part */
 /* app_keyboard_init(); */

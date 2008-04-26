@@ -38,10 +38,11 @@ ${HEX}:  hideo.out
 flash: ${HEX}
 	${SUDO} ${AVRDUDE} -p ${MCU} -c ${PROGRAMMER} -U flash:w:${HEX}
 
+ALLHC!= ls *.[hc]
 reindent:
-.for SRC in ${SRCS}
+.for SRC in ${ALLHC}
 	@sed -I '' -e 's///' -e 's#//[ 	]*\(.*\)#/* \1 */#g' ${SRC}
-	@indent -cli0 -nfc1 ${SRC} && rm ${SRC}.BAK
+	@indent -cli1 -nfc1 ${SRC} && rm ${SRC}.BAK
 .endfor
 
 .include <bsd.prog.mk>

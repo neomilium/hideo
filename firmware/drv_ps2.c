@@ -75,40 +75,40 @@ ps2_bit_available(void)
 	bit = data_get();
 
 	switch (ps2_state) {
-	case PS_RX_START:
-		if (0 == bit) {
-			/* Prepare for reading next byte */
-			_data = 0;
-			_bit_read = 0;
-			_cparity = 1;
-			ps2_state = PS_RX_DATA;
-		}
-		break;
-	case PS_RX_DATA:
-		/* Least significant bits first */
-		_data |= (bit << _bit_read);
-		_bit_read++;
-		_cparity ^= bit;
-		if (8 == _bit_read) {
-			ps2_state = PS_RX_PARITY;
-		}
-		break;
-	case PS_RX_PARITY:
-		_parity = bit;
-		ps2_state = PS_RX_STOP;
-		break;
-	case PS_RX_STOP:
-		if ((1 == bit) && (_parity == _cparity)) {
-			/* Send byte */
-			clist_write(ps2, _data);
-		} else {
-			/* Transmission error. Resend */
-			ps2_write(0xFE);
-		}
-		ps2_state = PS_RX_START;
-		break;
-	default:
-		break;
+		case PS_RX_START:
+			if (0 == bit) {
+				/* Prepare for reading next byte */
+				_data = 0;
+				_bit_read = 0;
+				_cparity = 1;
+				ps2_state = PS_RX_DATA;
+			}
+			break;
+		case PS_RX_DATA:
+			/* Least significant bits first */
+			_data |= (bit << _bit_read);
+			_bit_read++;
+			_cparity ^= bit;
+			if (8 == _bit_read) {
+				ps2_state = PS_RX_PARITY;
+			}
+			break;
+		case PS_RX_PARITY:
+			_parity = bit;
+			ps2_state = PS_RX_STOP;
+			break;
+		case PS_RX_STOP:
+			if ((1 == bit) && (_parity == _cparity)) {
+				/* Send byte */
+				clist_write(ps2, _data);
+			} else {
+				/* Transmission error. Resend */
+				ps2_write(0xFE);
+			}
+			ps2_state = PS_RX_START;
+			break;
+		default:
+			break;
 	}
 }
 
@@ -118,36 +118,36 @@ ps2_send_bit(void)
 	uint8		bit;
 
 	switch (ps2_state) {
-	case PS_TX_START:
-		_bit_write = 0;
-		_cparity = 1;
-		ps2_state = PS_TX_DATA;
-		break;
-	case PS_TX_DATA:
-		/* Least significant bits first */
-		bit = (_data >> (_bit_write)) & 0x01;
-		data_set(bit);
-		_cparity ^= bit;
-		_bit_write++;
+		case PS_TX_START:
+			_bit_write = 0;
+			_cparity = 1;
+			ps2_state = PS_TX_DATA;
+			break;
+		case PS_TX_DATA:
+			/* Least significant bits first */
+			bit = (_data >> (_bit_write)) & 0x01;
+			data_set(bit);
+			_cparity ^= bit;
+			_bit_write++;
 
-		if (8 == _bit_write) {
-			ps2_state = PS_TX_PARITY;
-		}
-		break;
-	case PS_TX_PARITY:
-		data_set(_cparity);
-		ps2_state = PS_TX_STOP;
-		break;
-	case PS_TX_STOP:
-		data_release();
-		ps2_state = PS_TX_ACK;
-		break;
-	case PS_TX_ACK:
-		bit = data_get();
-		ps2_state = PS_RX_START;
-		break;
-	default:
-		break;
+			if (8 == _bit_write) {
+				ps2_state = PS_TX_PARITY;
+			}
+			break;
+		case PS_TX_PARITY:
+			data_set(_cparity);
+			ps2_state = PS_TX_STOP;
+			break;
+		case PS_TX_STOP:
+			data_release();
+			ps2_state = PS_TX_ACK;
+			break;
+		case PS_TX_ACK:
+			bit = data_get();
+			ps2_state = PS_RX_START;
+			break;
+		default:
+			break;
 	}
 }
 

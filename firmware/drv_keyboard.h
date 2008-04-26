@@ -23,7 +23,7 @@
 #define KEYBOARD_MENU_RIGHT    0x01
 
 
-void keyboard_init(void);
-void keyboard_poll(void);
+void		keyboard_init(void);
+void		keyboard_poll(void);
 
 #endif

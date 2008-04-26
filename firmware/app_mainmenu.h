@@ -15,8 +15,8 @@
 															mainmenu.item_count = sizeof(mainmenu_items)/sizeof(menu_item_t);													\
 															application_t app_mainmenu = { &_app_mainmenu_init, &_app_mainmenu_event_handler, &mainmenu }
 
-void _app_mainmenu_init(void*);
-void _app_mainmenu_event_handler(const event_t);
+void		_app_mainmenu_init(void *);
+void		_app_mainmenu_event_handler(const event_t);
 
 
 #endif

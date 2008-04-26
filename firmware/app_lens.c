@@ -31,27 +31,27 @@ _app_lens_event_handler(const event_t event)
 	lcd_display_number(_wanted_position);
 
 	switch (event.code) {
-	case E_MOUSE_Y_REV:
-	case E_MOUSE_Y_FWD:
-		lcd_gotoxy(60, 2);
-		lcd_display_number(lens_get_position());
-		lcd_finish_line();
-		break;
-	case E_KEY_PRESSED:
-		switch (event.data) {
-		case KEYBOARD_UP:
-			_wanted_position += 10;
-			lens_set_position(_wanted_position);
+		case E_MOUSE_Y_REV:
+		case E_MOUSE_Y_FWD:
+			lcd_gotoxy(60, 2);
+			lcd_display_number(lens_get_position());
+			lcd_finish_line();
 			break;
-		case KEYBOARD_DOWN:
-			_wanted_position -= 10;
-			lens_set_position(_wanted_position);
+		case E_KEY_PRESSED:
+			switch (event.data) {
+				case KEYBOARD_UP:
+					_wanted_position += 10;
+					lens_set_position(_wanted_position);
+					break;
+				case KEYBOARD_DOWN:
+					_wanted_position -= 10;
+					lens_set_position(_wanted_position);
+					break;
+				case KEYBOARD_MENU_LEFT:
+					windowmanager_exit();
+			}
 			break;
-		case KEYBOARD_MENU_LEFT:
-			windowmanager_exit();
-		}
-		break;
-	default:
-		break;
+		default:
+			break;
 	}
 }

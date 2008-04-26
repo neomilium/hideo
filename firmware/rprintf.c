@@ -331,40 +331,39 @@ rprintf1RamRom(unsigned char stringInRom, const char *format,...)
 		}
 
 		switch (format_flag = READMEMBYTE(stringInRom, format++)) {
-		case 'c':
-			format_flag = va_arg(ap, int);
-		default:
-			rprintfChar(format_flag);
-			continue;
-		case 'd':
-			base = 10;
-			div_val = 10000;
-			goto CONVERSION_LOOP;
+			case 'c':
+				format_flag = va_arg(ap, int);
+			default:
+				rprintfChar(format_flag);
+				continue;
+			case 'd':
+				base = 10;
+				div_val = 10000;
+				goto CONVERSION_LOOP;
 /* case 'x': base = 16; div_val = 0x10; */
-		case 'x':
-			base = 16;
-			div_val = 0x1000;
+			case 'x':
+				base = 16;
+				div_val = 0x1000;
 
-	CONVERSION_LOOP:
-			u_val = va_arg(ap, int);
-			if (format_flag == 'd') {
-				if (((int)u_val) < 0) {
-					u_val = -u_val;
-					rprintfChar('-');
+		CONVERSION_LOOP:
+				u_val = va_arg(ap, int);
+				if (format_flag == 'd') {
+					if (((int)u_val) < 0) {
+						u_val = -u_val;
+						rprintfChar('-');
+					}
+					while (div_val > 1 && div_val > u_val)
+						div_val /= 10;
 				}
-				while (div_val > 1 && div_val > u_val)
-					div_val /= 10;
-			}
-			do {
-				/*
-				 * 
-				 * rprintfChar(pgm_read_byte(HexChars+(u_val/d
-				 * iv_val)));
-				 */
-				rprintfu04(u_val / div_val);
-				u_val %= div_val;
-				div_val /= base;
-			} while (div_val);
+				do {
+					/*
+					 * rp
+					 * intfChar(pgm_read_byte(HexChars+(u_v
+					 * al/d iv_val))); */
+					rprintfu04(u_val / div_val);
+					u_val %= div_val;
+					div_val /= base;
+				} while (div_val);
 		}
 	}
 	va_end(ap);
@@ -448,93 +447,93 @@ rprintf2RamRom(unsigned char stringInRom, const char *sfmt,...)
 			fmt = READMEMBYTE(stringInRom, f);
 			bp = buf;
 			switch (fmt) {	/* do the formatting */
-			case 'd':	/* 'd' signed decimal */
-				if (do_long)
-					l = va_arg(ap, long);
-				else
-					l = (long)(va_arg(ap, int));
-				if (l < 0) {
-					sign = 1;
-					l = -l;
-				}
-				do {
-					*bp++ = l % 10 + '0';
-				} while ((l /= 10) > 0);
-				if (sign)
-					*bp++ = '-';
-				f_width = f_width - (bp - buf);
-				if (!flush_left)
-					while (f_width-- > 0)
-						rprintfChar(pad);
-				for (bp--; bp >= buf; bp--)
-					rprintfChar(*bp);
-				if (flush_left)
-					while (f_width-- > 0)
-						rprintfChar(' ');
-				break;
-			case 'o':	/* 'o' octal number */
-			case 'x':	/* 'x' hex number */
-			case 'u':	/* 'u' unsigned decimal */
-				if (do_long)
-					u = va_arg(ap, unsigned long);
-				else
-					u = (unsigned long)(va_arg(ap, unsigned));
-				if (fmt == 'u') {	/* unsigned decimal */
-					do {
-						*bp++ = u % 10 + '0';
-					} while ((u /= 10) > 0);
-				} else if (fmt == 'o') {	/* octal */
-					do {
-						*bp++ = u % 8 + '0';
-					} while ((u /= 8) > 0);
-					if (hash)
-						*bp++ = '0';
-				} else if (fmt == 'x') {	/* hex */
-					do {
-						i = u % 16;
-						if (i < 10)
-							*bp++ = i + '0';
-						else
-							*bp++ = i - 10 + 'a';
-					} while ((u /= 16) > 0);
-					if (hash) {
-						*bp++ = 'x';
-						*bp++ = '0';
+				case 'd':	/* 'd' signed decimal */
+					if (do_long)
+						l = va_arg(ap, long);
+					else
+						l = (long)(va_arg(ap, int));
+					if (l < 0) {
+						sign = 1;
+						l = -l;
 					}
-				}
-				i = f_width - (bp - buf);
-				if (!flush_left)
-					while (i-- > 0)
-						rprintfChar(pad);
-				for (bp--; bp >= buf; bp--)
-					rprintfChar((int)(*bp));
-				if (flush_left)
-					while (i-- > 0)
-						rprintfChar(' ');
-				break;
-			case 'c':	/* 'c' character */
-				i = va_arg(ap, int);
-				rprintfChar((int)(i));
-				break;
-			case 's':	/* 's' string */
-				bp = va_arg(ap, unsigned char *);
-				if (!bp)
-					bp = (unsigned char *)"(nil)";
-				f_width = f_width - strlen((char *)bp);
-				if (!flush_left)
-					while (f_width-- > 0)
-						rprintfChar(pad);
-				for (i = 0; *bp && i < prec; i++) {
-					rprintfChar(*bp);
-					bp++;
-				}
-				if (flush_left)
-					while (f_width-- > 0)
-						rprintfChar(' ');
-				break;
-			case '%':	/* '%' character */
-				rprintfChar('%');
-				break;
+					do {
+						*bp++ = l % 10 + '0';
+					} while ((l /= 10) > 0);
+					if (sign)
+						*bp++ = '-';
+					f_width = f_width - (bp - buf);
+					if (!flush_left)
+						while (f_width-- > 0)
+							rprintfChar(pad);
+					for (bp--; bp >= buf; bp--)
+						rprintfChar(*bp);
+					if (flush_left)
+						while (f_width-- > 0)
+							rprintfChar(' ');
+					break;
+				case 'o':	/* 'o' octal number */
+				case 'x':	/* 'x' hex number */
+				case 'u':	/* 'u' unsigned decimal */
+					if (do_long)
+						u = va_arg(ap, unsigned long);
+					else
+						u = (unsigned long)(va_arg(ap, unsigned));
+					if (fmt == 'u') {	/* unsigned decimal */
+						do {
+							*bp++ = u % 10 + '0';
+						} while ((u /= 10) > 0);
+					} else if (fmt == 'o') {	/* octal */
+						do {
+							*bp++ = u % 8 + '0';
+						} while ((u /= 8) > 0);
+						if (hash)
+							*bp++ = '0';
+					} else if (fmt == 'x') {	/* hex */
+						do {
+							i = u % 16;
+							if (i < 10)
+								*bp++ = i + '0';
+							else
+								*bp++ = i - 10 + 'a';
+						} while ((u /= 16) > 0);
+						if (hash) {
+							*bp++ = 'x';
+							*bp++ = '0';
+						}
+					}
+					i = f_width - (bp - buf);
+					if (!flush_left)
+						while (i-- > 0)
+							rprintfChar(pad);
+					for (bp--; bp >= buf; bp--)
+						rprintfChar((int)(*bp));
+					if (flush_left)
+						while (i-- > 0)
+							rprintfChar(' ');
+					break;
+				case 'c':	/* 'c' character */
+					i = va_arg(ap, int);
+					rprintfChar((int)(i));
+					break;
+				case 's':	/* 's' string */
+					bp = va_arg(ap, unsigned char *);
+					if (!bp)
+						bp = (unsigned char *)"(nil)";
+					f_width = f_width - strlen((char *)bp);
+					if (!flush_left)
+						while (f_width-- > 0)
+							rprintfChar(pad);
+					for (i = 0; *bp && i < prec; i++) {
+						rprintfChar(*bp);
+						bp++;
+					}
+					if (flush_left)
+						while (f_width-- > 0)
+							rprintfChar(' ');
+					break;
+				case '%':	/* '%' character */
+					rprintfChar('%');
+					break;
 			}
 			flush_left = 0, f_width = 0, prec = INF, hash = 0, do_long = 0;
 			sign = 0;
@@ -635,93 +634,93 @@ sprintf(const char *sfmt,...)
 			fmt = *f;
 			bp = buf;
 			switch (fmt) {	/* do the formatting */
-			case 'd':	/* 'd' signed decimal */
-				if (do_long)
-					l = va_arg(ap, long);
-				else
-					l = (long)(va_arg(ap, int));
-				if (l < 0) {
-					sign = 1;
-					l = -l;
-				}
-				do {
-					*bp++ = l % 10 + '0';
-				} while ((l /= 10) > 0);
-				if (sign)
-					*bp++ = '-';
-				f_width = f_width - (bp - buf);
-				if (!flush_left)
-					while (f_width-- > 0)
-						*str++ = (pad);
-				for (bp--; bp >= buf; bp--)
-					*str++ = (*bp);
-				if (flush_left)
-					while (f_width-- > 0)
-						*str++ = (' ');
-				break;
-			case 'o':	/* 'o' octal number */
-			case 'x':	/* 'x' hex number */
-			case 'u':	/* 'u' unsigned decimal */
-				if (do_long)
-					u = va_arg(ap, unsigned long);
-				else
-					u = (unsigned long)(va_arg(ap, unsigned));
-				if (fmt == 'u') {	/* unsigned decimal */
-					do {
-						*bp++ = u % 10 + '0';
-					} while ((u /= 10) > 0);
-				} else if (fmt == 'o') {	/* octal */
-					do {
-						*bp++ = u % 8 + '0';
-					} while ((u /= 8) > 0);
-					if (hash)
-						*bp++ = '0';
-				} else if (fmt == 'x') {	/* hex */
-					do {
-						i = u % 16;
-						if (i < 10)
-							*bp++ = i + '0';
-						else
-							*bp++ = i - 10 + 'a';
-					} while ((u /= 16) > 0);
-					if (hash) {
-						*bp++ = 'x';
-						*bp++ = '0';
+				case 'd':	/* 'd' signed decimal */
+					if (do_long)
+						l = va_arg(ap, long);
+					else
+						l = (long)(va_arg(ap, int));
+					if (l < 0) {
+						sign = 1;
+						l = -l;
 					}
-				}
-				i = f_width - (bp - buf);
-				if (!flush_left)
-					while (i-- > 0)
-						*str++ = (pad);
-				for (bp--; bp >= buf; bp--)
-					*str++ = ((int)(*bp));
-				if (flush_left)
-					while (i-- > 0)
-						*str++ = (' ');
-				break;
-			case 'c':	/* 'c' character */
-				i = va_arg(ap, int);
-				*str++ = ((int)(i));
-				break;
-			case 's':	/* 's' string */
-				bp = va_arg(ap, unsigned char *);
-				if (!bp)
-					bp = (unsigned char *)"(nil)";
-				f_width = f_width - strlen((char *)bp);
-				if (!flush_left)
-					while (f_width-- > 0)
-						*str++ = (pad);
-				for (i = 0; *bp && i < prec; i++) {
-					*str++ = (*bp);
-					bp++;
-				}
-				if (flush_left)
-					while (f_width-- > 0)
-						*str++ = (' ');
-				break;
-			case '%':	/* '%' character */
-				*str++ = ('%');
-				break;
+					do {
+						*bp++ = l % 10 + '0';
+					} while ((l /= 10) > 0);
+					if (sign)
+						*bp++ = '-';
+					f_width = f_width - (bp - buf);
+					if (!flush_left)
+						while (f_width-- > 0)
+							*str++ = (pad);
+					for (bp--; bp >= buf; bp--)
+						*str++ = (*bp);
+					if (flush_left)
+						while (f_width-- > 0)
+							*str++ = (' ');
+					break;
+				case 'o':	/* 'o' octal number */
+				case 'x':	/* 'x' hex number */
+				case 'u':	/* 'u' unsigned decimal */
+					if (do_long)
+						u = va_arg(ap, unsigned long);
+					else
+						u = (unsigned long)(va_arg(ap, unsigned));
+					if (fmt == 'u') {	/* unsigned decimal */
+						do {
+							*bp++ = u % 10 + '0';
+						} while ((u /= 10) > 0);
+					} else if (fmt == 'o') {	/* octal */
+						do {
+							*bp++ = u % 8 + '0';
+						} while ((u /= 8) > 0);
+						if (hash)
+							*bp++ = '0';
+					} else if (fmt == 'x') {	/* hex */
+						do {
+							i = u % 16;
+							if (i < 10)
+								*bp++ = i + '0';
+							else
+								*bp++ = i - 10 + 'a';
+						} while ((u /= 16) > 0);
+						if (hash) {
+							*bp++ = 'x';
+							*bp++ = '0';
+						}
+					}
+					i = f_width - (bp - buf);
+					if (!flush_left)
+						while (i-- > 0)
+							*str++ = (pad);
+					for (bp--; bp >= buf; bp--)
+						*str++ = ((int)(*bp));
+					if (flush_left)
+						while (i-- > 0)
+							*str++ = (' ');
+					break;
+				case 'c':	/* 'c' character */
+					i = va_arg(ap, int);
+					*str++ = ((int)(i));
+					break;
+				case 's':	/* 's' string */
+					bp = va_arg(ap, unsigned char *);
+					if (!bp)
+						bp = (unsigned char *)"(nil)";
+					f_width = f_width - strlen((char *)bp);
+					if (!flush_left)
+						while (f_width-- > 0)
+							*str++ = (pad);
+					for (i = 0; *bp && i < prec; i++) {
+						*str++ = (*bp);
+						bp++;
+					}
+					if (flush_left)
+						while (f_width-- > 0)
+							*str++ = (' ');
+					break;
+				case '%':	/* '%' character */
+					*str++ = ('%');
+					break;
 			}
 			flush_left = 0, f_width = 0, prec = INF, hash = 0, do_long = 0;
 			sign = 0;

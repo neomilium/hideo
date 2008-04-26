@@ -29,8 +29,8 @@ lens_init(void)
 {
 	dc_motor_move(-50);
 
-	register_set( LENS_LIMIT_DDR, 0, LENS_LIMIT_MASK ); /* set as input */
-	register_set( LENS_LIMIT_PORT, 0b10000000, LENS_LIMIT_MASK ); /* enable pull-up */
+	register_set(LENS_LIMIT_DDR, 0, LENS_LIMIT_MASK);	/* set as input */
+	register_set(LENS_LIMIT_PORT, 0b10000000, LENS_LIMIT_MASK);	/* enable pull-up */
 
 	while (LENS_LIMIT_SWITCH) {
 	};
@@ -58,23 +58,23 @@ void
 _lens_event_handler(const event_t event)
 {
 	switch (_lens_mode) {
-		case LENS_MODE_INIT:
-		_lens_mode = LENS_MODE_RUN;
-		break;
-	case LENS_MODE_RUN:
-		switch (event.code) {
-		case E_MOUSE_Y_REV:
-			_lens_current_position += (unsigned)event.data;
+			case LENS_MODE_INIT:
+			_lens_mode = LENS_MODE_RUN;
 			break;
-		case E_MOUSE_Y_FWD:
-			_lens_current_position -= (unsigned)event.data;
+		case LENS_MODE_RUN:
+			switch (event.code) {
+				case E_MOUSE_Y_REV:
+					_lens_current_position += (unsigned)event.data;
+					break;
+				case E_MOUSE_Y_FWD:
+					_lens_current_position -= (unsigned)event.data;
+					break;
+				default:
+					break;
+			}
 			break;
 		default:
 			break;
-		}
-		break;
-	default:
-		break;
 	}
 }
 

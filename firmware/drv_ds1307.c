@@ -10,7 +10,7 @@ drv_ds1307_init(void)
 {
 	i2cInit();
 
-	byte		data[2];
+	byte		data      [2];
 	data[0] = 0x00;
 	/* Timekeeper Registers address */
 	i2cMasterSendNI(DS1307_I2C_ADDR, 1, &data[0]);
