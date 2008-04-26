@@ -1,11 +1,11 @@
 #include "lens_control.h"
 
 #include "eventmanager.h"
-#include "ps2_mouse.h"
-#include "dc-motor.h"
+#include "drv_ps2_mouse.h"
+#include "drv_dc-motor.h"
 
-void _lens_poll(void);
-void _lens_event_handler(const event_t event);
+void		_lens_poll(void);
+void		_lens_event_handler(const event_t event);
 
 #define LENS_POSITION_MAX		60000
 
@@ -23,10 +23,10 @@ lens_init(void)
 {
 	dc_motor_move(-50);
 
-	DDRC  &= 0b01111111;
+	DDRC &= 0b01111111;
 	PORTC |= 0b10000000;
 
-	while(LENS_LIMIT_SWITCH){
+	while (LENS_LIMIT_SWITCH) {
 	};
 	dc_motor_stop();
 
@@ -37,8 +37,8 @@ lens_init(void)
 void
 _lens_poll(void)
 {
-	if(_lens_current_position != _lens_wanted_position) {
-		if((_lens_current_position - _lens_wanted_position) > 0) {
+	if (_lens_current_position != _lens_wanted_position) {
+		if ((_lens_current_position - _lens_wanted_position) > 0) {
 			dc_motor_move(50);
 		} else {
 			dc_motor_move(-50);
@@ -51,20 +51,24 @@ _lens_poll(void)
 void
 _lens_event_handler(const event_t event)
 {
-	switch(_lens_mode) {
+	switch (_lens_mode) {
 		case LENS_MODE_INIT:
-			_lens_mode = LENS_MODE_RUN;
+		_lens_mode = LENS_MODE_RUN;
+		break;
+	case LENS_MODE_RUN:
+		switch (event.code) {
+		case E_MOUSE_Y_REV:
+			_lens_current_position += (unsigned)event.data;
 			break;
-		case LENS_MODE_RUN:
-			switch(event.code) {
-				case E_MOUSE_Y_REV:
-					_lens_current_position += (unsigned)event.data;
-				break;
-				case E_MOUSE_Y_FWD:
-					_lens_current_position -= (unsigned)event.data;
-				break;
-			}
+		case E_MOUSE_Y_FWD:
+			_lens_current_position -= (unsigned)event.data;
 			break;
+		default:
+			break;
+		}
+		break;
+	default:
+		break;
 	}
 }
 

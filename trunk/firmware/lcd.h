@@ -2,7 +2,7 @@
 #define __LCD_H__
 
 #include <avr/pgmspace.h>
-#include "nokia_driver.h"
+#include "drv_nokia.h"
 
 #define lcd_init() nokia_init()
 #define lcd_clear() nokia_clear()
