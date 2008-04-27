@@ -3,7 +3,7 @@ PROG= hideo.out
 
 APP_SRC=	app_date.c app_keyboard.c app_lcd.c app_lens.c app_mainmenu.c app_motor.c app_mouse.c app_temperature.c lens_control.c
 DRV_SRC=	drv_dc-motor.c drv_ds1307.c drv_24lc256.c drv_keyboard.c drv_nokia.c drv_ps2.c drv_ps2_mouse.c drv_pwm.c drv_stepper-motor.c
-CONTRIB_SRC=	a2d.c i2c.c rprintf.c
+CONTRIB_SRC=	a2d.c i2c.c
 OS_SRC=		buffer.c clist.c eventmanager.c lcd.c main.c menus.c windowmanager.c
 
 SRCS=	${APP_SRC} ${DRV_SRC} ${OS_SRC} ${CONTRIB_SRC}
