@@ -1,6 +1,6 @@
 #include "app_mainmenu.h"
 #include "menus.h"
-#include "drv_keyboard.h"
+#include "keyboard.h"
 
 #include "windowmanager.h"
 static uint8	_menu_current_item = 0;

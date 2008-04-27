@@ -9,6 +9,8 @@
 																{ PSTR("Date"), &app_date },														\
 																{ PSTR("Motor"), &app_motor },											\
 																{ PSTR("Lens"), &app_lens },											\
+																{ PSTR("Keyboard"), &app_keyboard },											\
+																{ PSTR("EEPROM"), &app_eeprom },											\
 																{ PSTR("Mouse"), &app_mouse },											\
 															};																									\
 															mainmenu.menu_items = mainmenu_items;								\

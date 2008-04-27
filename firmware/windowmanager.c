@@ -1,7 +1,7 @@
 #include "windowmanager.h"
 
 #include "lcd.h"
-#include "drv_keyboard.h"
+#include "keyboard.h"
 
 #define WM_MAX_APPLICATION_STACK_DEPTH 3
 

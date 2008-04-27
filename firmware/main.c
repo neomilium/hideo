@@ -16,6 +16,8 @@
 #include "app_motor.h"
 #include "app_lens.h"
 #include "app_date.h"
+#include "app_keyboard.h"
+#include "app_eeprom.h"
 
 #include "lens_control.h"
 #include "drv_dc-motor.h"
@@ -23,6 +25,8 @@
 #include "drv_ps2_mouse.h"
 #include "i2c.h"
 #include "rtc.h"
+#include "eeprom.h"
+#include "keyboard.h"
 
 int
 main(void)
@@ -47,12 +51,13 @@ main(void)
 				 * ps2_mouse_init() */
 
 	/* Applications part */
-/* app_keyboard_init(); */
+	app_keyboard_init();
 /* app_temperature_init(); */
 	app_motor_init();
 	app_mouse_init();
 	app_lens_init();
 	app_date_init();
+	app_eeprom_init();
 
 	app_mainmenu_init();
 

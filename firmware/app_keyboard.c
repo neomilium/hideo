@@ -1,7 +1,7 @@
 #include <avr/pgmspace.h>
 
 #include "app_keyboard.h"
-#include "drv_keyboard.h"
+#include "keyboard.h"
 
 #include "lcd.h"
 
