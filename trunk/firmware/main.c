@@ -21,6 +21,7 @@
 #include "drv_dc-motor.h"
 #include "drv_stepper-motor.h"
 #include "drv_ps2_mouse.h"
+#include "i2c.h"
 #include "rtc.h"
 
 int
@@ -38,7 +39,8 @@ main(void)
 	ps2_mouse_init();
 /* stepper_motor_init(); */
 	dc_motor_init();
-	rtc_init();
+	i2c_init();
+	rtc_init();		/* /!\ Require i2c_init() */
 
 	/* Daemons part */
 	lens_init();		/* /!\ Require dc_motor_init(),

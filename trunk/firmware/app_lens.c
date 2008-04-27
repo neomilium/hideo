@@ -26,17 +26,14 @@ _app_lens_event_handler(const event_t event)
 
 	lcd_gotoxy(0, 2);
 	lcd_display_string(PSTR("position: "));
+	lcd_gotoxy(60, 2);
+	lcd_display_number(lens_get_position());
+	lcd_finish_line();
 	lcd_gotoxy(0, 3);
 	lcd_display_string(PSTR("wanted: "));
 	lcd_display_number(_wanted_position);
 
 	switch (event.code) {
-		case E_MOUSE_Y_REV:
-		case E_MOUSE_Y_FWD:
-			lcd_gotoxy(60, 2);
-			lcd_display_number(lens_get_position());
-			lcd_finish_line();
-			break;
 		case E_KEY_PRESSED:
 			switch (event.data) {
 				case KEYBOARD_UP:
