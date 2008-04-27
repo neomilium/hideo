@@ -1,20 +1,25 @@
-#include "drv_keyboard.h"
+#include "keyboard.h"
 
 #include "eventmanager.h"
+
+#define KEYBOARD_MASK					0xF3
+#define KEYBOARD_PIN					PINB
+#define KEYBOARD_PORT					PORTB
+#define KEYBOARD_DDR					DDRB
 
 static uint8	_keyboard_status = 0x00;
 
 void
-keyboard_init(void)
+drv_keyboard_init(void)
 {
 	KEYBOARD_DDR = 0x00;	/* Set keyboard port in input */
 	KEYBOARD_PORT = KEYBOARD_MASK;	/* Set internal pull-up resistances */
-	eventmanager_add_polling_fct(keyboard_poll);
+	eventmanager_add_polling_fct(drv_keyboard_poll);
 	_keyboard_status = KEYBOARD_PORT & KEYBOARD_MASK;
 }
 
 void
-keyboard_poll(void)
+drv_keyboard_poll(void)
 {
 	if ((KEYBOARD_PIN & KEYBOARD_MASK) != _keyboard_status) {
 		event_t		event = {

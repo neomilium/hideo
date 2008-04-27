@@ -4,7 +4,7 @@
 #include "drv_ps2_mouse.h"
 #include "lcd.h"
 
-#include "drv_keyboard.h"
+#include "keyboard.h"
 
 #include "windowmanager.h"
 

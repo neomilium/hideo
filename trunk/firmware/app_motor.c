@@ -5,7 +5,7 @@
 #include "drv_dc-motor.h"
 #include "lcd.h"
 
-#include "drv_keyboard.h"
+#include "keyboard.h"
 
 #include "windowmanager.h"
 

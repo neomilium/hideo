@@ -15,7 +15,6 @@ void
 _app_template_init(void *data)
 {
 	lcd_clear();
-	ps2_mouse_init();
 }
 
 void
