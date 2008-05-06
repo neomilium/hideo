@@ -68,6 +68,8 @@
     <FILE SHOWN="FALSE" NAME="types.h" />
     <FILE SHOWN="FALSE" NAME="windowmanager.c" />
     <FILE SHOWN="FALSE" NAME="windowmanager.h" />
+    <FILE SHOWN="FALSE" NAME="i2ceeprom.c" />
+    <FILE SHOWN="FALSE" NAME="i2ceeprom.h" />
   </FILES>
   <SETTINGS>
     <ASSEMBLER_COMMAND VALUE="avr-gcc" />

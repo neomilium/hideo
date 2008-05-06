@@ -2,12 +2,13 @@
 
 #include <avr/io.h>
 
-#define PWM_PERIOD		0x06E2
+#define PWM_PERIOD		3333
 void
 pwm_init(void)
 {
-	TCCR1A = 0xA2;		/* */
-	TCCR1B = 0x1B;		/* */
+	TCCR1A = 0b10100010;	/* */
+	TCCR1B = 0b00011011;	/* Prescaler = clock / 8
+				 * Fast PWM mode */
 
 	ICR1 = PWM_PERIOD;	/* period */
 	OCR1A = 0x0000;		/* Up time for OC1A */

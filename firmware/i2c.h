@@ -17,7 +17,7 @@
 /* /		This library provides the high-level functions needed to use the I2C */
 /* /	serial interface supported by the hardware of several AVR processors. */
 /* / The library is functional but has not been exhaustively tested yet and is */
-/* / still expanding.� Thanks to the standardization of the I2C protocol and */
+/* / still expanding. Thanks to the standardization of the I2C protocol and */
 /* /	register access, the send and receive commands are everything you need to */
 /* / talk to thousands of different I2C devices including: EEPROMS, Flash memory, */
 /* / MP3 players, A/D and D/A converters, electronic potentiometers, etc. */
