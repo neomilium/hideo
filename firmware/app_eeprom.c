@@ -12,14 +12,24 @@ _app_eeprom_init(void *data)
 {
 	byte buf[2] = { 0x00, 0x11 };
 	lcd_clear();
+	lcd_display_string(PSTR("   EEPROM"));
+	lcd_finish_line();
 	eeprom_setpos(0);
 	eeprom_write(&buf, 2);
 	eeprom_setpos(0);
+	lcd_display_string(PSTR("w : "));
+	lcd_display_hex(buf[0]);
+	lcd_display_char(' ');
+	lcd_display_hex(buf[1]);
+	lcd_finish_line();
 	buf[0] = 0x22;
 	buf[1] = 0x33;
 	eeprom_read(&buf, 2);
+	lcd_display_string(PSTR("r : "));
 	lcd_display_hex(buf[0]);
+	lcd_display_char(' ');
 	lcd_display_hex(buf[1]);
+	lcd_finish_line();
 }
 
 void

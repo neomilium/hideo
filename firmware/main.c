@@ -47,6 +47,7 @@ main(void)
 	rtc_init();		/* /!\ Require i2c_init() */
 
 	/* Daemons part */
+
 	lens_init();		/* /!\ Require dc_motor_init(),
 				 * ps2_mouse_init() */
 

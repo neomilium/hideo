@@ -1,9 +1,6 @@
 #include "drv_pwm.h"
 
 #include <avr/io.h>
-#include <util/delay.h>
-#include <avr/pgmspace.h>
-/* #include "bit_field.h" */
 
 #define PWM_PERIOD		0x06E2
 void
