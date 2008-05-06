@@ -14,8 +14,8 @@ void		_lens_event_handler(const event_t event);
 #define LENS_MODE_INIT			0x00
 #define LENS_MODE_RUN			0x01
 
-static volatile uint16 _lens_current_position = 0;
-static volatile uint16 _lens_wanted_position = 0;
+static volatile sint16 _lens_current_position = 0;
+static volatile sint16 _lens_wanted_position = 0;
 static volatile uint8 _lens_mode = LENS_MODE_INIT;
 
 #define LENS_LIMIT_SWITCH		GET_BIT(PINC).bit7
@@ -27,10 +27,10 @@ static volatile uint8 _lens_mode = LENS_MODE_INIT;
 void
 lens_init(void)
 {
-	dc_motor_move(-50);
-
 	register_set(LENS_LIMIT_DDR, 0, LENS_LIMIT_MASK);	/* set as input */
 	register_set(LENS_LIMIT_PORT, 0b10000000, LENS_LIMIT_MASK);	/* enable pull-up */
+
+	dc_motor_move(80);
 
 	while (LENS_LIMIT_SWITCH) {
 	};
@@ -45,9 +45,33 @@ _lens_poll(void)
 {
 	if (_lens_current_position != _lens_wanted_position) {
 		if ((_lens_current_position - _lens_wanted_position) > 0) {
-			dc_motor_move(50);
+			if ((_lens_current_position - _lens_wanted_position) > 4) {
+				if ((_lens_current_position - _lens_wanted_position) > 20) {
+					if ((_lens_current_position - _lens_wanted_position) > 100) {
+						dc_motor_move(80);
+					} else {
+						dc_motor_move((((_lens_current_position - _lens_wanted_position)*60)/100)+40);
+					}
+				} else {
+					dc_motor_move(40);
+				}
+			} else {
+				dc_motor_stop();
+			}
 		} else {
-			dc_motor_move(-50);
+			if ((_lens_wanted_position - _lens_current_position) > 4) {
+				if ((_lens_wanted_position - _lens_current_position) > 20) {
+					if ((_lens_wanted_position - _lens_current_position) > 100) {
+						dc_motor_move(-80);
+					} else {
+						dc_motor_move(-((((_lens_wanted_position - _lens_current_position)*60)/100)+40));
+					}
+				} else {
+					dc_motor_move(-40);
+				}
+			} else {
+				dc_motor_stop();
+			}
 		}
 	} else {
 		dc_motor_stop();
@@ -58,7 +82,7 @@ void
 _lens_event_handler(const event_t event)
 {
 	switch (_lens_mode) {
-			case LENS_MODE_INIT:
+		case LENS_MODE_INIT:
 			_lens_mode = LENS_MODE_RUN;
 			break;
 		case LENS_MODE_RUN:

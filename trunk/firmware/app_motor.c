@@ -9,6 +9,8 @@
 
 #include "windowmanager.h"
 
+static sint16 dc_motor_speed = 0;
+
 void
 _app_motor_init(void *data)
 {
@@ -51,13 +53,17 @@ _app_motor_event_handler(const event_t event)
 					break;
 				case KEYBOARD_UP:
 					lcd_gotoxy(0, 3);
-					lcd_display_line(PSTR("dc-motor: FWD"));
-					dc_motor_move(50);
+					lcd_display_string(PSTR("dc-motor: UP "));
+					dc_motor_speed += 10;
+					lcd_display_number(dc_motor_speed);
+					dc_motor_move(dc_motor_speed);
 					break;
 				case KEYBOARD_DOWN:
 					lcd_gotoxy(0, 3);
-					lcd_display_line(PSTR("dc-motor: REV"));
-					dc_motor_move(-50);
+					lcd_display_string(PSTR("dc-motor: DOWN "));
+					dc_motor_speed -= 10;
+					lcd_display_number(dc_motor_speed);
+					dc_motor_move(dc_motor_speed);
 					break;
 				case KEYBOARD_MENU_RIGHT:
 					lcd_gotoxy(0, 3);

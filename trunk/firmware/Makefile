@@ -16,7 +16,6 @@ LDFLAGS= -Wa
 
 CC= avr-gcc
 CFLAGS= -fgnu89-inline -funsigned-bitfields -fpack-struct -fshort-enums -std=gnu99 -mmcu=atmega8535 -mcall-prologues -Wall -Os -DF_CPU=8000000UL
-
 NO_MAN=
 
 ###########################################

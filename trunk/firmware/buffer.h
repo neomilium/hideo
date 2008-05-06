@@ -18,11 +18,11 @@
  * @endcode
  * @par Overview
  * This byte-buffer structure provides an easy and efficient way to store and
- * process a stream of bytes.  You can create as many buffers as you like
+ * process a stream of bytes. You can create as many buffers as you like
  * (within memory limits), and then use this common set of functions to access
  * each buffer.  The buffers are designed for FIFO
- * operation (first in, first out). This means that the first byte you put in
- * the buffer will be the first one you get when you read out the buffer. 
+ * operation (first in, first out). This means that the first byte you put in
+ * the buffer will be the first one you get when you read out the buffer.
  * Supported functions include buffer initialize, get byte from front of
  * buffer, add byte to end of buffer, check if buffer is full, and flush
  * buffer.  The buffer uses a circular design so no copying of data is ever
