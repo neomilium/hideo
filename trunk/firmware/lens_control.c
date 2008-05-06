@@ -24,17 +24,18 @@ static volatile uint8 _lens_mode = LENS_MODE_INIT;
 #define LENS_LIMIT_DDR			DDRC
 #define LENS_LIMIT_MASK			0b10000000
 
+#define LENS_SPEED_MAX		80
+#define LENS_SPEED_MIN		35
+
+#define LENS_TOLERANCE		2
+
 void
 lens_init(void)
 {
 	register_set(LENS_LIMIT_DDR, 0, LENS_LIMIT_MASK);	/* set as input */
 	register_set(LENS_LIMIT_PORT, 0b10000000, LENS_LIMIT_MASK);	/* enable pull-up */
 
-	dc_motor_move(80);
-
-	while (LENS_LIMIT_SWITCH) {
-	};
-	dc_motor_stop();
+	dc_motor_move(LENS_SPEED_MAX);
 
 	eventmanager_add_polling_fct(_lens_poll);
 	eventmanager_add_handling_fct(_lens_event_handler);
@@ -43,38 +44,37 @@ lens_init(void)
 void
 _lens_poll(void)
 {
-	if (_lens_current_position != _lens_wanted_position) {
-		if ((_lens_current_position - _lens_wanted_position) > 0) {
-			if ((_lens_current_position - _lens_wanted_position) > 4) {
-				if ((_lens_current_position - _lens_wanted_position) > 20) {
-					if ((_lens_current_position - _lens_wanted_position) > 100) {
-						dc_motor_move(80);
+	if (_lens_mode == LENS_MODE_RUN) {
+		if (_lens_current_position != _lens_wanted_position) {
+			sint16 _lens_poll_position_diff = _lens_current_position - _lens_wanted_position;
+	
+			if (_lens_poll_position_diff < 0) {
+				_lens_poll_position_diff = -(_lens_poll_position_diff);
+			}
+	
+			sint8 _lens_poll_speed = 0;
+	
+			if (_lens_poll_position_diff > LENS_TOLERANCE) {
+				if (_lens_poll_position_diff > 20) {
+					if (_lens_poll_position_diff > 100) {
+						_lens_poll_speed = LENS_SPEED_MAX;
 					} else {
-						dc_motor_move((((_lens_current_position - _lens_wanted_position)*60)/100)+40);
+						_lens_poll_speed = (((_lens_poll_position_diff * (LENS_SPEED_MAX - LENS_SPEED_MIN)) / 100) + LENS_SPEED_MIN);
 					}
 				} else {
-					dc_motor_move(40);
+					_lens_poll_speed = LENS_SPEED_MIN;
 				}
 			} else {
-				dc_motor_stop();
+				_lens_poll_speed = 0;
 			}
+	
+			if((_lens_current_position - _lens_wanted_position) < 0) {
+				_lens_poll_speed = -(_lens_poll_speed);
+			}
+			dc_motor_move(_lens_poll_speed);
 		} else {
-			if ((_lens_wanted_position - _lens_current_position) > 4) {
-				if ((_lens_wanted_position - _lens_current_position) > 20) {
-					if ((_lens_wanted_position - _lens_current_position) > 100) {
-						dc_motor_move(-80);
-					} else {
-						dc_motor_move(-((((_lens_wanted_position - _lens_current_position)*60)/100)+40));
-					}
-				} else {
-					dc_motor_move(-40);
-				}
-			} else {
-				dc_motor_stop();
-			}
+			dc_motor_stop();
 		}
-	} else {
-		dc_motor_stop();
 	}
 }
 
@@ -83,10 +83,28 @@ _lens_event_handler(const event_t event)
 {
 	switch (_lens_mode) {
 		case LENS_MODE_INIT:
-			_lens_mode = LENS_MODE_RUN;
+			switch (event.code) {
+				case E_MOUSE_BUTTON_PRESSED:
+					switch (event.data) {
+						case MOUSE_BUTTON_RIGHT:
+							_lens_mode = LENS_MODE_RUN;
+							dc_motor_stop();
+							_lens_wanted_position = 300;
+					}
+					break;
+				default:
+					break;
+			}
 			break;
 		case LENS_MODE_RUN:
 			switch (event.code) {
+				case E_MOUSE_BUTTON_PRESSED:
+					switch (event.data) {
+						case MOUSE_BUTTON_RIGHT:
+							_lens_current_position = 0;
+							dc_motor_stop();
+					}
+					break;
 				case E_MOUSE_Y_REV:
 					_lens_current_position += (unsigned)event.data;
 					break;

@@ -55,8 +55,8 @@ i2c_init(void)
 	/* TODO: should #ifdef these */
 	sbi(PORTC, 0);		/* i2c SCL on ATmega163,323,16,32,etc */
 	sbi(PORTC, 1);		/* i2c SDA on ATmega163,323,16,32,etc */
-	sbi(PORTD, 0);		/* i2c SCL on ATmega128,64 */
-	sbi(PORTD, 1);		/* i2c SDA on ATmega128,64 */
+// 	sbi(PORTD, 0);		/* i2c SCL on ATmega128,64 */
+// 	sbi(PORTD, 1);		/* i2c SDA on ATmega128,64 */
 
 	/* clear SlaveReceive and SlaveTransmit handler to null */
 	i2c_slave_receive = 0;
