@@ -11,8 +11,6 @@
     <FILE SHOWN="FALSE" NAME="app_keyboard.h" />
     <FILE SHOWN="FALSE" NAME="app_lcd.c" />
     <FILE SHOWN="FALSE" NAME="app_lcd.h" />
-    <FILE SHOWN="FALSE" NAME="app_lens.c" />
-    <FILE SHOWN="FALSE" NAME="app_lens.h" />
     <FILE SHOWN="FALSE" NAME="application.h" />
     <FILE SHOWN="FALSE" NAME="app_mainmenu.c" />
     <FILE SHOWN="FALSE" NAME="app_mainmenu.h" />
@@ -58,8 +56,6 @@
     <FILE SHOWN="FALSE" NAME="keyboard.h" />
     <FILE SHOWN="FALSE" NAME="lcd.c" />
     <FILE SHOWN="FALSE" NAME="lcd.h" />
-    <FILE SHOWN="FALSE" NAME="lens_control.c" />
-    <FILE SHOWN="FALSE" NAME="lens_control.h" />
     <FILE SHOWN="FALSE" NAME="main.c" />
     <FILE SHOWN="FALSE" NAME="menus.c" />
     <FILE SHOWN="FALSE" NAME="menus.h" />
@@ -70,6 +66,10 @@
     <FILE SHOWN="FALSE" NAME="windowmanager.h" />
     <FILE SHOWN="FALSE" NAME="i2ceeprom.c" />
     <FILE SHOWN="FALSE" NAME="i2ceeprom.h" />
+    <FILE SHOWN="FALSE" NAME="app_display.c" />
+    <FILE SHOWN="FALSE" NAME="app_display.h" />
+    <FILE SHOWN="FALSE" NAME="display_control.c" />
+    <FILE SHOWN="FALSE" NAME="display_control.h" />
   </FILES>
   <SETTINGS>
     <ASSEMBLER_COMMAND VALUE="avr-gcc" />

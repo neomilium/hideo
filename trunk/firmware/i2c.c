@@ -368,7 +368,6 @@ i2cMasterTransferNI(u08 deviceAddr, u08 sendlength, u08 * senddata, u08 receivel
 	/* enable TWI interrupt */
 	sbi(TWCR, TWIE);
 }
-#endif
 
 /* ! I2C (TWI) interrupt service routine */
 SIGNAL(SIG_2WIRE_SERIAL)
@@ -565,6 +564,7 @@ SIGNAL(SIG_2WIRE_SERIAL)
 			break;
 	}
 }
+#endif
 
 e_i2c_state_type
 i2c_get_state(void)

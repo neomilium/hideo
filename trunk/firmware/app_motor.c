@@ -41,24 +41,24 @@ _app_motor_event_handler(const event_t event)
 			 */
 		case E_KEY_PRESSED:
 			switch (event.data) {
-				case KEYBOARD_LEFT:
+				case KEYBOARD_UP:
 					lcd_gotoxy(0, 2);
 					lcd_display_line(PSTR("stepper: FWD"));
-					stepper_motor_move(50);
+					stepper_motor_move(5);
 					break;
-				case KEYBOARD_RIGHT:
+				case KEYBOARD_DOWN:
 					lcd_gotoxy(0, 2);
 					lcd_display_line(PSTR("stepper: REV"));
-					stepper_motor_move(-30);
+					stepper_motor_move(-5);
 					break;
-				case KEYBOARD_UP:
+				case KEYBOARD_LEFT:
 					lcd_gotoxy(0, 3);
 					lcd_display_string(PSTR("dc-motor: UP "));
 					dc_motor_speed += 10;
 					lcd_display_number(dc_motor_speed);
 					dc_motor_move(dc_motor_speed);
 					break;
-				case KEYBOARD_DOWN:
+				case KEYBOARD_RIGHT:
 					lcd_gotoxy(0, 3);
 					lcd_display_string(PSTR("dc-motor: DOWN "));
 					dc_motor_speed -= 10;

@@ -8,7 +8,7 @@
 #define DC_MOTOR_PORT			PORTC
 #define DC_MOTOR_DDR			DDRC
 #define DC_MOTOR_MASK			0b00111100
-#define DC_MOTOR_DDR_CONFIG		0b00001100
+#define DC_MOTOR_DDR_CONFIG		0b00111100
 
 #define DC_MOTOR_ENABLE			GET_BIT(PORTD).bit5
 
@@ -27,11 +27,15 @@ dc_motor_init(void)
 void
 dc_motor_move(sint8 speed)
 {
-	if (speed < 0) {
-		register_set(DC_MOTOR_PORT, DC_MOTOR_MOVE_REV, DC_MOTOR_MASK);
-		speed = -speed;
+	if (speed != 0) {
+		if (speed < 0) {
+			register_set(DC_MOTOR_PORT, DC_MOTOR_MOVE_REV, DC_MOTOR_MASK);
+			speed = -speed;
+		} else {
+			register_set(DC_MOTOR_PORT, DC_MOTOR_MOVE_FWD, DC_MOTOR_MASK);
+		}
 	} else {
-		register_set(DC_MOTOR_PORT, DC_MOTOR_MOVE_FWD, DC_MOTOR_MASK);
+		register_set(DC_MOTOR_PORT, DC_MOTOR_MOVE_STP, DC_MOTOR_MASK);
 	}
 	pwm_A_set(speed);
 }
@@ -39,6 +43,5 @@ dc_motor_move(sint8 speed)
 void
 dc_motor_stop(void)
 {
-	register_set(DC_MOTOR_PORT, DC_MOTOR_MOVE_STP, DC_MOTOR_MASK);
-	pwm_A_set(0);
+	dc_motor_move(0);
 }

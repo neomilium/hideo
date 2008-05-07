@@ -14,12 +14,12 @@
 #include "app_mainmenu.h"
 #include "app_mouse.h"
 #include "app_motor.h"
-#include "app_lens.h"
+#include "app_display.h"
 #include "app_date.h"
 #include "app_keyboard.h"
 #include "app_eeprom.h"
 
-#include "lens_control.h"
+#include "display_control.h"
 #include "drv_dc-motor.h"
 #include "drv_stepper-motor.h"
 #include "drv_ps2_mouse.h"
@@ -41,14 +41,14 @@ main(void)
 
 	/* Devices part */
 	ps2_mouse_init();
-/* stepper_motor_init(); */
+	stepper_motor_init();
 	dc_motor_init();
 	i2c_init();
 	rtc_init();		/* /!\ Require i2c_init() */
 
 	/* Daemons part */
 
-	lens_init();		/* /!\ Require dc_motor_init(),
+	display_init();		/* /!\ Require dc_motor_init(),
 				 * ps2_mouse_init() */
 
 	/* Applications part */
@@ -56,7 +56,7 @@ main(void)
 /* app_temperature_init(); */
 	app_motor_init();
 	app_mouse_init();
-	app_lens_init();
+	app_display_init();
 	app_date_init();
 	app_eeprom_init();
 
