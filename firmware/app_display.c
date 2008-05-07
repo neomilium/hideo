@@ -4,9 +4,10 @@
 
 #include "display_control.h"
 #include "drv_ps2_mouse.h"
-#include "lcd.h"
 
+#include "lcd.h"
 #include "keyboard.h"
+#include "eeprom.h"
 
 #include "windowmanager.h"
 
@@ -18,6 +19,9 @@ void _app_display_update_display(void);
 void
 _app_display_init(void *data)
 {
+	eeprom_read( EEPROM_MEMMAP__DISPLAY_LENS, sizeof(_lens_wanted_position), &_lens_wanted_position );
+	eeprom_read( EEPROM_MEMMAP__DISPLAY_TRAPEZOID, sizeof(_trapezoid_wanted_position), &_trapezoid_wanted_position );
+
 	_app_display_update_display();
 }
 
