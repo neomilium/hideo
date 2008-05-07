@@ -1,6 +1,7 @@
 #include "display_control.h"
 
 #include "hideo.h"
+#include "eeprom.h"
 
 #include "eventmanager.h"
 #include "drv_ps2_mouse.h"
@@ -34,7 +35,7 @@ static volatile uint8 _display_lens_mode = DISPLAY_LENS_MODE_INIT;
 
 static volatile sint16 _display_trapezoid_current_position = 0;
 static volatile sint16 _display_trapezoid_wanted_position = 0;
-static volatile uint8 _display_trapezoid_mode = DISPLAY_LENS_MODE_INIT;
+static volatile uint8 _display_trapezoid_mode = DISPLAY_TRAPEZOID_MODE_INIT;
 
 
 void
@@ -42,9 +43,11 @@ display_init(void)
 {
 	/* Lens */
 	dc_motor_move(DISPLAY_LENS_SPEED_MAX);
+	eeprom_read( EEPROM_MEMMAP__DISPLAY_LENS, sizeof(_display_lens_wanted_position), &_display_lens_wanted_position );
 
 	/* Trapezoid */
-
+	eeprom_read( EEPROM_MEMMAP__DISPLAY_TRAPEZOID, sizeof(_display_trapezoid_wanted_position), &_display_trapezoid_wanted_position );
+	
 	/* Common */
 	eventmanager_add_polling_fct(_display_poll);
 	eventmanager_add_handling_fct(_display_event_handler);
@@ -123,7 +126,6 @@ _display_event_handler(const event_t event)
 						case MOUSE_BUTTON_RIGHT:
 							_display_lens_mode = DISPLAY_LENS_MODE_RUN;
 							dc_motor_stop();
-							_display_lens_wanted_position = 300;
 					}
 					break;
 				default:
@@ -160,7 +162,6 @@ _display_event_handler(const event_t event)
 					switch (event.data) {
 						case MOUSE_BUTTON_MIDDLE:
 							_display_trapezoid_mode = DISPLAY_LENS_MODE_RUN;
-							_display_trapezoid_wanted_position = 200;
 							break;
 						default:
 							break;
@@ -179,6 +180,7 @@ void
 display_lens_set_position(sint16 position)
 {
 	_display_lens_wanted_position = position;
+	eeprom_write( EEPROM_MEMMAP__DISPLAY_LENS, &_display_lens_wanted_position, sizeof(_display_lens_wanted_position) );
 }
 
 /*
@@ -193,6 +195,7 @@ void
 display_trapezoid_set_position(sint16 position)
 {
 	_display_trapezoid_wanted_position = position;
+	eeprom_write( EEPROM_MEMMAP__DISPLAY_TRAPEZOID, &_display_trapezoid_wanted_position, sizeof(_display_trapezoid_wanted_position) );
 }
 
 /*

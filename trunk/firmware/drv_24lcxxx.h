@@ -4,7 +4,7 @@
 #include "types.h"
 
 void		drv_24lcxxx_init(void);
-byte		drv_24lcxxx_read_byte(const uint16 memory_address);
-void		drv_24lcxxx_write_byte(const uint16 memory_address, byte data);
+void		drv_24lcxxx_read(const uint16 memory_address, const uint8 size, const void* data);
+void		drv_24lcxxx_write(const uint16 memory_address, const void* data, const uint8 size);
 
 #endif				/* !_DRV_24LCXXX_H_ */

@@ -45,11 +45,15 @@ main(void)
 	dc_motor_init();
 	i2c_init();
 	rtc_init();		/* /!\ Require i2c_init() */
+	eeprom_init();		/* /!\ Require i2c_init() */
 
 	/* Daemons part */
 
-	display_init();		/* /!\ Require dc_motor_init(),
-				 * ps2_mouse_init() */
+	display_init();		/* /!\ Require	dc_motor_init(),
+				 *		stepper_motor_init(),
+				 *		ps2_mouse_init(),
+				 *		eeprom_init();
+				 */
 
 	/* Applications part */
 	app_keyboard_init();

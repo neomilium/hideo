@@ -12,43 +12,44 @@
 void
 _app_eeprom_init(void *data)
 {
-	byte buf0 = 0x00;
-	byte buf1 = 0x00;
+	byte buf[2] = { 0x00, 0x00 };
 	lcd_clear();
 
 	lcd_display_string(PSTR("   EEPROM"));
 	lcd_finish_line();
 
 	/* First read cycle */
-	buf0 = eeprom_read(0);
-	buf1 = eeprom_read(1);
+	eeprom_read(EEPROM_MEMMAP__DISPLAY_TRAPEZOID, 2, buf);
 	lcd_display_string(PSTR("r : "));
-	lcd_display_hex(buf0);
+	lcd_display_hex(buf[0]);
 	lcd_display_char(' ');
-	lcd_display_hex(buf1);
+	lcd_display_hex(buf[1]);
 	lcd_finish_line();
+
 
 	/* Write cycle */
-	buf0 = buf0 + 1;
-	buf1 = buf1 + 3;
-	eeprom_write(0, buf0);
-	eeprom_write(1, buf1);
+/*
+	buf[0] = buf[0] + 1;
+	buf[1] = buf[1] + 3;
+	eeprom_write(0x0000, buf, 2);
 	lcd_display_string(PSTR("w : "));
-	lcd_display_hex(buf0);
+	lcd_display_hex(buf[0]);
 	lcd_display_char(' ');
-	lcd_display_hex(buf1);
+	lcd_display_hex(buf[1]);
 	lcd_finish_line();
+*/
 
 	/* Re-read cycle */
-	buf0 = 0x00;
-	buf1 = 0x00;
-	buf0 = eeprom_read(0);
-	buf1 = eeprom_read(1);
+/*
+	buf[0] = 0x00;
+	buf[1] = 0x00;
+	eeprom_read(0, 2, buf);
 	lcd_display_string(PSTR("r : "));
-	lcd_display_hex(buf0);
+	lcd_display_hex(buf[0]);
 	lcd_display_char(' ');
-	lcd_display_hex(buf1);
+	lcd_display_hex(buf[1]);
 	lcd_finish_line();
+*/
 }
 
 void
