@@ -5,14 +5,23 @@
 #include <avr/io.h>
 #include <util/delay.h>
 
-#define STEPPER_ELECTROMAGNETS_POSITION1		0b00000100
-#define STEPPER_ELECTROMAGNETS_POSITION2		0b00001100
-#define STEPPER_ELECTROMAGNETS_POSITION3		0b00001000
-#define STEPPER_ELECTROMAGNETS_POSITION4		0b00011000
-#define STEPPER_ELECTROMAGNETS_POSITION5		0b00010000
-#define STEPPER_ELECTROMAGNETS_POSITION6		0b00110000
-#define STEPPER_ELECTROMAGNETS_POSITION7		0b00100000
-#define STEPPER_ELECTROMAGNETS_POSITION8		0b00100100
+#define STEPPER_MOTOR_PORT			PORTC
+#define STEPPER_MOTOR_DDR			DDRC
+
+#define STEPPER_MOTOR_ENABLE         		GET_BIT(PORTC).bit6
+#define STEPPER_MOTOR_ENABLE_MASK		0b01000000
+
+#define STEPPER_ELECTROMAGNETS_MASK		0b00111100
+#define STEPPER_ELECTROMAGNETS_POSITION1	0b00000100
+#define STEPPER_ELECTROMAGNETS_POSITION2	0b00001100
+#define STEPPER_ELECTROMAGNETS_POSITION3	0b00001000
+#define STEPPER_ELECTROMAGNETS_POSITION4	0b00011000
+#define STEPPER_ELECTROMAGNETS_POSITION5	0b00010000
+#define STEPPER_ELECTROMAGNETS_POSITION6	0b00110000
+#define STEPPER_ELECTROMAGNETS_POSITION7	0b00100000
+#define STEPPER_ELECTROMAGNETS_POSITION8	0b00100100
+
+#define STEPPER_MOTOR_INTERSTEP_DELAY	50
 
 static const byte _stepper_motor_positions[] = {
 	STEPPER_ELECTROMAGNETS_POSITION1,
@@ -27,31 +36,25 @@ static const byte _stepper_motor_positions[] = {
 
 static uint8	_stepper_motor_current_position = 0;
 
-#define STEPPER_MOTOR_ENABLE         GET_BIT(PORTC).bit6
-
 void
 stepper_motor_init(void)
 {
-	register_set(STEPPER_MOTOR_DDR, 0xFF, STEPPER_ELECTROMAGNETS_MASK | STEPPER_MOTORS_ENABLE_MASK);
+	register_set(STEPPER_MOTOR_DDR, 0xFF, STEPPER_ELECTROMAGNETS_MASK | STEPPER_MOTOR_ENABLE_MASK);
 	STEPPER_MOTOR_ENABLE = 0;
 }
 
 void
 stepper_motor_increment(void)
 {
-	byte		port = STEPPER_MOTOR_PORT & (~STEPPER_ELECTROMAGNETS_MASK);
-	port |= ((_stepper_motor_positions[_stepper_motor_current_position]) & STEPPER_ELECTROMAGNETS_MASK);
-	STEPPER_MOTOR_PORT = port;
 	_stepper_motor_current_position = (_stepper_motor_current_position + 1) % 8;
+	register_set(STEPPER_MOTOR_PORT, (_stepper_motor_positions[_stepper_motor_current_position]), STEPPER_ELECTROMAGNETS_MASK);
 }
 
 void
 stepper_motor_decrement(void)
 {
-	byte		port = STEPPER_MOTOR_PORT & (~STEPPER_ELECTROMAGNETS_MASK);
-	port |= ((_stepper_motor_positions[_stepper_motor_current_position]) & STEPPER_ELECTROMAGNETS_MASK);
-	STEPPER_MOTOR_PORT = port;
 	_stepper_motor_current_position = (_stepper_motor_current_position + 8 - 1) % 8;
+	register_set(STEPPER_MOTOR_PORT, (_stepper_motor_positions[_stepper_motor_current_position]), STEPPER_ELECTROMAGNETS_MASK);
 }
 
 void
@@ -62,22 +65,14 @@ stepper_motor_move(sint16 steps)
 		for (sint16 i = steps; i > 0; i--) {
 			stepper_motor_increment();
 			for (uint8 d = 0; d < 100; d++)
-				_delay_us(10);
+				_delay_us(STEPPER_MOTOR_INTERSTEP_DELAY);
 		}
 	} else {
 		for (sint16 i = steps; i < 0; i++) {
 			stepper_motor_decrement();
 			for (uint8 d = 0; d < 100; d++)
-				_delay_us(10);
+				_delay_us(STEPPER_MOTOR_INTERSTEP_DELAY);
 		}
 	}
-	/*
-	 * lcd_gotoxy(0,2); lcd_display_string(PSTR("Port:"));
-	 * lcd_display_hex(STEPPER_MOTOR_PORT); lcd_gotoxy(0,3);
-	 * lcd_display_string(PSTR("Pos:"));
-	 * lcd_display_number(_stepper_motor_current_position);
-	 * lcd_gotoxy(0,4); lcd_display_string(PSTR("DDR:"));
-	 * lcd_display_hex(STEPPER_MOTOR_DDR);
-	 */
 	STEPPER_MOTOR_ENABLE = 0;
 }

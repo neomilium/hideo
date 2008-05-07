@@ -4,8 +4,8 @@
 
 #include "date.h"
 
-#define _NOK_MODE_NORMAL   0x00
-#define _NOK_MODE_INVERTED 0xFF
+#define _NOK_MODE_NORMAL		0x00
+#define _NOK_MODE_INVERTED		0xFF
 
 
 const prog_uchar ascii_table[128][5] = {
