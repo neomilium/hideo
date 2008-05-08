@@ -24,21 +24,6 @@ _app_motor_event_handler(const event_t event)
 	lcd_display_line(PSTR("  Motors"));
 
 	switch (event.code) {
-			/*
-			 * case E_MOUSE_X_REV: _motor_x +=
-			 * (unsigned)event.data; lcd_gotoxy(12,2);
-			 * lcd_display_number(_motor_x); lcd_finish_line();
-			 * break; case E_MOUSE_X_FWD: _motor_x -=
-			 * (unsigned)event.data; lcd_gotoxy(12,2);
-			 * lcd_display_number(_motor_x); lcd_finish_line();
-			 * break; case E_MOUSE_Y_REV: _motor_y +=
-			 * (unsigned)event.data; lcd_gotoxy(12,3);
-			 * lcd_display_number(_motor_y); lcd_finish_line();
-			 * break; case E_MOUSE_Y_FWD: _motor_y -=
-			 * (unsigned)event.data; lcd_gotoxy(12,3);
-			 * lcd_display_number(_motor_y); lcd_finish_line();
-			 * break;
-			 */
 		case E_KEY_PRESSED:
 			switch (event.data) {
 				case KEYBOARD_UP:

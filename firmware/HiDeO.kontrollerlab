@@ -28,8 +28,6 @@
     <FILE SHOWN="FALSE" NAME="clist.h" />
     <FILE SHOWN="FALSE" NAME="daemon.h" />
     <FILE SHOWN="FALSE" NAME="date.h" />
-    <FILE SHOWN="FALSE" NAME="drv_24lc256.c" />
-    <FILE SHOWN="FALSE" NAME="drv_24lc256.h" />
     <FILE SHOWN="FALSE" NAME="drv_dc-motor.c" />
     <FILE SHOWN="FALSE" NAME="drv_dc-motor.h" />
     <FILE SHOWN="FALSE" NAME="drv_ds1307.c" />
@@ -64,12 +62,13 @@
     <FILE SHOWN="FALSE" NAME="types.h" />
     <FILE SHOWN="FALSE" NAME="windowmanager.c" />
     <FILE SHOWN="FALSE" NAME="windowmanager.h" />
-    <FILE SHOWN="FALSE" NAME="i2ceeprom.c" />
-    <FILE SHOWN="FALSE" NAME="i2ceeprom.h" />
     <FILE SHOWN="FALSE" NAME="app_display.c" />
     <FILE SHOWN="FALSE" NAME="app_display.h" />
     <FILE SHOWN="FALSE" NAME="display_control.c" />
     <FILE SHOWN="FALSE" NAME="display_control.h" />
+    <FILE SHOWN="FALSE" NAME="drv_24lcxxx.c" />
+    <FILE SHOWN="FALSE" NAME="drv_24lcxxx.h" />
+    <FILE SHOWN="FALSE" NAME="temperature_control.h" />
   </FILES>
   <SETTINGS>
     <ASSEMBLER_COMMAND VALUE="avr-gcc" />

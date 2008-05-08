@@ -51,12 +51,12 @@
 /* A2D voltage reference select */
 /* *this determines what is used as the */
 /* full-scale voltage point for A2D conversions */
-#define ADC_REFERENCE_AREF		0x00	/* /< 0x00 -> AREF pin,
+#define ADC_REFERENCE_AREF		0x00	/* /< 0x00 -> AREF pin,		\
 						 * internal VREF turned off */
-#define ADC_REFERENCE_AVCC		0x01	/* /< 0x01 -> AVCC pin,
+#define ADC_REFERENCE_AVCC		0x01	/* /< 0x01 -> AVCC pin,		\
 						 * internal VREF turned off */
 #define ADC_REFERENCE_RSVD		0x02	/* /< 0x02 -> Reserved */
-#define ADC_REFERENCE_256V		0x03	/* /< 0x03 -> Internal 2.56V
+#define ADC_REFERENCE_256V		0x03	/* /< 0x03 -> Internal 2.56V	\
 						 * VREF */
 /* default value */
 #define ADC_REFERENCE			ADC_REFERENCE_AVCC
@@ -76,7 +76,7 @@
 #define ADC_CH_ADC5				0x05
 #define ADC_CH_ADC6				0x06
 #define ADC_CH_ADC7				0x07
-#define ADC_CH_122V				0x1E	/* /< 1.22V voltage
+#define ADC_CH_122V				0x1E	/* /< 1.22V voltage \
 							 * reference */
 #define ADC_CH_AGND				0x1F	/* /< AGND */
 /* these channels supported only in ATmega128 */
