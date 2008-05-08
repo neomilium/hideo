@@ -112,7 +112,7 @@ static uint8	_nokia_current_x = 0;
 void
 nokia_init(void)
 {
-	NOK_DDR = 0xFF;
+	register_set(_DRV_NOKIA_DDR, 0xFF, _DRV_NOKIA_MASK);
 	NOK_DC = 1;
 	NOK_CS = 1;		/* chip disabled */
 	_delay_us(80);

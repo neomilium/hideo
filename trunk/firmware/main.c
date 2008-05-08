@@ -17,7 +17,7 @@
 #include "app_display.h"
 #include "app_date.h"
 #include "app_keyboard.h"
-#include "app_eeprom.h"
+#include "app_temperature.h"
 
 #include "display_control.h"
 #include "drv_dc-motor.h"
@@ -57,12 +57,12 @@ main(void)
 
 	/* Applications part */
 	app_keyboard_init();
-/* app_temperature_init(); */
+	app_temperature_init();
 	app_motor_init();
 	app_mouse_init();
 	app_display_init();
 	app_date_init();
-	app_eeprom_init();
+// 	app_eeprom_init();
 
 	app_mainmenu_init();
 

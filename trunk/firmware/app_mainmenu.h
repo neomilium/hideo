@@ -8,9 +8,9 @@
 					menu_item_t mainmenu_items[] = {					\
 					{ PSTR("Date"), &app_date },						\
 					{ PSTR("Motor"), &app_motor },						\
-					{ PSTR("Display"), &app_display },						\
+					{ PSTR("Display"), &app_display },					\
 					{ PSTR("Keyboard"), &app_keyboard },					\
-					{ PSTR("EEPROM"), &app_eeprom },					\
+					{ PSTR("Temperature"), &app_temperature },				\
 					{ PSTR("Mouse"), &app_mouse },						\
 				};										\
 				mainmenu.menu_items = mainmenu_items;						\

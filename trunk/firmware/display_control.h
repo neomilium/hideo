@@ -1,5 +1,5 @@
-#ifndef __LENS_CONTROL_H__
-#define __LENS_CONTROL_H__
+#ifndef _DISPLAY_CONTROL_H_
+#define _DISPLAY_CONTROL_H_
 
 #include "types.h"
 
@@ -9,4 +9,4 @@ void		display_lens_set_position(sint16 position);
 void		display_trapezoid_set_position(sint16 position);
 
 
-#endif
+#endif /* ! _DISPLAY_CONTROL_H_ */
