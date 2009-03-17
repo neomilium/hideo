@@ -18,6 +18,7 @@
 #include "app_date.h"
 #include "app_keyboard.h"
 #include "app_temperature.h"
+#include "app_hqionoff.h"
 
 #include "display_control.h"
 #include "drv_dc-motor.h"
@@ -63,11 +64,15 @@ main(void)
 	app_display_init();
 	app_date_init();
 // 	app_eeprom_init();
+	app_hqionoff_init();
 
 	app_mainmenu_init();
 
 	LED0 = 1;
-	RELAY0 = 1;
+	RELAY0 = 0;
+
+
+	VENTIL2=0;
 
 	windowmanager_init();
 
