@@ -18,7 +18,7 @@
 #include "app_date.h"
 #include "app_keyboard.h"
 #include "app_temperature.h"
-#include "app_hqionoff.h"
+#include "app_hqi.h"
 
 #include "display_control.h"
 #include "drv_dc-motor.h"
@@ -33,6 +33,9 @@ int
 main(void)
 {
 	cli();
+
+  // Backlight
+  LED0 = 1;
 
 	/*
 	 * eventmanager_init() must be called before all modules that use
@@ -57,22 +60,34 @@ main(void)
 				 */
 
 	/* Applications part */
-	app_keyboard_init();
+//	app_keyboard_init();
 	app_temperature_init();
-	app_motor_init();
-	app_mouse_init();
+//	app_motor_init();
+//	app_mouse_init();
 	app_display_init();
 	app_date_init();
 // 	app_eeprom_init();
-	app_hqionoff_init();
+//	app_hqi_init();
 
 	app_mainmenu_init();
 
-	LED0 = 1;
+  // HQI
 	RELAY0 = 0;
 
+  // LCD Fan
+	FAN1 = 1;
 
-	VENTIL2=0;
+  // HQI Fan
+  FAN0 = 1;
+
+  // VENTILO OFF"
+//   VENTIL1=0;
+//   VENTIL2=0;
+//   pwm_B_set(0);
+  // VENTILO ON
+//   VENTIL1=1;
+//   VENTIL2=1;
+//   pwm_B_set(99);
 
 	windowmanager_init();
 

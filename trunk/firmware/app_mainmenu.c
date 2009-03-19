@@ -3,8 +3,8 @@
 #include "keyboard.h"
 
 #include "windowmanager.h"
-static uint8	_menu_current_item = 0;
 
+static uint8	_menu_current_item = 0;
 static menu_t  *_menu;
 
 void

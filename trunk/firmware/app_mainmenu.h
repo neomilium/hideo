@@ -7,12 +7,8 @@
 #define app_mainmenu_init()	menu_t mainmenu;								\
 					menu_item_t mainmenu_items[] = {					\
 					{ PSTR("Date"), &app_date },						\
-					{ PSTR("Motor"), &app_motor },						\
 					{ PSTR("Display"), &app_display },					\
-					{ PSTR("Keyboard"), &app_keyboard },					\
 					{ PSTR("Temperature"), &app_temperature },				\
-					{ PSTR("Mouse"), &app_mouse },						\
-					{ PSTR("HQI on/off"), &app_hqionoff },						\
 				};										\
 				mainmenu.menu_items = mainmenu_items;						\
 				mainmenu.item_count = sizeof(mainmenu_items)/sizeof(menu_item_t);		\

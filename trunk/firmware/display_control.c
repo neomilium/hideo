@@ -43,10 +43,10 @@ display_init(void)
 {
 	/* Lens */
 	dc_motor_move(DISPLAY_LENS_SPEED_MAX);
-	eeprom_read( EEPROM_MEMMAP__DISPLAY_LENS, sizeof(_display_lens_wanted_position), &_display_lens_wanted_position );
+	eeprom_read( EEPROM_MEMMAP__DISPLAY_LENS, sizeof(_display_lens_wanted_position), (void*)&_display_lens_wanted_position );
 
 	/* Trapezoid */
-	eeprom_read( EEPROM_MEMMAP__DISPLAY_TRAPEZOID, sizeof(_display_trapezoid_wanted_position), &_display_trapezoid_wanted_position );
+	eeprom_read( EEPROM_MEMMAP__DISPLAY_TRAPEZOID, sizeof(_display_trapezoid_wanted_position), (void*)&_display_trapezoid_wanted_position );
 	
 	/* Common */
 	eventmanager_add_polling_fct(_display_poll);
@@ -180,7 +180,7 @@ void
 display_lens_set_position(sint16 position)
 {
 	_display_lens_wanted_position = position;
-	eeprom_write( EEPROM_MEMMAP__DISPLAY_LENS, &_display_lens_wanted_position, sizeof(_display_lens_wanted_position) );
+	eeprom_write( EEPROM_MEMMAP__DISPLAY_LENS, (void*)&_display_lens_wanted_position, sizeof(_display_lens_wanted_position) );
 }
 
 /*
@@ -195,7 +195,7 @@ void
 display_trapezoid_set_position(sint16 position)
 {
 	_display_trapezoid_wanted_position = position;
-	eeprom_write( EEPROM_MEMMAP__DISPLAY_TRAPEZOID, &_display_trapezoid_wanted_position, sizeof(_display_trapezoid_wanted_position) );
+	eeprom_write( EEPROM_MEMMAP__DISPLAY_TRAPEZOID, (void*)&_display_trapezoid_wanted_position, sizeof(_display_trapezoid_wanted_position) );
 }
 
 /*

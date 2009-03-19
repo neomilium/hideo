@@ -21,7 +21,7 @@ drv_24lcxxx_read(const uint16 memory_address, const uint8 size, const void* data
 	// send memory address we wish to access to the memory chip
 	while( i2c_master_send_ni(_EEPROM_ADDR, 2, _memory_address) != I2C_OK ) { };
 	// retrieve the data at this memory address
-	i2c_master_receive_ni(_EEPROM_ADDR, size, data);
+	i2c_master_receive_ni(_EEPROM_ADDR, size, (byte*)data);
 }
 
 void
@@ -34,5 +34,5 @@ drv_24lcxxx_write(const uint16 memory_address, const void* data, const uint8 siz
 
 	// send memory address we wish to access to the memory chip
 	// along with the data we wish to write
-	while( i2c_master_hsend_ni(_EEPROM_ADDR, 2, _memory_address, size, data) != I2C_OK ) { };
+	while( i2c_master_hsend_ni(_EEPROM_ADDR, 2, _memory_address, size, (byte*)data) != I2C_OK ) { };
 }

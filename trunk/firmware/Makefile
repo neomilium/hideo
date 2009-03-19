@@ -1,9 +1,9 @@
 
 PROG= hideo.out
 
-APP_SRC=	app_eeprom.c app_date.c app_keyboard.c app_lcd.c app_display.c app_mainmenu.c app_motor.c app_mouse.c app_temperature.c display_control.c
-DRV_SRC=	drv_dc-motor.c drv_ds1307.c drv_24lc256.c drv_keyboard.c drv_nokia.c drv_ps2.c drv_ps2_mouse.c drv_pwm.c drv_stepper-motor.c
-CONTRIB_SRC=	a2d.c i2c.c i2ceeprom.c
+APP_SRC=	app_eeprom.c app_date.c app_keyboard.c app_lcd.c app_display.c app_mainmenu.c app_motor.c app_mouse.c app_temperature.c app_hqi.c display_control.c
+DRV_SRC=	drv_dc-motor.c drv_ds1307.c drv_24lcxxx.c drv_keyboard.c drv_nokia.c drv_ps2.c drv_ps2_mouse.c drv_pwm.c drv_stepper-motor.c
+CONTRIB_SRC=	a2d.c i2c.c
 OS_SRC=		buffer.c clist.c eventmanager.c lcd.c main.c menus.c windowmanager.c
 
 SRCS=	${APP_SRC} ${DRV_SRC} ${OS_SRC} ${CONTRIB_SRC}
@@ -23,7 +23,7 @@ NO_MAN=
 AVRDUDE=avrdude
 
 PROGRAMMER= stk200
-MCU= m8535
+MCU= m32
 
 ###########################################
 
@@ -40,7 +40,7 @@ flash: ${HEX}
 ALLHC!= ls *.[hc]
 reindent:
 .for SRC in ${ALLHC}
-	@sed -I '' -e 's///' -e 's#//[ 	]*\(.*\)#/* \1 */#g' ${SRC}
+	@sed -I '' -e 's///' -e 's#//[ 	]*\(.*\)#/* \1 */#g' ${SRC}
 	@indent -cli1 -nfc1 ${SRC} && rm ${SRC}.BAK
 .endfor
 
