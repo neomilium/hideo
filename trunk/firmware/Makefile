@@ -15,7 +15,7 @@ HEX= ${PROG:R}.hex
 LDFLAGS= -Wa
 
 CC= avr-gcc
-CFLAGS= -fgnu89-inline -funsigned-bitfields -fpack-struct -fshort-enums -std=gnu99 -mmcu=atmega8535 -mcall-prologues -Wall -Os -DF_CPU=8000000UL
+CFLAGS= -funsigned-bitfields -fpack-struct -fshort-enums -std=gnu99 -mmcu=atmega32 -mcall-prologues -Wstrict-prototypes -Wall -Os -DF_CPU=8000000UL
 NO_MAN=
 
 ###########################################
@@ -35,7 +35,7 @@ ${HEX}:  hideo.out
 	avr-objcopy -R .eeprom -O ihex ${.ALLSRC} ${.TARGET}
 
 flash: ${HEX}
-	${SUDO} ${AVRDUDE} -p ${MCU} -c ${PROGRAMMER} -U flash:w:${HEX}
+	${SUDO} ${AVRDUDE} -p ${MCU} -c ${PROGRAMMER} -u -U flash:w:${HEX}:i
 
 ALLHC!= ls *.[hc]
 reindent:
