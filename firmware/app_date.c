@@ -15,17 +15,17 @@ void
 _app_date_event_handler(const event_t event)
 {
 	switch (event.code) {
-			case E_KEY_PRESSED:
+		case E_KEY_PRESSED:
 			switch (event.data) {
-					case KEYBOARD_MENU_LEFT:
+				case KEYBOARD_MENU_LEFT:
 					windowmanager_exit();
 					break;
 				default:
+					app_date_show_datetime();
 					break;
 			}
 			break;
 		default:
-			app_date_show_datetime();
 			break;
 	}
 }
@@ -45,7 +45,7 @@ app_date_show_datetime(void)
 	lcd_display_char('-');
 	lcd_display_bcd(datetime.date);
 
-	lcd_display_char(' ');
+	lcd_gotoxy(0, 1);
 	lcd_display_bcd(datetime.hours);
 	lcd_display_char(':');
 	lcd_display_bcd(datetime.minutes);

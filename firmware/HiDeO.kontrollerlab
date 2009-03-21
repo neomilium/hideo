@@ -1,76 +1,76 @@
 <!DOCTYPE KontrollerLab>
-<PROJECT VERSION="0.8.0-beta1" >
+<PROJECT VERSION="0.1" >
   <FILES>
     <FILE SHOWN="FALSE" NAME="a2d.c" />
-    <FILE VIEWS="4,33,400,300,4," SHOWN="TRUE" NAME="a2d.h" />
-    <FILE VIEWS="593,622,1260,710,4," SHOWN="TRUE" NAME="app_date.c" />
-    <FILE VIEWS="283,312,1260,710,4," SHOWN="TRUE" NAME="app_date.h" />
-    <FILE VIEWS="903,250,1260,710,4," SHOWN="TRUE" NAME="app_eeprom.c" />
-    <FILE VIEWS="252,281,1260,710,4," SHOWN="TRUE" NAME="app_eeprom.h" />
-    <FILE VIEWS="159,188,1260,710,4," SHOWN="TRUE" NAME="app_keyboard.c" />
-    <FILE VIEWS="66,95,1260,710,4," SHOWN="TRUE" NAME="app_keyboard.h" />
+    <FILE SHOWN="FALSE" NAME="a2d.h" />
+    <FILE SHOWN="FALSE" NAME="app_date.c" />
+    <FILE SHOWN="FALSE" NAME="app_date.h" />
+    <FILE SHOWN="FALSE" NAME="app_eeprom.c" />
+    <FILE SHOWN="FALSE" NAME="app_eeprom.h" />
+    <FILE SHOWN="FALSE" NAME="app_keyboard.c" />
+    <FILE SHOWN="FALSE" NAME="app_keyboard.h" />
     <FILE SHOWN="FALSE" NAME="app_lcd.c" />
-    <FILE VIEWS="531,467,1260,710,4," SHOWN="TRUE" NAME="app_lcd.h" />
-    <FILE VIEWS="1058,405,1260,710,4," SHOWN="TRUE" NAME="application.h" />
-    <FILE VIEWS="345,374,1260,710,4," SHOWN="TRUE" NAME="app_mainmenu.c" />
-    <FILE VIEWS="221,250,1260,710,4," SHOWN="TRUE" NAME="app_mainmenu.h" />
-    <FILE VIEWS="376,312,1260,710,4," SHOWN="TRUE" NAME="app_motor.c" />
-    <FILE VIEWS="1089,436,1260,710,4," SHOWN="TRUE" NAME="app_motor.h" />
-    <FILE VIEWS="407,343,1260,710,4," SHOWN="TRUE" NAME="app_mouse.c" />
-    <FILE VIEWS="562,498,1260,710,4," SHOWN="TRUE" NAME="app_mouse.h" />
-    <FILE VIEWS="438,374,1260,710,4," SHOWN="TRUE" NAME="app_temperature.c" />
-    <FILE VIEWS="593,529,1260,710,4," SHOWN="TRUE" NAME="app_temperature.h" />
-    <FILE VIEWS="1120,467,1260,710,4," SHOWN="TRUE" NAME="avrlibdefs.h" />
-    <FILE VIEWS="1151,498,1260,710,4," SHOWN="TRUE" NAME="avrlibtypes.h" />
-    <FILE VIEWS="469,405,1260,710,4," SHOWN="TRUE" NAME="buffer.c" />
-    <FILE VIEWS="1182,529,1260,710,4," SHOWN="TRUE" NAME="buffer.h" />
-    <FILE VIEWS="500,436,1260,710,4," SHOWN="TRUE" NAME="clist.c" />
-    <FILE VIEWS="1213,560,1260,710,4," SHOWN="TRUE" NAME="clist.h" />
-    <FILE VIEWS="1244,591,1260,710,4," SHOWN="TRUE" NAME="daemon.h" />
-    <FILE VIEWS="4,622,1260,710,4," SHOWN="TRUE" NAME="date.h" />
-    <FILE VIEWS="376,405,1260,710,4," SHOWN="TRUE" NAME="drv_dc-motor.c" />
-    <FILE VIEWS="97,33,1260,710,4," SHOWN="TRUE" NAME="drv_dc-motor.h" />
-    <FILE VIEWS="407,436,1260,710,4," SHOWN="TRUE" NAME="drv_ds1307.c" />
+    <FILE SHOWN="FALSE" NAME="app_lcd.h" />
+    <FILE SHOWN="FALSE" NAME="application.h" />
+    <FILE SHOWN="FALSE" NAME="app_mainmenu.c" />
+    <FILE SHOWN="FALSE" NAME="app_mainmenu.h" />
+    <FILE SHOWN="FALSE" NAME="app_motor.c" />
+    <FILE SHOWN="FALSE" NAME="app_motor.h" />
+    <FILE SHOWN="FALSE" NAME="app_mouse.c" />
+    <FILE SHOWN="FALSE" NAME="app_mouse.h" />
+    <FILE SHOWN="FALSE" NAME="app_temperature.c" />
+    <FILE SHOWN="FALSE" NAME="app_temperature.h" />
+    <FILE SHOWN="FALSE" NAME="avrlibdefs.h" />
+    <FILE SHOWN="FALSE" NAME="avrlibtypes.h" />
+    <FILE SHOWN="FALSE" NAME="buffer.c" />
+    <FILE SHOWN="FALSE" NAME="buffer.h" />
+    <FILE SHOWN="FALSE" NAME="clist.c" />
+    <FILE SHOWN="FALSE" NAME="clist.h" />
+    <FILE SHOWN="FALSE" NAME="daemon.h" />
+    <FILE SHOWN="FALSE" NAME="date.h" />
+    <FILE SHOWN="FALSE" NAME="drv_dc-motor.c" />
+    <FILE SHOWN="FALSE" NAME="drv_dc-motor.h" />
+    <FILE SHOWN="FALSE" NAME="drv_ds1307.c" />
     <FILE SHOWN="FALSE" NAME="drv_ds1307.h" />
-    <FILE VIEWS="500,529,1260,710,4," SHOWN="TRUE" NAME="drv_keyboard.c" />
-    <FILE VIEWS="438,467,1260,710,4," SHOWN="TRUE" NAME="drv_keyboard.h" />
-    <FILE VIEWS="717,64,1260,710,4," SHOWN="TRUE" NAME="drv_nokia.c" />
-    <FILE VIEWS="624,653,1260,710,4," SHOWN="TRUE" NAME="drv_nokia.h" />
-    <FILE VIEWS="531,560,1260,710,4," SHOWN="TRUE" NAME="drv_ps2.c" />
-    <FILE VIEWS="128,64,1260,710,4," SHOWN="TRUE" NAME="drv_ps2.h" />
-    <FILE SHOWN="FALSE" NAME="drv_ps2_mouse.c" />
-    <FILE VIEWS="159,95,1260,710,4," SHOWN="TRUE" NAME="drv_ps2_mouse.h" />
-    <FILE VIEWS="872,219,1260,710,4," SHOWN="TRUE" NAME="drv_pwm.c" />
-    <FILE VIEWS="624,560,1260,710,4," SHOWN="TRUE" NAME="drv_pwm.h" />
-    <FILE VIEWS="841,188,1260,710,4," SHOWN="TRUE" NAME="drv_stepper-motor.c" />
-    <FILE VIEWS="655,591,1260,710,4," SHOWN="TRUE" NAME="drv_stepper-motor.h" />
-    <FILE VIEWS="686,622,1260,710,4," SHOWN="TRUE" NAME="eeprom.h" />
-    <FILE VIEWS="965,312,1260,710,4," SHOWN="TRUE" NAME="eventmanager.c" />
-    <FILE VIEWS="190,126,1260,710,4," SHOWN="TRUE" NAME="eventmanager.h" />
-    <FILE VIEWS="221,157,1260,710,4," SHOWN="TRUE" NAME="global.h" />
-    <FILE VIEWS="810,157,1260,710,4," SHOWN="TRUE" NAME="i2c.c" />
-    <FILE VIEWS="252,188,1260,710,4," SHOWN="TRUE" NAME="i2cconf.h" />
+    <FILE SHOWN="FALSE" NAME="drv_keyboard.c" />
+    <FILE SHOWN="FALSE" NAME="drv_keyboard.h" />
+    <FILE SHOWN="TRUE" NAME="drv_nokia.c" />
+    <FILE SHOWN="FALSE" NAME="drv_nokia.h" />
+    <FILE SHOWN="TRUE" NAME="drv_ps2.c" />
+    <FILE SHOWN="FALSE" NAME="drv_ps2.h" />
+    <FILE SHOWN="TRUE" NAME="drv_ps2_mouse.c" />
+    <FILE SHOWN="FALSE" NAME="drv_ps2_mouse.h" />
+    <FILE SHOWN="FALSE" NAME="drv_pwm.c" />
+    <FILE SHOWN="FALSE" NAME="drv_pwm.h" />
+    <FILE SHOWN="TRUE" NAME="drv_stepper-motor.c" />
+    <FILE SHOWN="FALSE" NAME="drv_stepper-motor.h" />
+    <FILE SHOWN="FALSE" NAME="eeprom.h" />
+    <FILE SHOWN="FALSE" NAME="eventmanager.c" />
+    <FILE SHOWN="FALSE" NAME="eventmanager.h" />
+    <FILE SHOWN="FALSE" NAME="global.h" />
+    <FILE SHOWN="FALSE" NAME="i2c.c" />
+    <FILE SHOWN="FALSE" NAME="i2cconf.h" />
     <FILE SHOWN="FALSE" NAME="i2c.h" />
-    <FILE VIEWS="469,498,1260,710,4," SHOWN="TRUE" NAME="keyboard.h" />
-    <FILE VIEWS="779,126,1260,710,4," SHOWN="TRUE" NAME="lcd.c" />
-    <FILE VIEWS="562,591,1260,710,4," SHOWN="TRUE" NAME="lcd.h" />
-    <FILE VIEWS="469,498,1260,710,4," SHOWN="TRUE" NAME="main.c" />
-    <FILE VIEWS="1027,374,1260,710,4," SHOWN="TRUE" NAME="menus.c" />
-    <FILE VIEWS="655,684,1260,710,4," SHOWN="TRUE" NAME="menus.h" />
-    <FILE VIEWS="0,0,1260,710,5," SHOWN="TRUE" NAME="relay.h" />
-    <FILE VIEWS="314,250,1260,710,4," SHOWN="TRUE" NAME="rtc.h" />
-    <FILE VIEWS="748,95,1260,710,4," SHOWN="TRUE" NAME="types.h" />
-    <FILE VIEWS="996,343,1260,710,4," SHOWN="TRUE" NAME="windowmanager.c" />
-    <FILE VIEWS="686,33,1260,710,4," SHOWN="TRUE" NAME="windowmanager.h" />
-    <FILE VIEWS="500,529,1260,710,4," SHOWN="TRUE" NAME="app_display.c" />
-    <FILE VIEWS="531,560,1260,710,4," SHOWN="TRUE" NAME="app_display.h" />
-    <FILE VIEWS="934,281,1260,710,4," SHOWN="TRUE" NAME="display_control.c" />
-    <FILE VIEWS="35,653,1260,710,4," SHOWN="TRUE" NAME="display_control.h" />
+    <FILE SHOWN="FALSE" NAME="keyboard.h" />
+    <FILE SHOWN="FALSE" NAME="lcd.c" />
+    <FILE SHOWN="FALSE" NAME="lcd.h" />
+    <FILE SHOWN="TRUE" NAME="main.c" />
+    <FILE SHOWN="FALSE" NAME="menus.c" />
+    <FILE SHOWN="FALSE" NAME="menus.h" />
+    <FILE SHOWN="FALSE" NAME="relay.h" />
+    <FILE SHOWN="FALSE" NAME="rtc.h" />
+    <FILE SHOWN="FALSE" NAME="types.h" />
+    <FILE SHOWN="FALSE" NAME="windowmanager.c" />
+    <FILE SHOWN="FALSE" NAME="windowmanager.h" />
+    <FILE SHOWN="FALSE" NAME="app_display.c" />
+    <FILE SHOWN="FALSE" NAME="app_display.h" />
+    <FILE SHOWN="TRUE" NAME="display_control.c" />
+    <FILE SHOWN="FALSE" NAME="display_control.h" />
     <FILE SHOWN="FALSE" NAME="drv_24lcxxx.c" />
-    <FILE VIEWS="66,684,1260,710,4," SHOWN="TRUE" NAME="drv_24lcxxx.h" />
-    <FILE VIEWS="345,281,1260,710,4," SHOWN="TRUE" NAME="temperature_control.h" />
-    <FILE VIEWS="655,591,1260,710,4," SHOWN="TRUE" NAME="app_hqionoff.c" />
-    <FILE VIEWS="686,622,1260,710,4," SHOWN="TRUE" NAME="app_hqionoff.h" />
+    <FILE SHOWN="FALSE" NAME="drv_24lcxxx.h" />
+    <FILE SHOWN="FALSE" NAME="temperature_control.h" />
+    <FILE SHOWN="FALSE" NAME="app_hqi.c" />
+    <FILE SHOWN="FALSE" NAME="app_hqi.h" />
   </FILES>
   <SETTINGS>
     <ASSEMBLER_COMMAND VALUE="avr-gcc" />
@@ -83,7 +83,7 @@
     <COMPILER_OPT_LEVEL VALUE="s" />
     <COMPILER_STRICT_PROTOTYPES VALUE="TRUE" />
     <COMPILER_WALL VALUE="TRUE" />
-    <CPU VALUE="ATMega8535" />
+    <CPU VALUE="ATMega32" />
     <HEX_FILE VALUE="hideo.hex" />
     <LINKER_COMMAND VALUE="avr-gcc -Wa" />
     <LINKER_FLAGS VALUE="" />
