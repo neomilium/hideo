@@ -3,13 +3,12 @@
 #include <util/delay.h>
 
 #include "eventmanager.h"
+#include "scheduler.h"
 #include "windowmanager.h"
 #include "menus.h"
 
 #include "lcd.h"
 #include "relay.h"
-
-#define LED0    GET_BIT(PORTD).bit7
 
 #include "app_mainmenu.h"
 #include "app_mouse.h"
@@ -34,14 +33,12 @@ main(void)
 {
 	cli();
 
-	// Backlight
-	LED0 = 1;
-
 	/*
 	 * eventmanager_init() must be called before all modules that use
 	 * events...
 	 */
 	eventmanager_init();
+	scheduler_init();
 
 	/* Devices part */
 	stepper_motor_init();

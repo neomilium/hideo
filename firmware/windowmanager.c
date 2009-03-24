@@ -2,22 +2,44 @@
 
 #include "lcd.h"
 #include "keyboard.h"
+#include "leds.h"
+
+#include "app_screensaver.h"
 
 #define WM_MAX_APPLICATION_STACK_DEPTH 3
+#define WM_SCREENSAVER_DELAY 5
 
 static application_t *_application_stack[WM_MAX_APPLICATION_STACK_DEPTH];
 static uint8	_current_depth = -1;
+
+static uint8	_inactivity_counter = 0;
+
+// dirty hack ^^
+static app_screensaver_init();
 
 void
 windowmanager_init(void)
 {
 	lcd_init();
 	keyboard_init();
+
+	// Backlight
+	LED0 = 1;
 }
 
 void
 windowmanager_process_events(const event_t event)
 {
+	if(event.code == E_SCHEDULER_TICK) {
+		_inactivity_counter++;
+	} else if((event.code == E_KEY_PRESSED) || (event.code == E_KEY_RELEASED)) {
+		_inactivity_counter = 0;
+	}
+
+	if((_inactivity_counter > WM_SCREENSAVER_DELAY) && (_application_stack[_current_depth] != &app_screensaver)) {
+		windowmanager_launch(&app_screensaver);
+	}
+
 	_application_stack[_current_depth]->fn_event_handler(event);
 }
 

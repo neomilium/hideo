@@ -19,7 +19,9 @@ typedef enum {
 	E_MOUSE_X_FWD,
 
 	E_MOUSE_Y_REV,
-	E_MOUSE_Y_FWD
+	E_MOUSE_Y_FWD,
+
+	E_SCHEDULER_TICK
 }		event_code_t;
 
 typedef struct {
