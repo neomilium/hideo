@@ -65,7 +65,7 @@ main(void)
 // 	app_motor_init();
 // 	app_mouse_init();
 // 	app_eeprom_init();
-// 	app_temperature_init();
+ 	app_temperature_init();
 
 // 	/* Applications part */
 	app_display_init();
