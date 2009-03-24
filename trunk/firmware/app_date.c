@@ -25,6 +25,9 @@ _app_date_event_handler(const event_t event)
 					break;
 			}
 			break;
+		case E_SCHEDULER_TICK:
+			app_date_show_datetime();
+			break;
 		default:
 			break;
 	}
