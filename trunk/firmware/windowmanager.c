@@ -17,6 +17,8 @@ static uint8	_inactivity_counter = 0;
 // dirty hack ^^
 static app_screensaver_init();
 
+static uint8 _screesaver_is_enabled = 1;
+
 void
 windowmanager_init(void)
 {
@@ -30,17 +32,32 @@ windowmanager_init(void)
 void
 windowmanager_process_events(const event_t event)
 {
-	if(event.code == E_SCHEDULER_TICK) {
-		_inactivity_counter++;
-	} else if((event.code == E_KEY_PRESSED) || (event.code == E_KEY_RELEASED)) {
-		_inactivity_counter = 0;
-	}
-
-	if((_inactivity_counter > WM_SCREENSAVER_DELAY) && (_application_stack[_current_depth] != &app_screensaver)) {
-		windowmanager_launch(&app_screensaver);
+	if( _screesaver_is_enabled ) {
+		if(event.code == E_SCHEDULER_TICK) {
+			_inactivity_counter++;
+		} else if((event.code == E_KEY_PRESSED) || (event.code == E_KEY_RELEASED)) {
+			_inactivity_counter = 0;
+		}
+	
+		if((_inactivity_counter > WM_SCREENSAVER_DELAY) && (_application_stack[_current_depth] != &app_screensaver)) {
+			windowmanager_launch(&app_screensaver);
+		}
 	}
 
 	_application_stack[_current_depth]->fn_event_handler(event);
+}
+
+void
+windowmanager_screensaver_disable(void)
+{
+	_screesaver_is_enabled = 0;
+}
+
+void
+windowmanager_screensaver_enable(void)
+{
+	_screesaver_is_enabled = 1;
+	_inactivity_counter = 0;
 }
 
 void

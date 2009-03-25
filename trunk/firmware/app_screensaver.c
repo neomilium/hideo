@@ -9,7 +9,6 @@ void
 _app_screensaver_init(void *data)
 {
 	lcd_clear();
-	lcd_gotoxy(0, 0);
 	LED0 = 0; // Backlight ON
 }
 

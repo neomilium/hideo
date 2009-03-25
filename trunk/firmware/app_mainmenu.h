@@ -6,9 +6,10 @@
 
 #define app_mainmenu_init()	menu_t mainmenu;								\
 					menu_item_t mainmenu_items[] = {					\
-					{ PSTR("Display"), &app_display },						\
+					{ PSTR("Display"), &app_display },					\
 					{ PSTR("Date"), &app_date },						\
 					{ PSTR("HQI"), &app_hqi },						\
+					{ PSTR("Power off"), &app_poweroff },					\
 				};										\
 				mainmenu.menu_items = mainmenu_items;						\
 				mainmenu.item_count = sizeof(mainmenu_items)/sizeof(menu_item_t);		\
