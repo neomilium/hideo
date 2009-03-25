@@ -34,15 +34,15 @@
     <FILE SHOWN="FALSE" NAME="drv_ds1307.h" />
     <FILE SHOWN="FALSE" NAME="drv_keyboard.c" />
     <FILE SHOWN="FALSE" NAME="drv_keyboard.h" />
-    <FILE SHOWN="TRUE" NAME="drv_nokia.c" />
+    <FILE SHOWN="FALSE" NAME="drv_nokia.c" />
     <FILE SHOWN="FALSE" NAME="drv_nokia.h" />
-    <FILE SHOWN="TRUE" NAME="drv_ps2.c" />
+    <FILE SHOWN="FALSE" NAME="drv_ps2.c" />
     <FILE SHOWN="FALSE" NAME="drv_ps2.h" />
-    <FILE SHOWN="TRUE" NAME="drv_ps2_mouse.c" />
+    <FILE SHOWN="FALSE" NAME="drv_ps2_mouse.c" />
     <FILE SHOWN="FALSE" NAME="drv_ps2_mouse.h" />
     <FILE SHOWN="FALSE" NAME="drv_pwm.c" />
     <FILE SHOWN="FALSE" NAME="drv_pwm.h" />
-    <FILE SHOWN="TRUE" NAME="drv_stepper-motor.c" />
+    <FILE SHOWN="FALSE" NAME="drv_stepper-motor.c" />
     <FILE SHOWN="FALSE" NAME="drv_stepper-motor.h" />
     <FILE SHOWN="FALSE" NAME="eeprom.h" />
     <FILE SHOWN="FALSE" NAME="eventmanager.c" />
@@ -54,7 +54,7 @@
     <FILE SHOWN="FALSE" NAME="keyboard.h" />
     <FILE SHOWN="FALSE" NAME="lcd.c" />
     <FILE SHOWN="FALSE" NAME="lcd.h" />
-    <FILE SHOWN="TRUE" NAME="main.c" />
+    <FILE SHOWN="FALSE" NAME="main.c" />
     <FILE SHOWN="FALSE" NAME="menus.c" />
     <FILE SHOWN="FALSE" NAME="menus.h" />
     <FILE SHOWN="FALSE" NAME="relay.h" />
@@ -64,13 +64,22 @@
     <FILE SHOWN="FALSE" NAME="windowmanager.h" />
     <FILE SHOWN="FALSE" NAME="app_display.c" />
     <FILE SHOWN="FALSE" NAME="app_display.h" />
-    <FILE SHOWN="TRUE" NAME="display_control.c" />
+    <FILE SHOWN="FALSE" NAME="display_control.c" />
     <FILE SHOWN="FALSE" NAME="display_control.h" />
     <FILE SHOWN="FALSE" NAME="drv_24lcxxx.c" />
     <FILE SHOWN="FALSE" NAME="drv_24lcxxx.h" />
     <FILE SHOWN="FALSE" NAME="temperature_control.h" />
     <FILE SHOWN="FALSE" NAME="app_hqi.c" />
     <FILE SHOWN="FALSE" NAME="app_hqi.h" />
+    <FILE SHOWN="FALSE" NAME="scheduler.h" />
+    <FILE SHOWN="FALSE" NAME="scheduler.c" />
+    <FILE SHOWN="FALSE" NAME="app_screensaver.h" />
+    <FILE SHOWN="FALSE" NAME="app_screensaver.c" />
+    <FILE SHOWN="FALSE" NAME="hideo.h" />
+    <FILE SHOWN="FALSE" NAME="leds.h" />
+    <FILE SHOWN="FALSE" NAME="app_poweroff.h" />
+    <FILE SHOWN="FALSE" NAME="app_poweroff.c" />
+    <FILE SHOWN="FALSE" NAME="fans.h" />
   </FILES>
   <SETTINGS>
     <ASSEMBLER_COMMAND VALUE="avr-gcc" />
