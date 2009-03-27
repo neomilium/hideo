@@ -80,6 +80,8 @@
     <FILE SHOWN="FALSE" NAME="app_poweroff.h" />
     <FILE SHOWN="FALSE" NAME="app_poweroff.c" />
     <FILE SHOWN="FALSE" NAME="fans.h" />
+    <FILE SHOWN="FALSE" NAME="hqi_control.h" />
+    <FILE SHOWN="FALSE" NAME="hqi_control.c" />
   </FILES>
   <SETTINGS>
     <ASSEMBLER_COMMAND VALUE="avr-gcc" />
