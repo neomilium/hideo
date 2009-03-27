@@ -10,28 +10,31 @@
 #include "windowmanager.h"
 
 #include "display_control.h"
+#include "hqi_control.h"
 
 #define PO_SHUTDOWN_CANCEL_DELAY	10
-#define PO_COOLING_HQI_DURATION		30
 
 typedef enum {
-	PO_MODE_SHUTDOWN,
-	PO_MODE_COOLING_HQI,
-	PO_MODE_OFF
+	PO_MODE_INTERACTIVE,
+	PO_MODE_READONLY,
 }		poweroff_mode_t;
 
-static poweroff_mode_t _mode = PO_MODE_SHUTDOWN;
+static poweroff_mode_t _mode;
 static uint8 _remaining_time_before_shutdown_process = PO_SHUTDOWN_CANCEL_DELAY;
-static uint16 _remaining_time_before_cooling_done = PO_COOLING_HQI_DURATION;
 
 void _app_poweroff_display(void);
 
 void
 _app_poweroff_init(void *data)
 {
-	if(_mode == PO_MODE_SHUTDOWN) {
+	if(hqi_mode() == HQI_MODE_RUNNING) {
+		_mode = PO_MODE_INTERACTIVE;
+	} else {
+		_mode = PO_MODE_READONLY;
+	}
+
+	if(_mode == PO_MODE_INTERACTIVE) {
 		_remaining_time_before_shutdown_process = PO_SHUTDOWN_CANCEL_DELAY;
-		_remaining_time_before_cooling_done = PO_COOLING_HQI_DURATION;
 	}
 	_app_poweroff_display();
 }
@@ -39,8 +42,8 @@ _app_poweroff_init(void *data)
 void
 _app_poweroff_display(void)
 {
-	switch (_mode) {
-		case PO_MODE_SHUTDOWN:
+	switch (hqi_mode()) {
+		case HQI_MODE_RUNNING:
 			windowmanager_screensaver_disable();
 			lcd_clear();
 			lcd_gotoxy(0,0);
@@ -50,14 +53,18 @@ _app_poweroff_display(void)
 			lcd_gotoxy(0,5);
 			lcd_display_string(PSTR("Key to cancel"));
 			break;
-		case PO_MODE_COOLING_HQI:
+		case HQI_MODE_COOLING:
 			lcd_clear();
 			lcd_gotoxy(0,0);
 			lcd_display_string(PSTR("   Poweroff"));
 			lcd_gotoxy(0,2);
 			lcd_display_string(PSTR("Cooling HQI..."));
+			lcd_gotoxy(24,3);
+			lcd_display_number(hqi_remaining_time_before_ready());
+			lcd_display_string(PSTR(" sec"));
+			lcd_finish_line();
 			break;
-		case PO_MODE_OFF:
+		case HQI_MODE_READY:
 			lcd_clear();
 			lcd_gotoxy(0,0);
 			lcd_display_string(PSTR("   Poweroff"));
@@ -72,16 +79,15 @@ void
 _app_poweroff_event_handler(const event_t event)
 {
 	switch (_mode) {
-		case PO_MODE_SHUTDOWN:
+		case PO_MODE_INTERACTIVE:
 			switch (event.code) {
 				case E_SCHEDULER_TICK:
 					_remaining_time_before_shutdown_process--;
-					if(_remaining_time_before_shutdown_process == 0) {
-						_mode = PO_MODE_COOLING_HQI;
-						_app_poweroff_display();
-
-						RELAY0 = 0; // HQI Off
+					if(0 == _remaining_time_before_shutdown_process) {
+						_mode = PO_MODE_READONLY;
+						hqi_stop();
 						display_lens_park();
+						_app_poweroff_display();
 					} else {
 						lcd_gotoxy(24,3);
 						lcd_display_number(_remaining_time_before_shutdown_process);
@@ -97,35 +103,15 @@ _app_poweroff_event_handler(const event_t event)
 					break;
 			}
 		break;
-		case PO_MODE_COOLING_HQI:
+		case PO_MODE_READONLY:
 			switch (event.code) {
 				case E_SCHEDULER_TICK:
-					_remaining_time_before_cooling_done--;
-					if(_remaining_time_before_cooling_done == 0) {
-						_mode = PO_MODE_OFF;
-
-						_app_poweroff_display();
-
-						FAN0 = 0;
-						FAN1 = 0;
-					} else {
-						lcd_gotoxy(24,3);
-						lcd_display_number(_remaining_time_before_cooling_done);
-						lcd_display_string(PSTR(" sec"));
-						lcd_finish_line();
-					}
+					_app_poweroff_display();
 					break;
-				default: // Don't do anything before HQI cooling process done.
-					break;
-			}
-		break;
-		case PO_MODE_OFF:
-			switch (event.code) {
 				case E_KEY_PRESSED:
-					_mode = PO_MODE_SHUTDOWN;
 					windowmanager_exit();
 					break;
-				default:
+				default: // Don't do anything before HQI cooling process done.
 					break;
 			}
 		break;

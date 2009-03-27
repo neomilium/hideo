@@ -9,6 +9,7 @@
 #include "fans.h"
 
 #include "display_control.h"
+#include "hqi_control.h"
 
 #include "windowmanager.h"
 #include "menus.h"
@@ -42,9 +43,7 @@ _app_hqi_event_handler(const event_t event)
 		case KEYBOARD_MENU_RIGHT:
 			if (_menu_current_item == 0) {
 				display_lens_load_position();
-				FAN0 = 1;	// HQI fan ON
-				FAN1 = 1;	// LCD fan ON
-				RELAY0 = 1;
+				hqi_start();
 			} else {
 				RELAY0 = 0;
 			}

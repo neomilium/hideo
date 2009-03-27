@@ -54,19 +54,22 @@ main(void)
 	ps2_mouse_init();
 
 	/* Daemons part */
-// 
+
 	display_init();		/* /!\ Require	dc_motor_init(),
-// 				 *		stepper_motor_init(),
-// 				 *		ps2_mouse_init(),
-// 				 *		eeprom_init();
-// 				 */
-// 
+				 *		stepper_motor_init(),
+				 *		ps2_mouse_init(),
+				 *		eeprom_init();
+				 */
+	hqi_init();		/* /!\ Require	rtc_init(),
+						eeprom_init();
+				*/
+
 	/* Debug applications part */
 // 	app_keyboard_init();
 // 	app_motor_init();
 // 	app_mouse_init();
 // 	app_eeprom_init();
- 	app_temperature_init();
+	app_temperature_init();
 	app_date_init();
 	app_hqi_init();
 
