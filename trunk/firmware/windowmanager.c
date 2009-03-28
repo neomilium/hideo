@@ -7,7 +7,7 @@
 #include "app_screensaver.h"
 
 #define WM_MAX_APPLICATION_STACK_DEPTH 3
-#define WM_SCREENSAVER_DELAY 5
+#define WM_SCREENSAVER_DELAY 10
 
 static application_t *_application_stack[WM_MAX_APPLICATION_STACK_DEPTH];
 static uint8	_current_depth = -1;

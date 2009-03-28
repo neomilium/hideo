@@ -6,20 +6,15 @@
 
 #include "lcd.h"
 #include "keyboard.h"
+#include "thermal-sensors.h"
 
 #include "windowmanager.h"
-#include "a2d.h"
-
-
-#define _TEMPERATURE_ADC_HQI		ADC_CH_ADC6
-#define _TEMPERATURE_ADC_LCD		ADC_CH_ADC7
 
 void
 _app_temperature_display(void)
 {
-	const uint8 _temperature_hqi = (a2dConvert10bit(_TEMPERATURE_ADC_HQI) / 2) + 2;
-	const uint8 _temperature_lcd = (a2dConvert10bit(_TEMPERATURE_ADC_LCD) / 2) + 2;
-	const uint8 _temperature_ref = a2dConvert10bit(ADC_CH_122V) / 2;
+	const uint8 _temperature_hqi = thermal_sensors_read(LM35_ADC_CHANNEL_HQI);
+	const uint8 _temperature_lcd = thermal_sensors_read(LM35_ADC_CHANNEL_LCD);
 
 	lcd_clear();
 	lcd_gotoxy(0, 0);
@@ -29,19 +24,11 @@ _app_temperature_display(void)
 	lcd_display_string(PSTR("Temp. LCD: "));
 	lcd_display_number(_temperature_lcd);
 	lcd_finish_line();
-	lcd_display_string(PSTR("Temp. Ref: "));
-	lcd_display_number(_temperature_ref);
 }
 
 void
 _app_temperature_init(void *data)
 {
-	register_set(DDRA, 0x00, 0b11000000);
-	register_set(PORTA, 0x00, 0b11000000);
-
-	a2dInit();
-	a2dSetReference(ADC_REFERENCE_AREF);
-
 	_app_temperature_display();
 }
 
