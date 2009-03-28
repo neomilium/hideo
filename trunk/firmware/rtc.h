@@ -18,5 +18,8 @@ typedef struct rtc_datetime rtc_datetime_t;
 #define rtc_init() drv_ds1307_init()
 #define rtc_write( X ) drv_ds1307_write( X )
 #define rtc_read() drv_ds1307_read()
+#define rtc_start() drv_ds1307_start()
+#define rtc_stop() drv_ds1307_stop()
+
 
 #endif

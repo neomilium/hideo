@@ -7,7 +7,11 @@
 #define eeprom_read	drv_24lcxxx_read
 #define eeprom_write	drv_24lcxxx_write
 
+/* lens value's size = 2 bytes */
 #define EEPROM_MEMMAP__DISPLAY_LENS		0x00
+/* trapezoid value's size = 2 bytes */
 #define EEPROM_MEMMAP__DISPLAY_TRAPEZOID	0x02
+/* HQI lifetime value's size = 7 bytes */
+#define EEPROM_MEMMAP__HQI_LIFETIME		0x04
 
 #endif /* !_EEPROM_H_ */
