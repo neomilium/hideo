@@ -14,6 +14,8 @@ void		hqi_start(void);
 void		hqi_stop(void);
 hqi_mode_t	hqi_mode(void);
 uint16		hqi_remaining_time_before_ready(void);
+uint32		hqi_uptime(void);
+uint8		hqi_temperature(void);
 void		hqi_lifetime_counter_reset(void);
 
 #endif /* ! _HQI_CONTROL_H_ */

@@ -82,6 +82,11 @@
     <FILE SHOWN="FALSE" NAME="fans.h" />
     <FILE SHOWN="FALSE" NAME="hqi_control.h" />
     <FILE SHOWN="FALSE" NAME="hqi_control.c" />
+    <FILE SHOWN="FALSE" NAME="app_status.c" />
+    <FILE SHOWN="FALSE" NAME="drv_lm35.h" />
+    <FILE SHOWN="FALSE" NAME="drv_lm35.c" />
+    <FILE SHOWN="FALSE" NAME="thermal-sensors.h" />
+    <FILE SHOWN="FALSE" NAME="app_status.h" />
   </FILES>
   <SETTINGS>
     <ASSEMBLER_COMMAND VALUE="avr-gcc" />

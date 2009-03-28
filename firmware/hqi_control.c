@@ -4,6 +4,7 @@
 
 #include "eeprom.h"
 #include "rtc.h"
+#include "thermal-sensors.h"
 
 #include "fans.h"
 #include "relay.h"
@@ -22,13 +23,13 @@ hqi_init(void)
 	eventmanager_add_handling_fct(_hqi_event_handler);
 
 	/* Debug */
-	//hqi_lifetime_counter_reset();
+	//hqi_uptime_counter_reset();
 }
 
 void
-hqi_lifetime_counter_reset(void)
+hqi_uptime_counter_reset(void)
 {
-	rtc_datetime_t hqi_lifetime = {
+	rtc_datetime_t hqi_uptime = {
 		.seconds = 0,
 		.minutes = 0,
 		.hours = 0,
@@ -37,26 +38,53 @@ hqi_lifetime_counter_reset(void)
 		.month = 0,
 		.year = 0
 	};
-	eeprom_write(EEPROM_MEMMAP__HQI_LIFETIME, &hqi_lifetime, sizeof(rtc_datetime_t));
-	rtc_write(hqi_lifetime);
+	eeprom_write(EEPROM_MEMMAP__HQI_LIFETIME, &hqi_uptime, sizeof(rtc_datetime_t));
+	rtc_write(hqi_uptime);
 }
 
 void
-_hqi_lifetime_counter_start(void)
+_hqi_uptime_counter_start(void)
 {
-	rtc_datetime_t hqi_lifetime;
-	eeprom_read(EEPROM_MEMMAP__HQI_LIFETIME, sizeof(rtc_datetime_t), &hqi_lifetime);
-	rtc_write(hqi_lifetime);
+	rtc_datetime_t hqi_uptime;
+	eeprom_read(EEPROM_MEMMAP__HQI_LIFETIME, sizeof(rtc_datetime_t), &hqi_uptime);
+	rtc_write(hqi_uptime);
 	rtc_start();
 }
 
-void
-_hqi_lifetime_counter_stop(void)
+uint32
+hqi_uptime(void)
 {
-	rtc_datetime_t hqi_lifetime;
+	rtc_datetime_t hqi_uptime;
+	uint32 hqi_uptime_in_sec;
+
+	switch(_hqi_mode) {
+		case HQI_MODE_RUNNING:
+			hqi_uptime = rtc_read();
+			break;
+		default:
+			eeprom_read(EEPROM_MEMMAP__HQI_LIFETIME, sizeof(rtc_datetime_t), &hqi_uptime);
+			break;
+	}
+	hqi_uptime_in_sec = hqi_uptime.seconds;
+	hqi_uptime_in_sec += hqi_uptime.minutes * 60;
+	hqi_uptime_in_sec += hqi_uptime.hours * 60 * 60;
+	hqi_uptime_in_sec += hqi_uptime.date * 60 * 60 * 24;
+	return hqi_uptime_in_sec;
+}
+
+uint8
+hqi_temperature(void)
+{
+	return thermal_sensors_read(LM35_ADC_CHANNEL_HQI);
+}
+
+void
+_hqi_uptime_counter_stop(void)
+{
+	rtc_datetime_t hqi_uptime;
 	rtc_stop();
-	hqi_lifetime = rtc_read();
-	eeprom_write(EEPROM_MEMMAP__HQI_LIFETIME, &hqi_lifetime, sizeof(rtc_datetime_t));
+	hqi_uptime = rtc_read();
+	eeprom_write(EEPROM_MEMMAP__HQI_LIFETIME, &hqi_uptime, sizeof(rtc_datetime_t));
 }
 
 void
@@ -71,7 +99,7 @@ hqi_start(void)
 		
 			RELAY0 = 1;	// Enable HQI
 
-			_hqi_lifetime_counter_start();
+			_hqi_uptime_counter_start();
 
 			_hqi_mode = HQI_MODE_RUNNING;
 			break;
@@ -88,7 +116,7 @@ hqi_stop(void)
 			RELAY0 = 0; 	// Disable HQI
 			_remaining_time_before_cooling_done = HQI_COOLING_DURATION;
 
-			_hqi_lifetime_counter_stop();
+			_hqi_uptime_counter_stop();
 			_hqi_mode = HQI_MODE_COOLING;
 			break;
 		default:
