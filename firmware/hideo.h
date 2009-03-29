@@ -1,7 +1,7 @@
 #ifndef _HIDEO_H_
 #define _HIDEO_H_
 
-#define register_set( REGISTER, VALUE, MASK ) do { REGISTER = ( ((REGISTER) & ~(MASK)) | (VALUE) ); } while (0)
+#define register_set( REGISTER, VALUE, MASK ) do { REGISTER = ( ((REGISTER) & ~(MASK)) | ((VALUE) & (MASK)) ); } while (0)
 
 /* Define the bits in the port */
 typedef struct {

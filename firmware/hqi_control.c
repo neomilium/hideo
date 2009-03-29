@@ -19,6 +19,7 @@ void _hqi_event_handler(const event_t event);
 void
 hqi_init(void)
 {
+	RELAY0 = 0;		// Make sure HQI is disabled after a failure on power supply.
 	rtc_stop();		// Make sure RTC doesn't count after a failure on power supply.
 	eventmanager_add_handling_fct(_hqi_event_handler);
 
@@ -92,10 +93,10 @@ hqi_start(void)
 {
 	switch(_hqi_mode) {
 		case HQI_MODE_READY:
-			FAN0 = 1;	// Enable HQI fan
+			fans_hqi_start();	// Enable HQI fan
 		
 			/* Maybe FAN1 is not supposed to be here : not related to HQI */
-			FAN1 = 1;	// Enable LCD fan
+			fans_lcd_start();	// Enable LCD fan
 		
 			RELAY0 = 1;	// Enable HQI
 
@@ -145,8 +146,8 @@ _hqi_event_handler(const event_t event)
 				case HQI_MODE_COOLING:
 					_remaining_time_before_cooling_done--;
 					if(_remaining_time_before_cooling_done == 0) {
-						FAN0 = 0;	// Disable HQI FAN
-						FAN1 = 0;	// Disable LCD FAN
+						fans_hqi_stop();	// Disable HQI FAN
+						fans_lcd_stop();	// Disable LCD FAN
 						_hqi_mode = HQI_MODE_READY;
 					}
 					break;
