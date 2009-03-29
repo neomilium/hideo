@@ -17,18 +17,20 @@
 #include "drv_dc-motor.h"
 #include "drv_stepper-motor.h"
 #include "drv_ps2_mouse.h"
+#include "drv_videocontroller.h"
 
 /* Applications */
 #include "app_mainmenu.h"
 
+#include "app_poweron.h"
 #include "app_status.h"
 #include "app_display.h"
 #include "app_poweroff.h"
 
 /* Debug apps */
 // #include "app_temperature.h"
-#include "app_date.h"
-#include "app_hqi.h"
+// #include "app_date.h"
+// #include "app_hqi.h"
 // #include "app_mouse.h"
 // #include "app_motor.h"
 // #include "app_keyboard.h"
@@ -55,8 +57,9 @@ main(void)
 	i2c_init();
 	rtc_init();			/* /!\ Require i2c_init() */
 	eeprom_init();			/* /!\ Require i2c_init() */
-	thermal_sensors_init();
 	ps2_mouse_init();
+	thermal_sensors_init();
+	drv_videocontroller_init();
 
 	/* Daemons part */
 	display_init();		/* /!\ Require	dc_motor_init(),
@@ -75,18 +78,16 @@ main(void)
 // 	app_mouse_init();
 // 	app_eeprom_init();
 // 	app_temperature_init();
-	app_date_init();
-	app_hqi_init();
+// 	app_date_init();
+// 	app_hqi_init();
 
 // 	/* Applications part */
+	app_poweron_init();
 	app_status_init();
 	app_display_init();
 	app_poweroff_init();
 
 	app_mainmenu_init();
-
-	// HQI OFF
-	RELAY0 = 0;
 
 	windowmanager_init();
 

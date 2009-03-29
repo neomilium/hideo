@@ -10,11 +10,11 @@ lm35_init(void)
 	register_set(PORTA, 0x00, 0b11000000);
 
 	a2dInit();
-	a2dSetReference(ADC_REFERENCE_AREF);
+	a2dSetReference(ADC_REFERENCE_AVCC);
 }
 
 uint8
 lm35_read(uint8 channel)
 {
-	return (a2dConvert10bit(channel) / 2) + 2;
+	return(a2dConvert10bit(channel) / 2 );
 }

@@ -25,9 +25,9 @@ static volatile uint8 _display_lens_mode = DISPLAY_LENS_MODE_INIT;
 #define DISPLAY_LENS_LIMIT_MASK			0b10000000
 
 #define DISPLAY_LENS_SPEED_MAX			75
-#define DISPLAY_LENS_SPEED_MIN			35
+#define DISPLAY_LENS_SPEED_MIN			30
 
-#define DISPLAY_LENS_TOLERANCE		2
+#define DISPLAY_LENS_TOLERANCE			3
 
 /* Trapezoid */
 #define DISPLAY_TRAPEZOID_MODE_INIT		0x00

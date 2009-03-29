@@ -65,8 +65,24 @@ _app_status_display(void)
 
 	lcd_gotoxy(0, 2);
 	lcd_display_string(PSTR("Uptime  "));
-	lcd_display_number(hqi_uptime());
-	lcd_display_string(PSTR("s"));
+	uint32 _hqi_uptime = hqi_uptime();
+	if(_hqi_uptime < 60) {
+		lcd_display_string(PSTR("   "));
+		lcd_display_number(_hqi_uptime);
+		lcd_display_string(PSTR("s"));
+	} else if (_hqi_uptime < 3600) {
+		lcd_display_string(PSTR("   "));
+		lcd_display_number(_hqi_uptime / 60);
+		lcd_display_string(PSTR("m"));
+	} else {
+		if((_hqi_uptime / 3600) < 10000) lcd_display_string(PSTR(" "));
+		if((_hqi_uptime / 3600) < 1000) lcd_display_string(PSTR(" "));
+		if((_hqi_uptime / 3600) < 100) lcd_display_string(PSTR(" "));
+		if((_hqi_uptime / 3600) < 10) lcd_display_string(PSTR(" "));
+
+		lcd_display_number(_hqi_uptime / 3600);
+		lcd_display_string(PSTR("h"));
+	}
 
 	lcd_gotoxy(0, 3);
 	lcd_display_string(PSTR("Temp.     "));

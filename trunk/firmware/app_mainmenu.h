@@ -6,10 +6,9 @@
 
 #define app_mainmenu_init()	menu_t mainmenu;								\
 					menu_item_t mainmenu_items[] = {					\
-					{ PSTR("Power on"), NULL },						\
-					{ PSTR("Status"), &app_status },						\
+					{ PSTR("Power on"), &app_poweron },					\
+					{ PSTR("Status"), &app_status },					\
 					{ PSTR("Display"), &app_display },					\
-					{ PSTR("HQI"), &app_hqi },						\
 					{ PSTR("Power off"), &app_poweroff },					\
 				};										\
 				mainmenu.menu_items = mainmenu_items;						\

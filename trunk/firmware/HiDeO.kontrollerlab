@@ -87,6 +87,9 @@
     <FILE SHOWN="FALSE" NAME="drv_lm35.c" />
     <FILE SHOWN="FALSE" NAME="thermal-sensors.h" />
     <FILE SHOWN="FALSE" NAME="app_status.h" />
+    <FILE SHOWN="FALSE" NAME="app_poweron.c" />
+    <FILE SHOWN="FALSE" NAME="app_poweron.h" />
+    <FILE SHOWN="FALSE" NAME="drv_videocontroller.c" />
   </FILES>
   <SETTINGS>
     <ASSEMBLER_COMMAND VALUE="avr-gcc" />
