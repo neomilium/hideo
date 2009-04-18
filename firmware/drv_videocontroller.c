@@ -1,11 +1,11 @@
 #include "drv_videocontroller.h"
 
+#include "windowmanager.h"
 #include "eventmanager.h"
 
 #include "a2d.h"
 #include "hqi_control.h"
 #include "display_control.h"
-
 
 typedef enum {
 	VIDEOCONTROLLER_STATUS_OFF,
@@ -15,6 +15,9 @@ typedef enum {
 #define VIDEOCONTROLLER_ADC_CHANNEL ADC_CH_ADC5
 
 static videocontroller_status_t _videocontroller_status = VIDEOCONTROLLER_STATUS_OFF;
+
+static application_t * _app_poweron;
+static application_t * _app_poweroff;
 
 void _drv_videocontroller_poll(void);
 
@@ -38,6 +41,18 @@ drv_videocontroller_status(void)
 }
 
 void
+drv_videocontroller_hook_app_poweron(application_t * app)
+{
+	_app_poweron = app;
+}
+
+void
+drv_videocontroller_hook_app_poweroff(application_t * app)
+{
+	_app_poweroff = app;
+}
+
+void
 _drv_videocontroller_poll(void)
 {
 	videocontroller_status_t videocontroller_status = drv_videocontroller_status();
@@ -47,12 +62,12 @@ _drv_videocontroller_poll(void)
 
 		switch(videocontroller_status) {
 			case VIDEOCONTROLLER_STATUS_OFF:
-				hqi_stop();
-				display_lens_park();
+				windowmanager_screensaver_disable();	// Prevent from already running screensaver
+				windowmanager_launch(_app_poweroff);
 				break;
 			case VIDEOCONTROLLER_STATUS_ON:
-				hqi_start();
-				display_lens_load_position();
+				windowmanager_screensaver_disable();	// Prevent from already running screensaver
+				windowmanager_launch(_app_poweron);
 				break;
 		}
 	}

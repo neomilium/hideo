@@ -93,6 +93,9 @@ main(void)
 
 	sei();			/* Enable interrupts */
 
+	drv_videocontroller_hook_app_poweron(&app_poweron);
+	drv_videocontroller_hook_app_poweroff(&app_poweroff);
+
 	windowmanager_launch(&app_mainmenu);
 	eventmanager_add_handling_fct(windowmanager_process_events);
 

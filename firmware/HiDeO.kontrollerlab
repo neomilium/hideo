@@ -90,6 +90,7 @@
     <FILE SHOWN="FALSE" NAME="app_poweron.c" />
     <FILE SHOWN="FALSE" NAME="app_poweron.h" />
     <FILE SHOWN="FALSE" NAME="drv_videocontroller.c" />
+    <FILE SHOWN="FALSE" NAME="drv_videocontroller.h" />
   </FILES>
   <SETTINGS>
     <ASSEMBLER_COMMAND VALUE="avr-gcc" />

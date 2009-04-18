@@ -11,6 +11,8 @@
 
 #define HQI_COOLING_DURATION		30
 
+#define HQI_TEMPERATURE_MAX_AT_INIT	50
+
 static hqi_mode_t _hqi_mode = HQI_MODE_READY;
 static uint16 _remaining_time_before_cooling_done = HQI_COOLING_DURATION;
 
@@ -21,10 +23,21 @@ hqi_init(void)
 {
 	RELAY0 = 0;		// Make sure HQI is disabled after a failure on power supply.
 	rtc_stop();		// Make sure RTC doesn't count after a failure on power supply.
+
+	if(hqi_temperature() > HQI_TEMPERATURE_MAX_AT_INIT) {
+		fans_hqi_start();	// Enable HQI fan
+
+		/* Maybe FAN1 is not supposed to be here : not related to HQI */
+		fans_lcd_start();	// Enable LCD fan
+		
+		_remaining_time_before_cooling_done = HQI_COOLING_DURATION;
+		_hqi_mode = HQI_MODE_COOLING;
+	}
+
 	eventmanager_add_handling_fct(_hqi_event_handler);
 
 	/* Debug */
-	//hqi_uptime_counter_reset();
+// 	hqi_uptime_counter_reset();
 }
 
 void
