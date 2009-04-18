@@ -50,6 +50,9 @@ windowmanager_process_events(const event_t event)
 void
 windowmanager_screensaver_disable(void)
 {
+	if(_application_stack[_current_depth] == &app_screensaver) {
+		windowmanager_exit();
+	}
 	_screesaver_is_enabled = 0;
 }
 
