@@ -59,8 +59,16 @@ _app_poweroff_display(void)
 			lcd_display_string(PSTR("  Power off"));
 			lcd_gotoxy(0,2);
 			lcd_display_string(PSTR("Cooling HQI..."));
-			lcd_gotoxy(24,3);
-			lcd_display_number(hqi_remaining_time_before_ready());
+
+			uint16 hqi_remaining_time = hqi_remaining_time_before_ready();
+			if(hqi_remaining_time > 60) {
+				lcd_gotoxy(4,3);
+				lcd_display_number(hqi_remaining_time / 60);
+				lcd_display_string(PSTR(" min "));
+			} else {
+				lcd_gotoxy(24,3);
+			}
+			lcd_display_number(hqi_remaining_time % 60);
 			lcd_display_string(PSTR(" sec"));
 			lcd_finish_line();
 			break;
