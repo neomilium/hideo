@@ -9,9 +9,9 @@
 #include "fans.h"
 #include "relay.h"
 
-#define HQI_COOLING_DURATION		30
+#define HQI_COOLING_DURATION		15*60
 
-#define HQI_TEMPERATURE_MAX_AT_INIT	50
+#define HQI_TEMPERATURE_MAX_AT_INIT	40
 
 static hqi_mode_t _hqi_mode = HQI_MODE_READY;
 static uint16 _remaining_time_before_cooling_done = HQI_COOLING_DURATION;
