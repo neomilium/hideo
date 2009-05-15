@@ -1,8 +1,14 @@
 #                                               -*- Autoconf -*-
-#
+# This file have been create using configure.ac from avr-libc project 
 # Copyright (c) 2004,  Theodore A. Roth
 # Copyright (c) 2005,2006,2007,2009  Anatoly Sokolov
 # Copyright (c) 2005,2008  Joerg Wunsch
+#
+# HiDeO project
+# Copyright (c) 2008,2009,  Romain Tartière
+# Copyright (c) 2008,2009,  Carlos Carpentier
+# Copyright (c) 2008,2009,  Romuald Conty
+# 
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -39,7 +45,7 @@ dnl        macro name           value            description
 m4_define([hideo_major],    [0])dnl           major version
 m4_define([hideo_minor],    [9])dnl           minor version
 m4_define([hideo_revision], [1])dnl           revision (dot-dot version)
-m4_define([hideo_reldate],  [20090514])dnl    release date
+m4_define([hideo_reldate],  [20090515])dnl    release date
 dnl end of library versioning data
 
 dnl odd minor number marks a development branch, append date to version there
