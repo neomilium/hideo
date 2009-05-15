@@ -165,6 +165,9 @@ case "${OBJCOPY}" in
    *) AC_MSG_ERROR(Wrong object copier found; check the PATH!) ;;
 esac
 
+AVROBJCOPY=${OBJCOPY}
+AC_SUBST(AVROBJCOPY)
+
 # case "${RANLIB}" in
 #    *avr-ranlib*) ;;
 #    *) AC_MSG_ERROR(Wrong ranlib found; check the PATH!) ;;
