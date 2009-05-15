@@ -27,8 +27,14 @@
 # POSSIBILITY OF SUCH DAMAGE.
 #
 #
-bin_PROGRAMS = hideo
-hideo_SOURCES = \
+OBJCOPY=$(AVROBJCOPY)
+
+noinst_PROGRAMS = hideo.elf hideo.hex
+
+hideo.hex: hideo.elf
+	$(OBJCOPY) -R .eeprom -O ihex hideo.elf hideo.hex
+
+hideo_elf_SOURCES = \
 	a2d.c	\
 	app_date.c	\
 	app_display.c	\
@@ -62,7 +68,7 @@ hideo_SOURCES = \
 	hqi_control.c	\
 	i2c.c	\
 	lcd.c	\
-	main.c	\
+	hideo.c	\
 	menus.c	\
 	scheduler.c	\
 	windowmanager.c
