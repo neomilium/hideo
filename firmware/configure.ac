@@ -60,7 +60,7 @@ AC_INIT(HiDeO, hideo_version, hideo@hideo.org)
 AC_PREREQ(2.59)
 AC_REVISION($Revision: 1.86 $)
 
-AC_CONFIG_SRCDIR([src/main.c])
+AC_CONFIG_SRCDIR([src/hideo.c])
 AC_CONFIG_HEADER([src/config.h])
 
 dnl substitute M4 macros into shell variables
@@ -116,6 +116,8 @@ case "$host" in
 		;;
 esac
 
+AC_CHECK_HEADERS([avr/io.h],[],AC_MSG_ERROR(avr libc not found but required))
+
 ## TODO: Write a check for GNU Make
 
 dnl The default check whether the C compiler can create an executable
@@ -137,9 +139,9 @@ AC_CHECK_TOOL(AS, as, as)
 AM_PROG_AS
 # AC_PROG_RANLIB
 AC_CHECK_TOOL(AR, ar, ar)
+AC_CHECK_TOOL(OBJCOPY, objcopy, objcopy)
 
 # Make sure that we found the right avr cross-compiler.
-
 case "${CC}" in
    *avr-gcc*) ;;
    *) AC_MSG_ERROR(Wrong C compiler found; check the PATH!) ;;
@@ -151,6 +153,10 @@ esac
 case "${AR}" in
    *avr-ar*) ;;
    *) AC_MSG_ERROR(Wrong archiver found; check the PATH!) ;;
+esac
+case "${OBJCOPY}" in
+   *avr-objcopy*) ;;
+   *) AC_MSG_ERROR(Wrong object copier found; check the PATH!) ;;
 esac
 
 # case "${RANLIB}" in
@@ -211,119 +217,7 @@ dnl having fig2dev and still build all the formats?
 # 
 # CHECK_PNG_UTILS
 
-FNO_JUMP_TABLES=""
-AC_SUBST(FNO_JUMP_TABLES)
-
-AC_DEFUN(
-  CHECK_MNO_TABLEJUMP,
-  [
-    old_CC=${CC}
-    old_CFLAGS=${CFLAGS}
-    CFLAGS="-mno-tablejump"
-    CC=`echo "${CC}" | sed 's/-mmcu=avr.//'`
-    AC_MSG_CHECKING(whether ${CC} supports -mno-tablejump)
-    AC_COMPILE_IFELSE(
-      [AC_LANG_SOURCE([],[])],
-      [has_mno_tablejump=yes],
-      [has_mno_tablejump=no]
-    )
-    if test "x$has_mno_tablejump" = "xyes"
-    then
-      FNO_JUMP_TABLES="-mno-tablejump"
-    fi
-    AC_MSG_RESULT($has_mno_tablejump)
-    CC=${old_CC}
-    CFLAGS=${old_CFLAGS}
-  ]
-)
-
-AC_DEFUN(
-  CHECK_FNO_JUMP_TABLES,
-  [
-    old_CC=${CC}
-    old_CFLAGS=${CFLAGS}
-    CFLAGS="-fno-jump-tables"
-    CC=`echo "${CC}" | sed 's/-mmcu=avr.//'`
-    AC_MSG_CHECKING(whether ${CC} supports -fno-jump-tables)
-    AC_COMPILE_IFELSE(
-      [AC_LANG_SOURCE([],[])],
-      [has_fno_jump_tables=yes],
-      [has_fno_jump_tables=no]
-    )
-    if test "x$has_fno_jump_tables" = "xyes"
-    then
-      FNO_JUMP_TABLES="-fno-jump-tables"
-    fi
-    AC_MSG_RESULT($has_fno_jump_tables)
-    CC=${old_CC}
-    CFLAGS=${old_CFLAGS}
-  ]
-)
-
-CHECK_MNO_TABLEJUMP
-CHECK_FNO_JUMP_TABLES
-
-dnl Some devices are only handled by newer version of gcc. This macro lets us
-dnl probe to see if the installed avr-gcc supports a questionable device.
-AC_DEFUN(
-  CHECK_AVR_DEVICE,
-  [
-    old_CC=${CC}
-    old_CFLAGS=${CFLAGS}
-    CFLAGS="-mmcu=$1"
-    CC=`echo "${CC}" | sed 's/-mmcu=avr.//'`
-    AC_MSG_CHECKING(if ${CC} has support for $1)
-    AC_COMPILE_IFELSE(
-      [AC_LANG_SOURCE([],[])],
-      [has_dev_support=yes],
-      [has_dev_support=no]
-    )
-    if test "x$has_dev_support" = "xyes"
-    then
-      HAS_$1=yes
-    fi
-    AC_MSG_RESULT($has_dev_support)
-    CC=${old_CC}
-    CFLAGS=${old_CFLAGS}
-  ]
-)
-
-# avr5
-AM_CONDITIONAL(HAS_avr5, true)
 AM_CONDITIONAL(HAS_atmega32, true)
-
-CHECK_AVR_DEVICE(atmega324p)
-AM_CONDITIONAL(HAS_atmega324p, test "x$HAS_atmega324p" = "xyes")
-
-CHECK_AVR_DEVICE(atmega325)
-AM_CONDITIONAL(HAS_atmega325, test "x$HAS_atmega325" = "xyes")
-
-CHECK_AVR_DEVICE(atmega325p)
-AM_CONDITIONAL(HAS_atmega325p, test "x$HAS_atmega325p" = "xyes")
-
-CHECK_AVR_DEVICE(atmega3250)
-AM_CONDITIONAL(HAS_atmega3250, test "x$HAS_atmega3250" = "xyes")
-
-CHECK_AVR_DEVICE(atmega3250p)
-AM_CONDITIONAL(HAS_atmega3250p, test "x$HAS_atmega3250p" = "xyes")
-
-CHECK_AVR_DEVICE(atmega328p)
-AM_CONDITIONAL(HAS_atmega328p, test "x$HAS_atmega328p" = "xyes")
-
-CHECK_AVR_DEVICE(atmega329)
-AM_CONDITIONAL(HAS_atmega329, test "x$HAS_atmega329" = "xyes")
-
-CHECK_AVR_DEVICE(atmega329p)
-AM_CONDITIONAL(HAS_atmega329p, test "x$HAS_atmega329p" = "xyes")
-
-CHECK_AVR_DEVICE(atmega3290)
-AM_CONDITIONAL(HAS_atmega3290, test "x$HAS_atmega3290" = "xyes")
-
-CHECK_AVR_DEVICE(atmega3290p)
-AM_CONDITIONAL(HAS_atmega3290p, test "x$HAS_atmega3290p" = "xyes")
-
-CHECK_AVR_DEVICE(atmega32hvb)
-AM_CONDITIONAL(HAS_atmega32hvb, test "x$HAS_atmega32hvb" = "xyes")
 
 # Generate all files from *.in sources.
 
