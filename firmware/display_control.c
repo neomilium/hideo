@@ -47,7 +47,11 @@ display_init(void)
 
 	/* Trapezoid */
 	eeprom_read( EEPROM_MEMMAP__DISPLAY_TRAPEZOID, sizeof(_display_trapezoid_wanted_position), (void*)&_display_trapezoid_wanted_position );
-	
+
+	/* Reset EEPROM */
+// 	display_trapezoid_set_position(0);
+// 	display_lens_set_position(0);
+
 	/* Common */
 	eventmanager_add_polling_fct(_display_poll);
 	eventmanager_add_handling_fct(_display_event_handler);
