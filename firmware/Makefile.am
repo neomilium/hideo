@@ -1,4 +1,6 @@
-# Copyright (c) 2004,2005  Theodore A. Roth
+# Copyright (c) 2008,2009,  Romain Tartière
+# Copyright (c) 2008,2009,  Carlos Carpentier
+# Copyright (c) 2008,2009,  Romuald Conty
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -25,8 +27,6 @@
 # CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
 # ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
-#
-# $Id: Makefile.am,v 1.21 2009/01/23 14:45:42 arcanum Exp $
 #
 
 EXTRA_DIST = \
