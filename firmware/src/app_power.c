@@ -1,6 +1,6 @@
 #include <avr/pgmspace.h>
 
-#include "app_poweron.h"
+#include "app_power.h"
 
 #include "lcd.h"
 #include "leds.h"
@@ -12,35 +12,46 @@
 #include "display_control.h"
 #include "hqi_control.h"
 
-#define PO_CANCEL_DELAY	5
+#define POWER_STARTUP_CANCEL_DELAY	5
+#define POWER_SHUTDOWN_CANCEL_DELAY	30
 
 typedef enum {
-	PO_MODE_INTERACTIVE,
-	PO_MODE_READONLY,
-}		poweron_mode_t;
+	POWER_DISPLAY_MODE_INTERACTIVE,
+	POWER_DISPLAY_READONLY,
+}		power_display_mode_t;
 
-static poweron_mode_t _mode;
-static uint8 _remaining_time_before_startup_process = PO_CANCEL_DELAY;
+typedef enum {
+	POWER_STATE_STARTING,
+	POWER_STATE_ON,
+	POWER_STATE_SHUTDOWNING,
+	POWER_STATE_OFF,
+}		power_state_t;
 
-void _app_poweron_display(void);
+static power_display_mode_t _display_mode;
+static power_display_mode_t _state;
+static uint8 _remaining_time_before_startup_process = POWER_STARTUP_CANCEL_DELAY;
+static uint8 _remaining_time_before_shutdown_process = POWER_SHUTDOWN_CANCEL_DELAY;
+
+void _app_power_display(void);
 
 void
-_app_poweron_init(void *data)
+_app_power_init(void *data)
 {
+	_state = &data;
 	if(hqi_mode() == HQI_MODE_READY) {
-		_mode = PO_MODE_INTERACTIVE;
+		_display_mode = POWER_DISPLAY_MODE_INTERACTIVE;
 	} else {
-		_mode = PO_MODE_READONLY;
+		_display_mode = POWER_DISPLAY_READONLY;
 	}
 
-	if(_mode == PO_MODE_INTERACTIVE) {
-		_remaining_time_before_startup_process = PO_CANCEL_DELAY;
+	if(_display_mode == POWER_DISPLAY_MODE_INTERACTIVE) {
+		_remaining_time_before_startup_process = POWER_STARTUP_CANCEL_DELAY;
 	}
-	_app_poweron_display();
+	_app_power_display();
 }
 
 void
-_app_poweron_display(void)
+_app_power_display(void)
 {
 	switch (hqi_mode()) {
 		case HQI_MODE_READY:
@@ -83,18 +94,18 @@ _app_poweron_display(void)
 }
 
 void
-_app_poweron_event_handler(const event_t event)
+_app_power_event_handler(const event_t event)
 {
-	switch (_mode) {
-		case PO_MODE_INTERACTIVE:
+	switch (_display_mode) {
+		case POWER_DISPLAY_MODE_INTERACTIVE:
 			switch (event.code) {
 				case E_SCHEDULER_TICK:
 					_remaining_time_before_startup_process--;
 					if(0 == _remaining_time_before_startup_process) {
-						_mode = PO_MODE_READONLY;
+						_display_mode = POWER_DISPLAY_READONLY;
 						hqi_start();
 						display_lens_load_position();
-						_app_poweron_display();
+						_app_power_display();
 					} else {
 						lcd_gotoxy(24,3);
 						lcd_display_number(_remaining_time_before_startup_process);
@@ -110,10 +121,10 @@ _app_poweron_event_handler(const event_t event)
 					break;
 			}
 		break;
-		case PO_MODE_READONLY:
+		case POWER_DISPLAY_READONLY:
 			switch (event.code) {
 				case E_SCHEDULER_TICK:
-					_app_poweron_display();
+					_app_power_display();
 					break;
 				case E_KEY_PRESSED:
 					windowmanager_exit();

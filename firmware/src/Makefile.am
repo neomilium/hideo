@@ -47,7 +47,6 @@ hideo_elf_SOURCES = \
 	app_mouse.c	\
 	app_poweroff.c	\
 	app_poweron.c	\
-	app_screensaver.c	\
 	app_status.c	\
 	app_temperature.c	\
 	buffer.c	\
@@ -87,7 +86,6 @@ hideo_headers = \
 	app_mouse.h	\
 	app_poweroff.h	\
 	app_poweron.h	\
-	app_screensaver.h	\
 	app_status.h	\
 	app_temperature.h	\
 	avrlibdefs.h	\
