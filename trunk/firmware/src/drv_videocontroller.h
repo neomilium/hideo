@@ -9,6 +9,7 @@
 #include "application.h"
 
 void		drv_videocontroller_init(void);
-void		drv_videocontroller_hook_app_power(application_t * app);
+void		drv_videocontroller_hook_app_poweron(application_t * app);
+void		drv_videocontroller_hook_app_poweroff(application_t * app);
 
 #endif
