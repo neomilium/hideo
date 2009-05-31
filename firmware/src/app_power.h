@@ -4,13 +4,6 @@
 #include "application.h"
 #include "eventmanager.h"
 
-typedef enum {
-	POWER_STATE_STARTING,
-	POWER_STATE_ON,
-	POWER_STATE_SHUTDOWNING,
-	POWER_STATE_OFF,
-}		power_state_t;
-
 #define app_power_init()	application_t app_power = { &_app_power_init, &_app_power_event_handler, NULL }
 
 void		_app_power_init(void *);

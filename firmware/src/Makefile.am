@@ -34,12 +34,43 @@ noinst_PROGRAMS = hideo.elf hideo.hex
 hideo.hex: hideo.elf
 	$(OBJCOPY) -R .eeprom -O ihex hideo.elf hideo.hex
 
-hideo_elf_SOURCES = a2d.c	 app_date.c	 app_display.c	 app_eeprom.c	 app_hqi.c	 \
-	app_keyboard.c	 app_lcd.c	 app_mainmenu.c	 app_motor.c	 app_mouse.c	 app_power.c	 \
-	app_status.c	 app_temperature.c	 buffer.c	 clist.c	 display_control.c	 drv_24lcxxx.c	 \
-	drv_dc-motor.c	 drv_ds1307.c	 drv_keyboard.c	 drv_lm35.c	 drv_nokia.c	 drv_ps2.c	 \
-	drv_ps2_mouse.c	 drv_pwm.c	 drv_stepper-motor.c	 drv_videocontroller.c	 eventmanager.c	 \
-	hqi_control.c	 i2c.c	 lcd.c	 hideo.c	 menus.c	 scheduler.c	 windowmanager.c
+hideo_elf_SOURCES = \
+	a2d.c	\
+	app_date.c	\
+	app_display.c	\
+	app_eeprom.c	\
+	app_hqi.c	\
+	app_keyboard.c	\
+	app_lcd.c	\
+	app_mainmenu.c	\
+	app_motor.c	\
+	app_mouse.c	\
+	app_poweroff.c	\
+	app_poweron.c	\
+	app_status.c	\
+	app_temperature.c	\
+	buffer.c	\
+	clist.c	\
+	display_control.c	\
+	drv_24lcxxx.c	\
+	drv_dc-motor.c	\
+	drv_ds1307.c	\
+	drv_keyboard.c	\
+	drv_lm35.c	\
+	drv_nokia.c	\
+	drv_ps2.c	\
+	drv_ps2_mouse.c	\
+	drv_pwm.c	\
+	drv_stepper-motor.c	\
+	drv_videocontroller.c	\
+	eventmanager.c	\
+	hqi_control.c	\
+	i2c.c	\
+	lcd.c	\
+	hideo.c	\
+	menus.c	\
+	scheduler.c	\
+	windowmanager.c
 
 hideo_headers = \
 	a2d.h	\
@@ -53,7 +84,8 @@ hideo_headers = \
 	app_mainmenu.h	\
 	app_motor.h	\
 	app_mouse.h	\
-	app_power.h	\
+	app_poweroff.h	\
+	app_poweron.h	\
 	app_status.h	\
 	app_temperature.h	\
 	avrlibdefs.h	\
@@ -97,4 +129,3 @@ hideo_headers = \
 EXTRA_DIST = \
 	$(hideo_headers)
 
-noinst_HEADERS = app_power.h
