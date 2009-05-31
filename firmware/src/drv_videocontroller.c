@@ -6,6 +6,7 @@
 #include "a2d.h"
 #include "hqi_control.h"
 #include "display_control.h"
+#include "app_power.h"
 
 typedef enum {
 	VIDEOCONTROLLER_STATUS_OFF,
@@ -16,8 +17,9 @@ typedef enum {
 
 static videocontroller_status_t _videocontroller_status = VIDEOCONTROLLER_STATUS_OFF;
 
-static application_t * _app_poweron;
-static application_t * _app_poweroff;
+static application_t * _app_power;
+
+volatile power_state_t _power_state = POWER_STATE_STARTING;
 
 void _drv_videocontroller_poll(void);
 
@@ -41,15 +43,10 @@ drv_videocontroller_status(void)
 }
 
 void
-drv_videocontroller_hook_app_poweron(application_t * app)
+drv_videocontroller_hook_app_power(application_t * app)
 {
-	_app_poweron = app;
-}
-
-void
-drv_videocontroller_hook_app_poweroff(application_t * app)
-{
-	_app_poweroff = app;
+	_app_power = app;
+	_app_power->user_data = (void*)(&_power_state);
 }
 
 void
@@ -63,11 +60,13 @@ _drv_videocontroller_poll(void)
 		switch(videocontroller_status) {
 			case VIDEOCONTROLLER_STATUS_OFF:
 				windowmanager_screensaver_disable();	// Prevent from already running screensaver
-				windowmanager_launch(_app_poweroff);
+				_power_state = POWER_STATE_SHUTDOWNING;
+				windowmanager_launch(_app_power);
 				break;
 			case VIDEOCONTROLLER_STATUS_ON:
 				windowmanager_screensaver_disable();	// Prevent from already running screensaver
-				windowmanager_launch(_app_poweron);
+				_power_state = POWER_STATE_STARTING;
+				windowmanager_launch(_app_power);
 				break;
 		}
 	}

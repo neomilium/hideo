@@ -15,10 +15,10 @@ void
 _app_template_init(void *data)
 {
 	lcd_clear();
+	_app_template_display();
 }
 
-void
-_app_template_event_handler(const event_t event)
+void _app_template_display()
 {
 	lcd_gotoxy(0, 0);
 	lcd_display_string(PSTR("L:"));
@@ -31,7 +31,11 @@ _app_template_event_handler(const event_t event)
 	lcd_display_string(PSTR("X:"));
 	lcd_gotoxy(0, 3);
 	lcd_display_string(PSTR("Y:"));
+}
 
+void
+_app_template_event_handler(const event_t event)
+{
 	switch (event.code) {
 		case E_MOUSE_BUTTON_PRESSED:
 			switch (event.data) {
