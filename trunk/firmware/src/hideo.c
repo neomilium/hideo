@@ -22,10 +22,9 @@
 /* Applications */
 #include "app_mainmenu.h"
 
-#include "app_poweron.h"
+#include "app_power.h"
 #include "app_status.h"
 #include "app_display.h"
-#include "app_poweroff.h"
 
 /* Debug apps */
 // #include "app_temperature.h"
@@ -82,10 +81,9 @@ main(void)
 // 	app_hqi_init();
 
 // 	/* Applications part */
-	app_poweron_init();
+	app_power_init();
 	app_status_init();
 	app_display_init();
-	app_poweroff_init();
 
 	app_mainmenu_init();
 
@@ -93,8 +91,7 @@ main(void)
 
 	sei();			/* Enable interrupts */
 
-	drv_videocontroller_hook_app_poweron(&app_poweron);
-	drv_videocontroller_hook_app_poweroff(&app_poweroff);
+	drv_videocontroller_hook_app_power(&app_power);
 
 	windowmanager_launch(&app_mainmenu);
 	eventmanager_add_handling_fct(windowmanager_process_events);

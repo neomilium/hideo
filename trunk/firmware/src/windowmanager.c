@@ -90,8 +90,11 @@ void
 windowmanager_launch(application_t * app)
 {
 	if (NULL != app) {
-		++_current_depth;
-		_application_stack[_current_depth] = app;
+		if (app != _application_stack[_current_depth]) {	// If app is not the current application.
+			++_current_depth;
+			_application_stack[_current_depth] = app;
+		}
+		// init() new application or re- init() application if app is the current app.
 		_application_stack[_current_depth]->fn_init(_application_stack[_current_depth]->user_data);
 	}
 }
