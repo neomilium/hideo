@@ -65,7 +65,7 @@ _app_status_display(void)
 
 	lcd_gotoxy(0, 2);
 	lcd_display_string(PSTR("Uptime  "));
-	uint32 _hqi_uptime = hqi_uptime();
+	uint32_t _hqi_uptime = hqi_uptime();
 	if(_hqi_uptime < 60) {
 		lcd_display_string(PSTR("   "));
 		lcd_display_number(_hqi_uptime);

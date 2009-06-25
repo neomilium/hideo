@@ -1,6 +1,7 @@
 #include <avr/interrupt.h>
 #include <avr/io.h>
 #include <util/delay.h>
+#include <stdlib.h>
 
 #include "eventmanager.h"
 #include "scheduler.h"

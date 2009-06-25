@@ -1,5 +1,7 @@
 #include "windowmanager.h"
 
+#include <stdlib.h>
+
 #include "lcd.h"
 #include "keyboard.h"
 #include "leds.h"
@@ -8,9 +10,9 @@
 #define WM_SCREENSAVER_DELAY 10
 
 static application_t *_application_stack[WM_MAX_APPLICATION_STACK_DEPTH];
-static uint8	_current_depth = -1;
+static uint8_t	_current_depth = -1;
 
-static uint8	_inactivity_counter = 0;
+static uint8_t	_inactivity_counter = 0;
 
 
 typedef enum {

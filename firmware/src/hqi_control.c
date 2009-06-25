@@ -14,7 +14,7 @@
 #define HQI_TEMPERATURE_MAX_AT_INIT	40
 
 static hqi_mode_t _hqi_mode = HQI_MODE_READY;
-static uint16 _remaining_time_before_cooling_done = HQI_COOLING_DURATION;
+static uint16_t _remaining_time_before_cooling_done = HQI_COOLING_DURATION;
 
 void _hqi_event_handler(const event_t event);
 
@@ -65,11 +65,11 @@ _hqi_uptime_counter_start(void)
 	rtc_start();
 }
 
-uint32
+uint32_t
 hqi_uptime(void)
 {
 	rtc_datetime_t hqi_uptime;
-	uint32 hqi_uptime_in_sec;
+	uint32_t hqi_uptime_in_sec;
 
 	switch(_hqi_mode) {
 		case HQI_MODE_RUNNING:
@@ -86,7 +86,7 @@ hqi_uptime(void)
 	return hqi_uptime_in_sec;
 }
 
-uint8
+uint8_t 
 hqi_temperature(void)
 {
 	return thermal_sensors_read(LM35_ADC_CHANNEL_HQI);
@@ -144,7 +144,7 @@ hqi_mode(void)
 	return _hqi_mode;
 }
 
-uint16
+uint16_t
 hqi_remaining_time_before_ready(void)
 {
 	return _remaining_time_before_cooling_done;

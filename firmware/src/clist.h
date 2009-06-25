@@ -1,21 +1,21 @@
 #ifndef _CLIST_H_
 #define _CLIST_H_
 
-#include "types.h"
+#include <stdint.h>
 
 typedef struct {
-	uint8		size;
-	uint8		r       , w;
-	uint8		items    [1];
+	uint8_t 		size;
+	uint8_t 		r       , w;
+	uint8_t 		items    [1];
 }		clist_t;
 
 #define DECLARE_CLIST(name, s)						\
 																					\
 struct name##_clist_t {										\
-	uint8 size;															\
-	uint8 r;																\
-	uint8 w;																\
-	uint8 items[s];													\
+	uint8_t size;															\
+	uint8_t r;																\
+	uint8_t w;																\
+	uint8_t items[s];													\
 };																				\
 																					\
 struct name##_clist_t name##_clist = {		\
@@ -24,8 +24,8 @@ struct name##_clist_t name##_clist = {		\
 	.w           = 0												\
 }
 
-uint8		_clist_read(clist_t * clist, byte * data);
-uint8		_clist_write(clist_t * clist, byte data);
+uint8_t 		_clist_read(clist_t * clist, uint8_t * data);
+uint8_t 		_clist_write(clist_t * clist, uint8_t data);
 void		_clist_flush(clist_t * clist);
 
 #define clist_read(clist, data) _clist_read((clist_t *)&clist##_clist, data)

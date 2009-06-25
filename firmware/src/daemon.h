@@ -1,7 +1,7 @@
 #ifndef __DAEMON_H__
 #define __DAEMON_H__
 
-#include "types.h"
+#include <stdint.h>
 
 typedef struct {
 	void            (*fn_init) (void *);

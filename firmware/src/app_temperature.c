@@ -2,8 +2,6 @@
 
 #include <avr/pgmspace.h>
 
-#include "types.h"
-
 #include "lcd.h"
 #include "keyboard.h"
 #include "thermal-sensors.h"
@@ -13,8 +11,8 @@
 void
 _app_temperature_display(void)
 {
-	const uint8 _temperature_hqi = thermal_sensors_read(LM35_ADC_CHANNEL_HQI);
-	const uint8 _temperature_lcd = thermal_sensors_read(LM35_ADC_CHANNEL_LCD);
+	const uint8_t _temperature_hqi = thermal_sensors_read(LM35_ADC_CHANNEL_HQI);
+	const uint8_t _temperature_lcd = thermal_sensors_read(LM35_ADC_CHANNEL_LCD);
 
 	lcd_clear();
 	lcd_gotoxy(0, 0);

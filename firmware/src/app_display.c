@@ -11,8 +11,8 @@
 
 #include "windowmanager.h"
 
-static sint16	_lens_wanted_position = 0;
-static sint16	_trapezoid_wanted_position = 0;
+static int16_t	_lens_wanted_position = 0;
+static int16_t	_trapezoid_wanted_position = 0;
 
 void _app_display_update_display(void);
 

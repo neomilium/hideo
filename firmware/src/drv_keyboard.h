@@ -4,7 +4,7 @@
 #include <avr/io.h>
 #include "hideo.h"
 
-#include "types.h"
+#include <stdint.h>
 
 
 #define KEYBOARD_UP            0x10

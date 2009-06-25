@@ -7,7 +7,7 @@
 #include "eventmanager.h"
 
 
-static volatile uint8 _scheduler_logical_counter = 0;
+static volatile uint8_t _scheduler_logical_counter = 0;
 
 #define SCHEDULER_TICK_SECOND 0x00
 

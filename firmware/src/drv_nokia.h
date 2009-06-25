@@ -15,20 +15,20 @@
 
 #define NOK_SCREEN_WIDTH 84
 
-#include "types.h"
+#include <stdint.h>
 
 /* Fonctions qui concernent les manipulations hardware (ceci est le driver) */
 void		nokia_init(void);
 void		nokia_reset_DDRAM(void);
-void		nokia_write(unsigned char data);
-void		nokia_send_command(const unsigned char command);
-void		nokia_send_data(const unsigned char data);
+void		nokia_write(uint8_t data);
+void		nokia_send_command(const uint8_t command);
+void		nokia_send_data(const uint8_t data);
 
 /* Fonctions qui gerent l'affichage (API : Application Programming Interface) */
 void		nokia_clear(void);
-void		nokia_gotoxy(const unsigned char x, const unsigned char y);
-void		nokia_display_char(const unsigned char ascii);
+void		nokia_gotoxy(const uint8_t x, const uint8_t y);
+void		nokia_display_char(const uint8_t ascii);
 void		nokia_display_string(const char *string);
-void		nokia_set_mode(uint8 mode);
+void		nokia_set_mode(uint8_t mode);
 void		nokia_finish_line(void);
 #endif

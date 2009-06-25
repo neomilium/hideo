@@ -1,5 +1,4 @@
 #include "eventmanager.h"
-#include "types.h"
 #include "drv_ps2.h"
 
 #include <util/delay.h>
@@ -8,12 +7,12 @@
 
 #define MOUSE_PACKET_SIZE 3
 
-static byte	_mouse_button_status = 0x00;
+static uint8_t 	_mouse_button_status = 0x00;
 
-uint8
-_ps2_mouse_write(byte data)
+uint8_t
+_ps2_mouse_write(uint8_t data)
 {
-	byte		rdata;
+	uint8_t 		rdata;
 
 	ps2_write(data);
 
@@ -36,8 +35,8 @@ ps2_mouse_init(void)
 void
 ps2_mouse_poll(void)
 {
-	byte		_mouse_packet[MOUSE_PACKET_SIZE];
-	uint8		_mouse_bytes_read = 0;
+	uint8_t _mouse_packet[MOUSE_PACKET_SIZE];
+	uint8_t	_mouse_bytes_read = 0;
 
 	/* Empty buffer */
 	ps2_flush();
@@ -69,7 +68,7 @@ ps2_mouse_poll(void)
 	}
 	/* Mouse buttons handling */
 	if ((_mouse_packet[0] & 0x07) != _mouse_button_status) {
-		for (uint8 mask = 1; mask < 0x80; mask = mask << 1) {
+		for (uint8_t mask = 1; mask < 0x80; mask = mask << 1) {
 			if ((_mouse_packet[0] & mask) != (_mouse_button_status & mask)) {
 				event.data = mask;
 				if ((_mouse_packet[0] & mask)) {

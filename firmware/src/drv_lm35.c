@@ -13,8 +13,8 @@ lm35_init(void)
 	a2dSetReference(ADC_REFERENCE_AVCC);
 }
 
-uint8
-lm35_read(uint8 channel)
+uint8_t 
+lm35_read(uint8_t channel)
 {
 	return(a2dConvert10bit(channel) / 2 );
 }

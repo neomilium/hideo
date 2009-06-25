@@ -4,7 +4,7 @@
 #include <avr/io.h>
 #include "hideo.h"
 
-#include "types.h"
+#include <stdint.h>
 
 #include "application.h"
 

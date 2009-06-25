@@ -10,9 +10,9 @@ menus_init(void)
 }
 
 void
-menus_display(const menu_t * menu, const uint8 current_menu_item)
+menus_display(const menu_t * menu, const uint8_t current_menu_item)
 {
-	uint8		i;
+	uint8_t i;
 	lcd_clear();
 	for (i = 0; i < menu->item_count; i++) {
 		lcd_gotoxy(0, i);

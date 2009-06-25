@@ -7,7 +7,7 @@
 #define KEYBOARD_PORT					PORTB
 #define KEYBOARD_DDR					DDRB
 
-static uint8	_keyboard_status = 0x00;
+static uint8_t _keyboard_status = 0x00;
 
 void
 drv_keyboard_init(void)
@@ -26,8 +26,8 @@ drv_keyboard_poll(void)
 			.code = E_NONE,
 			.data = 0x00
 		};
-		for (uint8 i = 0; i < 8; i++) {
-			uint8		current_key_mask = (1 << i);
+		for (uint8_t i = 0; i < 8; i++) {
+			uint8_t current_key_mask = (1 << i);
 			if (KEYBOARD_MASK & current_key_mask) {
 				if ((KEYBOARD_PIN & current_key_mask) && !(_keyboard_status & current_key_mask)) {
 					event.code = E_KEY_RELEASED;
