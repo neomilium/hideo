@@ -89,7 +89,6 @@ hideo_headers = \
 	app_status.h	\
 	app_temperature.h	\
 	avrlibdefs.h	\
-	avrlibtypes.h	\
 	buffer.h	\
 	clist.h	\
 	daemon.h	\
@@ -123,7 +122,6 @@ hideo_headers = \
 	scheduler.h	\
 	temperature_control.h	\
 	thermal-sensors.h	\
-	types.h	\
 	windowmanager.h
 
 EXTRA_DIST = \
