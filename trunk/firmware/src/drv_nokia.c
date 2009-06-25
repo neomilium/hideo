@@ -102,8 +102,8 @@ const prog_uchar ascii_table[128][5] = {
 	{0x44, 0x64, 0x54, 0x4C, 0x44}	/* z */
 };
 
-static uint8	reverse_mode = _NOK_MODE_NORMAL;
-static uint8	_nokia_current_x = 0;
+static uint8_t	reverse_mode = _NOK_MODE_NORMAL;
+static uint8_t	_nokia_current_x = 0;
 
 /**
  * @fn void nokia_init(void)
@@ -132,7 +132,7 @@ nokia_init(void)
 	nokia_send_command(0x13);	/* LCD bias system 1:48. */
 
 	/**
-	 * @note unsigned chars are stored in the display data ram, address
+	 * @note uint8_t s are stored in the display data ram, address
 	 * counter, incremented automatically
 	 */
 	nokia_send_command(0x20);	/* 0x20 for horizontal mode from left
@@ -150,9 +150,9 @@ nokia_init(void)
 }
 
 void
-nokia_send_command(const unsigned char command)
+nokia_send_command(const uint8_t command)
 {
-	NOK_DC = 0;		/* unsigned char is a command it is read with
+	NOK_DC = 0;		/* uint8_t is a command it is read with
 				 * the eight SCLK pulse */
 	NOK_CS = 0;		/* chip enabled */
 	nokia_write(command);
@@ -160,7 +160,7 @@ nokia_send_command(const unsigned char command)
 }
 
 void
-nokia_send_data(const unsigned char data)
+nokia_send_data(const uint8_t data)
 {
 	NOK_DC = 1;
 	NOK_CS = 0;		/* chip enabled */
@@ -172,9 +172,9 @@ nokia_send_data(const unsigned char data)
 }
 
 void
-nokia_write(unsigned char data)
+nokia_write(uint8_t data)
 {
-	unsigned char	bit;
+	uint8_t 	bit;
 	for (bit = 8; bit > 0; bit--) {
 		NOK_SCLK = 0;
 
@@ -215,13 +215,13 @@ nokia_reset_DDRAM(void)
 }
 
 /**
- * @fn void nokia_gotoxy (const unsigned char x, const unsigned char y)
+ * @fn void nokia_gotoxy (const uint8_t x, const uint8_t y)
  * @brief Move cursor position to (x,y)
  * @param x x position in pixels
  * @param y y position in lines
  */
 void
-nokia_gotoxy(const unsigned char x, const unsigned char y)
+nokia_gotoxy(const uint8_t x, const uint8_t y)
 {				/* Nokia LCD Position cursor */
 	nokia_send_command(0x40 | (y & 0x07)),	/* Y axe initialisation: 0100
 						 * 0yyy	 */
@@ -231,9 +231,9 @@ nokia_gotoxy(const unsigned char x, const unsigned char y)
 }
 
 void
-nokia_display_char(const unsigned char ascii)
+nokia_display_char(const uint8_t ascii)
 {
-	unsigned char	data[5];
+	uint8_t 	data[5];
 	memcpy_P(data, ascii_table[ascii - 32], 5);
 
 	nokia_send_data(0x00);	/* Display a blank vertical line */
@@ -248,7 +248,7 @@ void
 nokia_display_string(const char *string)
 {
 	char		c;
-	while ((c = pgm_read_byte(string++)))
+	while ((c = pgm_read_byte (string++)))
 		nokia_display_char(c);
 }
 
@@ -264,7 +264,7 @@ nokia_clear(void)
 }
 
 void
-nokia_set_mode(uint8 mode)
+nokia_set_mode(uint8_t mode)
 {
 	reverse_mode = (mode) ? _NOK_MODE_INVERTED : _NOK_MODE_NORMAL;
 }

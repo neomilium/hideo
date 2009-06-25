@@ -17,9 +17,9 @@
 
 #define lcd_display_line( X ) nokia_display_string( X ); nokia_finish_line()
 
-void		lcd_display_number(sint16 number);
-void		lcd_display_hex(const byte hex);
-void		lcd_display_bcd(const byte bcd);
+void		lcd_display_number(int16_t number);
+void		lcd_display_hex(const uint8_t hex);
+void		lcd_display_bcd(const uint8_t bcd);
 /* void lcd_display_string( const char *string); */
 
 #endif

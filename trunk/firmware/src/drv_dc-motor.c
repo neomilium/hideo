@@ -25,7 +25,7 @@ dc_motor_init(void)
 }
 
 void
-dc_motor_move(sint8 speed)
+dc_motor_move(int8_t speed)
 {
 	if (speed != 0) {
 		if (speed < 0) {

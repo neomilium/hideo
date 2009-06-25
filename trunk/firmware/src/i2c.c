@@ -19,6 +19,8 @@
 #include <avr/io.h>
 #include <avr/interrupt.h>
 
+#include <stdbool.h>
+
 #include "i2c.h"
 
 /* Standard I2C bit rates are: */
@@ -29,23 +31,23 @@
 
 /* I2C state and address variables */
 static volatile e_i2c_state_type _i2c_state;
-static u08	_i2c_device_addr_rw;
+static uint8_t	_i2c_device_addr_rw;
 /* send/transmit buffer (outgoing data) */
-static u08	_i2c_send_data[I2C_SEND_DATA_BUFFER_SIZE];
-static u08	_i2c_send_data_index;
-static u08	_i2c_send_data_length;
+static uint8_t	_i2c_send_data[I2C_SEND_DATA_BUFFER_SIZE];
+static uint8_t	_i2c_send_data_index;
+static uint8_t	_i2c_send_data_length;
 /* receive buffer (incoming data) */
-static u08	_i2c_receive_data[I2C_RECEIVE_DATA_BUFFER_SIZE];
-static u08	_i2c_receive_data_index;
-static u08	_i2c_receive_data_length;
+static uint8_t	_i2c_receive_data[I2C_RECEIVE_DATA_BUFFER_SIZE];
+static uint8_t	_i2c_receive_data_index;
+static uint8_t	_i2c_receive_data_length;
 
 /* function pointer to i2c receive routine */
 /* ! _i2cSlaveReceive is called when this processor */
 /* is addressed as a slave for writing */
-static void     (*i2c_slave_receive) (u08 receive_data_length, u08 * receive_data);
+static void     (*i2c_slave_receive) (uint8_t receive_data_length, uint8_t * receive_data);
 /* ! _i2cSlaveTransmit is called when this processor */
 /* is addressed as a slave for reading */
-static		u08     (*i2c_slave_transmit) (u08 transmit_data_length_max, u08 * transmit_data);
+static		uint8_t     (*i2c_slave_transmit) (uint8_t transmit_data_length_max, uint8_t * transmit_data);
 
 /* functions */
 void
@@ -76,9 +78,9 @@ i2c_init(void)
 }
 
 void
-i2c_set_bitrate(u16 bitrateKHz)
+i2c_set_bitrate(uint16_t bitrateKHz)
 {
-	u08		bitrate_div;
+	uint8_t		bitrate_div;
 	/* set i2c bitrate */
 	/* SCL freq = F_CPU/(16+2*TWBR)) */
 #ifdef TWPS0
@@ -96,20 +98,20 @@ i2c_set_bitrate(u16 bitrateKHz)
 }
 
 void
-i2c_set_local_device_addr(u08 device_addr, u08 gen_call_en)
+i2c_set_local_device_addr(uint8_t device_addr, uint8_t gen_call_en)
 {
 	/* set local device address (used in slave mode only) */
 	outb(TWAR, ((device_addr & 0xFE) | (gen_call_en ? 1 : 0)));
 }
 
 void
-i2c_set_slave_receive_handler(void (*i2c_slave_rx_func) (u08 receive_data_length, u08 * recieve_data))
+i2c_set_slave_receive_handler(void (*i2c_slave_rx_func) (uint8_t receive_data_length, uint8_t * recieve_data))
 {
 	i2c_slave_receive = i2c_slave_rx_func;
 }
 
 void
-i2c_set_slave_transmit_handler(u08(*i2c_slave_tx_func) (u08 transmit_data_length_max, u08 * transmit_data))
+i2c_set_slave_transmit_handler(uint8_t(*i2c_slave_tx_func) (uint8_t transmit_data_length_max, uint8_t * transmit_data))
 {
 	i2c_slave_transmit = i2c_slave_tx_func;
 }
@@ -137,7 +139,7 @@ i2c_wait_for_complete(void)
 }
 
 inline void
-i2c_send_byte(u08 data)
+i2c_send_uint8_t (uint8_t data)
 {
 	/* save data to the TWDR */
 	outb(TWDR, data);
@@ -146,26 +148,26 @@ i2c_send_byte(u08 data)
 }
 
 inline void
-i2c_receive_byte(u08 ack_flag)
+i2c_receive_uint8_t (uint8_t ack_flag)
 {
 	/* begin receive over i2c */
 	if (ack_flag) {
-		/* ackFlag = TRUE: ACK the recevied data */
+		/* ackFlag = true: ACK the recevied data */
 		outb(TWCR, (inb(TWCR) & TWCR_CMD_MASK) | BV(TWINT) | BV(TWEA));
 	} else {
-		/* ackFlag = FALSE: NACK the recevied data */
+		/* ackFlag = false: NACK the recevied data */
 		outb(TWCR, (inb(TWCR) & TWCR_CMD_MASK) | BV(TWINT));
 	}
 }
 
-inline		u08
-i2c_get_received_byte(void)
+inline		uint8_t
+i2c_get_received_uint8_t (void)
 {
-	/* retieve received data byte from i2c TWDR */
+	/* retieve received data uint8_t from i2c TWDR */
 	return (inb(TWDR));
 }
 
-inline		u08
+inline		uint8_t
 i2c_get_status(void)
 {
 	/* retieve current i2c status from i2c TWSR */
@@ -173,9 +175,9 @@ i2c_get_status(void)
 }
 
 void
-i2c_master_send(u08 device_addr, u08 length, u08 * data)
+i2c_master_send(uint8_t device_addr, uint8_t length, uint8_t * data)
 {
-	u08		i;
+	uint8_t		i;
 	/* wait for interface to be ready */
 	while (_i2c_state);
 	/* set state */
@@ -192,9 +194,9 @@ i2c_master_send(u08 device_addr, u08 length, u08 * data)
 }
 
 void
-i2c_master_receive(u08 device_addr, u08 length, u08 * data)
+i2c_master_receive(uint8_t device_addr, uint8_t length, uint8_t * data)
 {
-	u08		i;
+	uint8_t		i;
 	/* wait for interface to be ready */
 	while (_i2c_state);
 	/* set state */
@@ -212,15 +214,15 @@ i2c_master_receive(u08 device_addr, u08 length, u08 * data)
 		*data++ = _i2c_receive_data[i];
 }
 
-u08
-i2c_master_send_ni(u08 device_addr, u08 length, u08 * data)
+uint8_t
+i2c_master_send_ni(uint8_t device_addr, uint8_t length, uint8_t * data)
 {
 	return(i2c_master_hsend_ni(device_addr, 0, 0, length, data));
 }
-u08
-i2c_master_hsend_ni(u08 device_addr, u08 hlength, u08 *header, u08 length, u08 * data)
+uint8_t
+i2c_master_hsend_ni(uint8_t device_addr, uint8_t hlength, uint8_t *header, uint8_t length, uint8_t * data)
 {
-	u08		retval = I2C_OK;
+	uint8_t		retval = I2C_OK;
 
 	/* disable TWI interrupt */
 	cbi(TWCR, TWIE);
@@ -230,20 +232,20 @@ i2c_master_hsend_ni(u08 device_addr, u08 hlength, u08 *header, u08 length, u08 *
 	i2c_wait_for_complete();
 
 	/* send device address with write */
-	i2c_send_byte(device_addr & 0xFE);
+	i2c_send_uint8_t (device_addr & 0xFE);
 	i2c_wait_for_complete();
 
 	/* check if device is present and live */
 	if (inb(TWSR) == TW_MT_SLA_ACK) {
 		/* send header */
 		while (hlength) {
-			i2c_send_byte(*header++);
+			i2c_send_uint8_t (*header++);
 			i2c_wait_for_complete();
 			hlength--;
 		}
 		/* send data */
 		while (length) {
-			i2c_send_byte(*data++);
+			i2c_send_uint8_t (*data++);
 			i2c_wait_for_complete();
 			length--;
 		}
@@ -265,10 +267,10 @@ i2c_master_hsend_ni(u08 device_addr, u08 hlength, u08 *header, u08 length, u08 *
 	return retval;
 }
 
-u08
-i2c_master_receive_ni(u08 device_addr, u08 length, u08 * data)
+uint8_t
+i2c_master_receive_ni(uint8_t device_addr, uint8_t length, uint8_t * data)
 {
-	u08		retval = I2C_OK;
+	uint8_t		retval = I2C_OK;
 
 	/* disable TWI interrupt */
 	cbi(TWCR, TWIE);
@@ -278,24 +280,24 @@ i2c_master_receive_ni(u08 device_addr, u08 length, u08 * data)
 	i2c_wait_for_complete();
 
 	/* send device address with read */
-	i2c_send_byte(device_addr | 0x01);
+	i2c_send_uint8_t (device_addr | 0x01);
 	i2c_wait_for_complete();
 
 	/* check if device is present and live */
 	if (inb(TWSR) == TW_MR_SLA_ACK) {
 		/* accept receive data and ack it */
 		while (length > 1) {
-			i2c_receive_byte(TRUE);
+			i2c_receive_uint8_t (true);
 			i2c_wait_for_complete();
-			*data++ = i2c_get_received_byte();
+			*data++ = i2c_get_received_uint8_t ();
 			/* decrement length */
 			length--;
 		}
 
-		/* accept receive data and nack it (last-byte signal) */
-		i2c_receive_byte(FALSE);
+		/* accept receive data and nack it (last-uint8_t signal) */
+		i2c_receive_uint8_t (false);
 		i2c_wait_for_complete();
-		*data++ = i2c_get_received_byte();
+		*data++ = i2c_get_received_uint8_t ();
 	} else {
 		/* device did not ACK it's address, */
 		/* data will not be transferred */
@@ -314,7 +316,7 @@ i2c_master_receive_ni(u08 device_addr, u08 length, u08 * data)
 }
 #if 0
 void
-i2cMasterTransferNI(u08 deviceAddr, u08 sendlength, u08 * senddata, u08 receivelength, u08 * receivedata)
+i2cMasterTransferNI(uint8_t deviceAddr, uint8_t sendlength, uint8_t * senddata, uint8_t receivelength, uint8_t * receivedata)
 {
 	/* disable TWI interrupt */
 	cbi(TWCR, TWIE);
@@ -348,15 +350,15 @@ i2cMasterTransferNI(u08 deviceAddr, u08 sendlength, u08 * senddata, u08 receivel
 
 		/* accept receive data and ack it */
 		while (receivelength > 1) {
-			i2cReceiveByte(TRUE);
+			i2cReceiveByte(true);
 			i2cWaitForComplete();
 			*receivedata++ = i2cGetReceivedByte();
 			/* decrement length */
 			receivelength--;
 		}
 
-		/* accept receive data and nack it (last-byte signal) */
-		i2cReceiveByte(TRUE);
+		/* accept receive data and nack it (last-uint8_t signal) */
+		i2cReceiveByte(true);
 		i2cWaitForComplete();
 		*receivedata++ = i2cGetReceivedByte();
 	}
@@ -373,7 +375,7 @@ i2cMasterTransferNI(u08 deviceAddr, u08 sendlength, u08 * senddata, u08 receivel
 SIGNAL(SIG_2WIRE_SERIAL)
 {
 	/* read status bits */
-	u08		status = inb(TWSR) & TWSR_STATUS_MASK;
+	uint8_t		status = inb(TWSR) & TWSR_STATUS_MASK;
 
 	switch (status) {
 			/* Master General */
@@ -381,7 +383,7 @@ SIGNAL(SIG_2WIRE_SERIAL)
 		case TW_REP_START:	/* 0x10: Sent repeated start
 					 * condition */
 			/* send device address */
-			i2c_send_byte(_i2c_device_addr_rw);
+			i2c_send_uint8_t (_i2c_device_addr_rw);
 			break;
 
 			/* Master Transmitter & Receiver status codes */
@@ -389,7 +391,7 @@ SIGNAL(SIG_2WIRE_SERIAL)
 		case TW_MT_DATA_ACK:	/* 0x28: Data acknowledged */
 			if (_i2c_send_data_index < _i2c_send_data_length) {
 				/* send data */
-				i2c_send_byte(_i2c_send_data[_i2c_send_data_index++]);
+				i2c_send_uint8_t (_i2c_send_data[_i2c_send_data_index++]);
 			} else {
 				/* transmit stop condition, enable SLA ACK */
 				i2c_send_stop();
@@ -399,7 +401,7 @@ SIGNAL(SIG_2WIRE_SERIAL)
 			break;
 		case TW_MR_DATA_NACK:	/* 0x58: Data received, NACK reply
 					 * issued */
-			/* store final received data byte */
+			/* store final received data uint8_t */
 			_i2c_receive_data[_i2c_receive_data_index++] = inb(TWDR);
 			/* continue to transmit STOP condition */
 		case TW_MR_SLA_NACK:	/* 0x48: Slave address not
@@ -424,22 +426,22 @@ SIGNAL(SIG_2WIRE_SERIAL)
 			 */
 			break;
 		case TW_MR_DATA_ACK:	/* 0x50: Data acknowledged */
-			/* store received data byte */
+			/* store received data uint8_t */
 			_i2c_receive_data[_i2c_receive_data_index++] = inb(TWDR);
-			/* fall-through to see if more bytes will be received */
+			/* fall-through to see if more uint8_t s will be received */
 		case TW_MR_SLA_ACK:	/* 0x40: Slave address acknowledged */
 			if (_i2c_receive_data_index < (_i2c_receive_data_length - 1))
 				/*
-				 * data byte will be received, reply with ACK
-				 * (more bytes in transfer)
+				 * data uint8_t will be received, reply with ACK
+				 * (more uint8_t s in transfer)
 				 */
-				i2c_receive_byte(TRUE);
+				i2c_receive_uint8_t (true);
 			else
 				/*
-				 * data byte will be received, reply with
-				 * NACK (final byte in transfer)
+				 * data uint8_t will be received, reply with
+				 * NACK (final uint8_t in transfer)
 				 */
-				i2c_receive_byte(FALSE);
+				i2c_receive_uint8_t (false);
 			break;
 
 			/* Slave Receiver status codes */
@@ -461,41 +463,41 @@ SIGNAL(SIG_2WIRE_SERIAL)
 			_i2c_state = I2C_SLAVE_RX;
 			/* prepare buffer */
 			_i2c_receive_data_index = 0;
-			/* receive data byte and return ACK */
+			/* receive data uint8_t and return ACK */
 			outb(TWCR, (inb(TWCR) & TWCR_CMD_MASK) | BV(TWINT) | BV(TWEA));
 			break;
-		case TW_SR_DATA_ACK:	/* 0x80: data byte has been received,
+		case TW_SR_DATA_ACK:	/* 0x80: data uint8_t has been received,
 					 * ACK has been returned */
-		case TW_SR_GCALL_DATA_ACK:	/* 0x90: data byte has been
+		case TW_SR_GCALL_DATA_ACK:	/* 0x90: data uint8_t has been
 						 * received, ACK has been
 						 * returned */
-			/* get previously received data byte */
+			/* get previously received data uint8_t */
 			_i2c_receive_data[_i2c_receive_data_index++] = inb(TWDR);
 			/* check receive buffer status */
 			if (_i2c_receive_data_index < I2C_RECEIVE_DATA_BUFFER_SIZE) {
-				/* receive data byte and return ACK */
-				i2c_receive_byte(TRUE);
+				/* receive data uint8_t and return ACK */
+				i2c_receive_uint8_t (true);
 				/*
 				 * outb(TWCR,
 				 * (inb(TWCR)&TWCR_CMD_MASK)|BV(TWINT)|BV(TWEA
 				 * ));
 				 */
 			} else {
-				/* receive data byte and return NACK */
-				i2c_receive_byte(FALSE);
+				/* receive data uint8_t and return NACK */
+				i2c_receive_uint8_t (false);
 				/*
 				 * outb(TWCR,
 				 * (inb(TWCR)&TWCR_CMD_MASK)|BV(TWINT));
 				 */
 			}
 			break;
-		case TW_SR_DATA_NACK:	/* 0x88: data byte has been received,
+		case TW_SR_DATA_NACK:	/* 0x88: data uint8_t has been received,
 					 * NACK has been returned */
-		case TW_SR_GCALL_DATA_NACK:	/* 0x98: data byte has been
+		case TW_SR_GCALL_DATA_NACK:	/* 0x98: data uint8_t has been
 						 * received, NACK has been
 						 * returned */
-			/* receive data byte and return NACK */
-			i2c_receive_byte(FALSE);
+			/* receive data uint8_t and return NACK */
+			i2c_receive_uint8_t (false);
 			/* outb(TWCR, (inb(TWCR)&TWCR_CMD_MASK)|BV(TWINT)); */
 			break;
 		case TW_SR_STOP:	/* 0xA0: STOP or REPEATED START has
@@ -527,19 +529,19 @@ SIGNAL(SIG_2WIRE_SERIAL)
 				_i2c_send_data_length = i2c_slave_transmit(I2C_SEND_DATA_BUFFER_SIZE, _i2c_send_data);
 			/* reset data index */
 			_i2c_send_data_index = 0;
-			/* fall-through to transmit first data byte */
-		case TW_ST_DATA_ACK:	/* 0xB8: data byte has been
+			/* fall-through to transmit first data uint8_t */
+		case TW_ST_DATA_ACK:	/* 0xB8: data uint8_t has been
 					 * transmitted, ACK has been received */
-			/* transmit data byte */
+			/* transmit data uint8_t */
 			outb(TWDR, _i2c_send_data[_i2c_send_data_index++]);
 			if (_i2c_send_data_index < _i2c_send_data_length)
-				/* expect ACK to data byte */
+				/* expect ACK to data uint8_t */
 				outb(TWCR, (inb(TWCR) & TWCR_CMD_MASK) | BV(TWINT) | BV(TWEA));
 			else
-				/* expect NACK to data byte */
+				/* expect NACK to data uint8_t */
 				outb(TWCR, (inb(TWCR) & TWCR_CMD_MASK) | BV(TWINT));
 			break;
-		case TW_ST_DATA_NACK:	/* 0xC0: data byte has been
+		case TW_ST_DATA_NACK:	/* 0xC0: data uint8_t has been
 					 * transmitted, NACK has been
 					 * received */
 		case TW_ST_LAST_DATA:	/* 0xC8: */

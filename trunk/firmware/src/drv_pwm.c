@@ -17,13 +17,13 @@ pwm_init(void)
 }
 
 void
-pwm_A_set(uint8 percents)
+pwm_A_set(uint8_t percents)
 {
 	OCR1A = (PWM_PERIOD / 100) * percents;
 }
 
 void
-pwm_B_set(uint8 percents)
+pwm_B_set(uint8_t percents)
 {
 	OCR1B = (PWM_PERIOD / 100) * percents;
 }

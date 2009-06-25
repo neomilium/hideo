@@ -4,7 +4,6 @@
 #include <util/delay.h>
 #include "hideo.h"
 
-#include "types.h"
 #include "drv_ps2.h"
 #include "clist.h"
 
@@ -24,12 +23,12 @@
 #define clock_get()     (PS2_CLK_DDR  = 0, PS2_CLK_OUT = 0, PS2_CLK_IN)
 #define clock_release() (PS2_CLK_DDR  = 0, PS2_CLK_OUT = 0)
 
-static volatile byte _data;	/* Byte being read */
-static volatile uint8 _bit_read;/* Number of bits already read in _data */
-static volatile uint8 _bit_write;	/* Number of bits already wrote in
+static volatile uint8_t _data;	/* Byte being read */
+static volatile uint8_t _bit_read;/* Number of bits already read in _data */
+static volatile uint8_t _bit_write;	/* Number of bits already wrote in
 					 * _data */
-static volatile uint8 _parity;	/* Received bit parity */
-static volatile uint8 _cparity;	/* Computed parity bit */
+static volatile uint8_t _parity;	/* Received bit parity */
+static volatile uint8_t _cparity;	/* Computed parity bit */
 
 DECLARE_CLIST(ps2, 20);
 
@@ -70,14 +69,14 @@ ps2_init(void)
 inline void
 ps2_bit_available(void)
 {
-	uint8		bit;
+	uint8_t		bit;
 
 	bit = data_get();
 
 	switch (ps2_state) {
 		case PS_RX_START:
 			if (0 == bit) {
-				/* Prepare for reading next byte */
+				/* Prepare for reading next uint8_t */
 				_data = 0;
 				_bit_read = 0;
 				_cparity = 1;
@@ -99,7 +98,7 @@ ps2_bit_available(void)
 			break;
 		case PS_RX_STOP:
 			if ((1 == bit) && (_parity == _cparity)) {
-				/* Send byte */
+				/* Send uint8_t */
 				clist_write(ps2, _data);
 			} else {
 				/* Transmission error. Resend */
@@ -115,7 +114,7 @@ ps2_bit_available(void)
 inline void
 ps2_send_bit(void)
 {
-	uint8		bit;
+	uint8_t		bit;
 
 	switch (ps2_state) {
 		case PS_TX_START:
@@ -160,8 +159,8 @@ ps2_inhib(void)
 	clock_release();
 }
 
-uint8
-ps2_read(uint8 * data)
+uint8_t
+ps2_read(uint8_t * data)
 {
 	return (clist_read(ps2, data));
 }
@@ -172,8 +171,8 @@ ps2_flush(void)
 	clist_flush(ps2);
 }
 
-uint8
-ps2_write(uint8 data)
+uint8_t
+ps2_write(uint8_t data)
 {
 	GICR &= ~(1 << INT2);	/* Disable interrupt */
 

@@ -2,6 +2,7 @@
 #define __EVENTMANAGER_H__
 
 #include "clist.h"
+#include <stdint.h>
 
 typedef enum {
 	E_NONE = 0x00,
@@ -26,7 +27,7 @@ typedef enum {
 
 typedef struct {
 	event_code_t	code;
-	byte		data;
+	uint8_t 		data;
 }		event_t;
 
 #define EVENTMANAGER_QUEUE_LENGTH	15

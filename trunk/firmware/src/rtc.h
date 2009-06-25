@@ -1,7 +1,9 @@
 #ifndef __RTC_H__
 #define __RTC_H__
 
-struct rtc_datetime {
+typedef uint8_t bcd_byte;
+
+typedef struct {
 	bcd_byte	seconds;
 	bcd_byte	minutes;
 	bcd_byte	hours;
@@ -9,9 +11,7 @@ struct rtc_datetime {
 	bcd_byte	date;
 	bcd_byte	month;
 	bcd_byte	year;
-};
-
-typedef struct rtc_datetime rtc_datetime_t;
+} rtc_datetime_t;
 
 #include "drv_ds1307.h"
 

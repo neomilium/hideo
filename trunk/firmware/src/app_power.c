@@ -29,8 +29,8 @@ typedef enum {
 
 static power_display_mode_t _display_mode;
 static power_display_mode_t _state;
-static uint8 _remaining_time_before_startup_process = POWER_STARTUP_CANCEL_DELAY;
-static uint8 _remaining_time_before_shutdown_process = POWER_SHUTDOWN_CANCEL_DELAY;
+static uint8_t _remaining_time_before_startup_process = POWER_STARTUP_CANCEL_DELAY;
+static uint8_t _remaining_time_before_shutdown_process = POWER_SHUTDOWN_CANCEL_DELAY;
 
 void _app_power_display(void);
 
@@ -70,7 +70,7 @@ _app_power_display(void)
 			lcd_display_string(PSTR("   Power on"));
 			lcd_gotoxy(0,2);
 			lcd_display_string(PSTR("Cooling HQI..."));
-			uint16 hqi_remaining_time = hqi_remaining_time_before_ready();
+			uint16_t hqi_remaining_time = hqi_remaining_time_before_ready();
 			if(hqi_remaining_time > 60) {
 				lcd_gotoxy(4,3);
 				lcd_display_number(hqi_remaining_time / 60);

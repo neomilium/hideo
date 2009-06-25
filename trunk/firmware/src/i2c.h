@@ -128,16 +128,16 @@ typedef enum {
 void		i2c_init   (void);
 
 /** Set the I2C transaction bitrate (in KHz) */
-void		i2c_set_bitrate(u16 bitrateKHz);
+void		i2c_set_bitrate(uint16_t bitrateKHz);
 
 /* I2C setup and configurations commands */
 /** Set the local (AVR processor's) I2C device address */
-void		i2c_set_local_device_addr(u08 device_addr, u08 gen_call_en);
+void		i2c_set_local_device_addr(uint8_t device_addr, uint8_t gen_call_en);
 
 /** Set the user function which handles receiving (incoming) data as a slave */
-void		i2c_set_slave_receive_handler(void (*i2c_slave_rx_func) (u08 receive_data_length, u08 * recieve_data));
+void		i2c_set_slave_receive_handler(void (*i2c_slave_rx_func) (uint8_t receive_data_length, uint8_t * recieve_data));
 /** Set the user function which handles transmitting (outgoing) data as a slave */
-void		i2c_set_slave_transmit_handler(u08(*i2c_slave_tx_func) (u08 transmit_data_length_max, u08 * transmit_data));
+void		i2c_set_slave_transmit_handler(uint8_t(*i2c_slave_tx_func) (uint8_t transmit_data_length_max, uint8_t * transmit_data));
 
 /* Low-level I2C transaction commands  */
 /** Send an I2C start condition in Master mode */
@@ -146,29 +146,29 @@ void		i2c_send_start(void);
 void		i2c_send_stop(void);
 /** Wait for current I2C operation to complete */
 void		i2c_wait_for_complete(void);
-/** Send an (address|R/W) combination or a data byte over I2C */
-void		i2c_send_byte(u08 data);
-/** Receive a data byte over I2C   */
-/* ackFlag = TRUE if recevied data should be ACK'ed */
-/* ackFlag = FALSE if recevied data should be NACK'ed */
-void		i2c_receive_byte(u08 ack_flag);
+/** Send an (address|R/W) combination or a data uint8_t over I2C */
+void		i2c_send_uint8_t (uint8_t data);
+/** Receive a data uint8_t over I2C   */
+/* ackFlag = true if recevied data should be ACK'ed */
+/* ackFlag = false if recevied data should be NACK'ed */
+void		i2c_receive_uint8_t (uint8_t ack_flag);
 /** Pick up the data that was received with i2cReceiveByte() */
-u08		i2c_get_received_byte(void);
+uint8_t		i2c_get_received_uint8_t (void);
 /** Get current I2c bus status from TWSR */
-u08		i2c_get_status(void);
+uint8_t		i2c_get_status(void);
 
 /* high-level I2C transaction commands */
 
 /** send I2C data to a device on the bus */
-void		i2c_master_send(u08 device_addr, u08 length, u08 * data);
+void		i2c_master_send(uint8_t device_addr, uint8_t length, uint8_t * data);
 /** receive I2C data from a device on the bus */
-void		i2c_master_receive(u08 device_addr, u08 length, u08 * data);
+void		i2c_master_receive(uint8_t device_addr, uint8_t length, uint8_t * data);
 
 /** send I2C data to a device on the bus (non-interrupt based) */
-u08		i2c_master_send_ni(u08 device_addr, u08 length, u08 * data);
-u08		i2c_master_hsend_ni(u08 device_addr, u08 hlength, u08 *header, u08 length, u08 * data);
+uint8_t		i2c_master_send_ni(uint8_t device_addr, uint8_t length, uint8_t * data);
+uint8_t		i2c_master_hsend_ni(uint8_t device_addr, uint8_t hlength, uint8_t *header, uint8_t length, uint8_t * data);
 /** receive I2C data from a device on the bus (non-interrupt based) */
-u08		i2c_master_receive_ni(u08 device_addr, u08 length, u08 * data);
+uint8_t		i2c_master_receive_ni(uint8_t device_addr, uint8_t length, uint8_t * data);
 
 /** Get the current high-level state of the I2C interface */
 e_i2c_state_type	i2c_get_state(void);

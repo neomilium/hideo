@@ -9,7 +9,7 @@
 
 #include "windowmanager.h"
 
-static sint16 dc_motor_speed = 0;
+static int16_t dc_motor_speed = 0;
 
 void
 _app_motor_init(void *data)

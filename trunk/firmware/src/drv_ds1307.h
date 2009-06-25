@@ -1,7 +1,7 @@
 #ifndef _DS1307_H_
 #define _DS1307_H_
 
-#include "types.h"
+#include <stdint.h>
 #include "rtc.h"
 
 void		drv_ds1307_init(void);

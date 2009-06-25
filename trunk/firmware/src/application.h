@@ -1,7 +1,7 @@
 #ifndef __APPLICATION_H__
 #define __APPLICATION_H__
 
-#include "types.h"
+#include <stdint.h>
 #include "eventmanager.h"
 
 typedef struct {

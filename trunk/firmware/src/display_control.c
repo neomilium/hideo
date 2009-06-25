@@ -15,9 +15,9 @@ void		_display_event_handler(const event_t event);
 #define DISPLAY_LENS_MODE_INIT			0x00
 #define DISPLAY_LENS_MODE_RUN			0x01
 
-static volatile sint16 _display_lens_current_position = 0;
-static volatile sint16 _display_lens_wanted_position = 0;
-static volatile uint8 _display_lens_mode = DISPLAY_LENS_MODE_INIT;
+static volatile int16_t _display_lens_current_position = 0;
+static volatile int16_t _display_lens_wanted_position = 0;
+static volatile uint8_t _display_lens_mode = DISPLAY_LENS_MODE_INIT;
 
 #define DISPLAY_LENS_LIMIT_PIN			PINC
 #define DISPLAY_LENS_LIMIT_PORT			PORTC
@@ -33,9 +33,9 @@ static volatile uint8 _display_lens_mode = DISPLAY_LENS_MODE_INIT;
 #define DISPLAY_TRAPEZOID_MODE_INIT		0x00
 #define DISPLAY_TRAPEZOID_MODE_RUN		0x01
 
-static volatile sint16 _display_trapezoid_current_position = 0;
-static volatile sint16 _display_trapezoid_wanted_position = 0;
-static volatile uint8 _display_trapezoid_mode = DISPLAY_TRAPEZOID_MODE_INIT;
+static volatile int16_t _display_trapezoid_current_position = 0;
+static volatile int16_t _display_trapezoid_wanted_position = 0;
+static volatile uint8_t _display_trapezoid_mode = DISPLAY_TRAPEZOID_MODE_INIT;
 
 
 void
@@ -73,11 +73,11 @@ void
 _display_poll(void)
 {
 	/* Lens */
-	sint8 _display_lens_poll_speed = 0;
+	int8_t _display_lens_poll_speed = 0;
 
 	if (_display_lens_mode == DISPLAY_LENS_MODE_RUN) {
 		if (_display_lens_current_position != _display_lens_wanted_position) {
-			sint16 _display_lens_poll_position_diff = _display_lens_current_position - _display_lens_wanted_position;
+			int16_t _display_lens_poll_position_diff = _display_lens_current_position - _display_lens_wanted_position;
 	
 			if (_display_lens_poll_position_diff < 0) {
 				_display_lens_poll_position_diff = -(_display_lens_poll_position_diff);
@@ -193,14 +193,14 @@ _display_event_handler(const event_t event)
 }
 
 void
-display_lens_set_position(sint16 position)
+display_lens_set_position(int16_t position)
 {
 	_display_lens_wanted_position = position;
 	eeprom_write( EEPROM_MEMMAP__DISPLAY_LENS, (void*)&_display_lens_wanted_position, sizeof(_display_lens_wanted_position) );
 }
 
 /*
-sint16
+int16_t
 display_lens_get_position(void)
 {
 	return _display_lens_current_position;
@@ -208,14 +208,14 @@ display_lens_get_position(void)
 */
 
 void
-display_trapezoid_set_position(sint16 position)
+display_trapezoid_set_position(int16_t position)
 {
 	_display_trapezoid_wanted_position = position;
 	eeprom_write( EEPROM_MEMMAP__DISPLAY_TRAPEZOID, (void*)&_display_trapezoid_wanted_position, sizeof(_display_trapezoid_wanted_position) );
 }
 
 /*
-sint16
+int16_t
 display_lens_get_position(void)
 {
 	return _display_lens_current_position;

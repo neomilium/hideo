@@ -17,6 +17,8 @@
 #include <avr/io.h>
 #include <avr/interrupt.h>
 
+#include <stdbool.h>
+
 #include "global.h"
 #include "a2d.h"
 
@@ -41,7 +43,7 @@ a2dInit(void)
 
 	sbi(ADCSR, ADIE);	/* enable ADC interrupts */
 
-	a2dCompleteFlag = FALSE;/* clear conversion complete flag */
+	a2dCompleteFlag = false;/* clear conversion complete flag */
 	sei();			/* turn on interrupts (if not already on) */
 }
 
@@ -82,8 +84,8 @@ a2dStartConvert(void)
 	sbi(ADCSR, ADSC);	/* start conversion */
 }
 
-/* return TRUE if conversion is complete */
-u08
+/* return true if conversion is complete */
+uint8_t
 a2dIsComplete(void)
 {
 	return bit_is_set(ADCSR, ADSC);
@@ -94,7 +96,7 @@ a2dIsComplete(void)
 unsigned short
 a2dConvert10bit(unsigned char ch)
 {
-	a2dCompleteFlag = FALSE;/* clear conversion complete flag */
+	a2dCompleteFlag = false;/* clear conversion complete flag */
 	outb(ADMUX, (inb(ADMUX) & ~ADC_MUX_MASK) | (ch & ADC_MUX_MASK));	/* set channel */
 	sbi(ADCSR, ADIF);	/* clear hardware "conversion complete" flag  */
 	sbi(ADCSR, ADSC);	/* start conversion */
@@ -118,5 +120,5 @@ a2dConvert8bit(unsigned char ch)
 SIGNAL(SIG_ADC)
 {
 	/* set the a2d conversion flag to indicate "complete" */
-	a2dCompleteFlag = TRUE;
+	a2dCompleteFlag = true;
 }

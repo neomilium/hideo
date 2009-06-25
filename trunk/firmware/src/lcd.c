@@ -1,13 +1,13 @@
 #include "lcd.h"
 
 void
-lcd_display_number(sint16 number)
+lcd_display_number(int16_t number)
 {
 	if (number < 0) {
 		lcd_display_char('-');
 		number = -number;
 	}
-	sint16		modulo = 10000;
+	int16_t		modulo = 10000;
 	char		display = 0;	/* Don't ignore 0 after first
 					 * displayed digits */
 	while (modulo != 1) {
@@ -22,7 +22,7 @@ lcd_display_number(sint16 number)
 }
 
 void
-lcd_display_hex(const byte hex)
+lcd_display_hex(const uint8_t hex)
 {
 	unsigned char	lsb = hex & 0x0F;
 	unsigned char	msb = (hex & 0xF0) >> 4;
@@ -42,7 +42,7 @@ lcd_display_hex(const byte hex)
 }
 
 void
-lcd_display_bcd(const byte bcd)
+lcd_display_bcd(const uint8_t bcd)
 {
 	unsigned char	lsb = bcd & 0x0F;
 	unsigned char	msb = (bcd & 0xF0) >> 4;

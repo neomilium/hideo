@@ -1,7 +1,7 @@
 #ifndef __WINDOWMANAGER_H__
 #define __WINDOWMANAGER_H__
 
-#include "types.h"
+#include <stdint.h>
 
 #include "application.h"
 

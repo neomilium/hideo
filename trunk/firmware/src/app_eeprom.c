@@ -12,7 +12,7 @@
 void
 _app_eeprom_init(void *data)
 {
-	byte buf[2] = { 0x00, 0x00 };
+	uint8_t buf[2] = { 0x00, 0x00 };
 	lcd_clear();
 
 	lcd_display_string(PSTR("   EEPROM"));

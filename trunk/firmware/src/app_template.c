@@ -8,8 +8,8 @@
 
 #include "windowmanager.h"
 
-static sint16	_mouse_x = 0;
-static sint16	_mouse_y = 0;
+static int16_t	_mouse_x = 0;
+static int16_t	_mouse_y = 0;
 
 void
 _app_template_init(void *data)

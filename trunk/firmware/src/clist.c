@@ -5,14 +5,14 @@
 
 
 /**
- * @fn clist_write(uint8 data)
+ * @fn clist_write(uint8_t data)
  *
- * @param uint8 *data Data to write to buffer.
+ * @param uint8_t *data Data to write to buffer.
  *
  * @return 1 on success, 0 otherwise.
  */
-uint8
-_clist_write(clist_t * clist, byte data)
+uint8_t 
+_clist_write(clist_t * clist, uint8_t data)
 {
 	if (clist_next_w(clist) == clist->r) {
 		/* Out of space ! */
@@ -25,14 +25,14 @@ _clist_write(clist_t * clist, byte data)
 }
 
 /**
- * @fn clist_read(uint8 *data)
+ * @fn clist_read(uint8_t *data)
  *
- * @param uint8 *data Data read from buffer.
+ * @param uint8_t *data Data read from buffer.
  *
  * @return 1 on success, 0 otherwise.
  */
-uint8
-_clist_read(clist_t * clist, byte * data)
+uint8_t 
+_clist_read(clist_t * clist, uint8_t * data)
 {
 	if (clist->w == clist->r) {
 		return (0);

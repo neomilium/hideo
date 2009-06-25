@@ -142,8 +142,8 @@ void		a2dSetChannel(unsigned char ch);
 /* ! start a conversion on the current a2d input channel */
 void		a2dStartConvert(void);
 
-/* ! return TRUE if conversion is complete */
-u08		a2dIsComplete(void);
+/* ! return true if conversion is complete */
+uint8_t		a2dIsComplete(void);
 
 /* ! Starts a conversion on A/D channel# ch, */
 /* / returns the 10-bit value of the conversion when it is finished. */

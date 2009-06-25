@@ -20,7 +20,7 @@ typedef enum {
 }		poweroff_mode_t;
 
 static poweroff_mode_t _mode;
-static uint8 _remaining_time_before_shutdown_process = PO_CANCEL_DELAY;
+static uint8_t _remaining_time_before_shutdown_process = PO_CANCEL_DELAY;
 
 void _app_poweroff_display(void);
 
@@ -60,7 +60,7 @@ _app_poweroff_display(void)
 			lcd_gotoxy(0,2);
 			lcd_display_string(PSTR("Cooling HQI..."));
 
-			uint16 hqi_remaining_time = hqi_remaining_time_before_ready();
+			uint16_t hqi_remaining_time = hqi_remaining_time_before_ready();
 			if(hqi_remaining_time > 60) {
 				lcd_gotoxy(4,3);
 				lcd_display_number(hqi_remaining_time / 60);

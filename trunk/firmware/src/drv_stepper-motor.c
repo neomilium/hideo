@@ -23,7 +23,7 @@
 
 #define STEPPER_MOTOR_INTERSTEP_DELAY	50
 
-static const byte _stepper_motor_positions[] = {
+static const uint8_t _stepper_motor_positions[] = {
 	STEPPER_ELECTROMAGNETS_POSITION1,
 	STEPPER_ELECTROMAGNETS_POSITION2,
 	STEPPER_ELECTROMAGNETS_POSITION3,
@@ -34,7 +34,7 @@ static const byte _stepper_motor_positions[] = {
 	STEPPER_ELECTROMAGNETS_POSITION8
 };
 
-static uint8	_stepper_motor_current_position = 0;
+static uint8_t	_stepper_motor_current_position = 0;
 
 void
 stepper_motor_init(void)
@@ -58,19 +58,19 @@ stepper_motor_decrement(void)
 }
 
 void
-stepper_motor_move(sint16 steps)
+stepper_motor_move(int16_t steps)
 {
 	STEPPER_MOTOR_ENABLE = 1;
 	if (steps >= 0) {
-		for (sint16 i = steps; i > 0; i--) {
+		for (int16_t i = steps; i > 0; i--) {
 			stepper_motor_increment();
-			for (uint8 d = 0; d < 100; d++)
+			for (uint8_t d = 0; d < 100; d++)
 				_delay_us(STEPPER_MOTOR_INTERSTEP_DELAY);
 		}
 	} else {
-		for (sint16 i = steps; i < 0; i++) {
+		for (int16_t i = steps; i < 0; i++) {
 			stepper_motor_decrement();
-			for (uint8 d = 0; d < 100; d++)
+			for (uint8_t d = 0; d < 100; d++)
 				_delay_us(STEPPER_MOTOR_INTERSTEP_DELAY);
 		}
 	}
