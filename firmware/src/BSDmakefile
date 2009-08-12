@@ -1,5 +1,6 @@
 
 PROG=		hideo.out
+HEX=		${PROG:R}.hex
 
 APP_SRC=	app_eeprom.c \
 		app_date.c \
@@ -40,26 +41,23 @@ OS_SRC=		buffer.c \
 
 SRCS=		${APP_SRC} ${DRV_SRC} ${OS_SRC} ${CONTRIB_SRC}
 
-CTAGS=		ctags
-
-HEX=		${PROG:R}.hex
-
-LDFLAGS=	-Wa
-
 CC=		avr-gcc
 CFLAGS=		-funsigned-bitfields -fpack-struct -fshort-enums -std=gnu99 -mmcu=atmega32 -mcall-prologues -Wall -Os -DF_CPU=8000000UL
+LDFLAGS=	-Wa
+
 NO_MAN=
 
-###########################################
+# [ Avrdude configuration ]
 
-AVRDUDE=	avrdude
+PROGRAMMER?=	stk200
+MCU?=		m32
 
-PROGRAMMER=	stk200
-MCU=		m32
+# [ System utilities ]
 
-###########################################
+SUDO?=		sudo
+CTAGS=		ctags
 
-SUDO=		sudo
+# [ Targets ]
 
 all: ${HEX}
 
@@ -67,7 +65,7 @@ ${HEX}: ${PROG}
 	avr-objcopy -R .eeprom -O ihex ${.ALLSRC} ${.TARGET}
 
 flash: ${HEX}
-	${SUDO} ${AVRDUDE} -p ${MCU} -c ${PROGRAMMER} -u -U flash:w:${HEX}:i
+	${SUDO} avrdude -p ${MCU} -c ${PROGRAMMER} -U flash:w:${HEX}:i
 
 ALLHC!= ls *.[hc]
 reindent:
