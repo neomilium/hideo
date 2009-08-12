@@ -1,4 +1,6 @@
 
 SUBDIR=	src
 
+SUBDIR_TARGETS=	flash
+
 .include <bsd.subdir.mk>
