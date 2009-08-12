@@ -37,9 +37,9 @@ static volatile enum {
 }		ps2_state = PS_RX_START;
 
 /* Private members */
-inline void	ps2_bit_available(void);
-inline void	ps2_inhib(void);
-inline void	ps2_send_bit(void);
+static inline void	ps2_bit_available(void);
+static inline void	ps2_inhib(void);
+static inline void	ps2_send_bit(void);
 
 
 ISR(INT2_vect)
@@ -66,7 +66,7 @@ ps2_init(void)
 	GIFR &= ~(1 << INT2);	/* Reset interrupt flag */
 }
 
-inline void
+static inline void
 ps2_bit_available(void)
 {
 	uint8_t		bit;
@@ -111,7 +111,7 @@ ps2_bit_available(void)
 	}
 }
 
-inline void
+static inline void
 ps2_send_bit(void)
 {
 	uint8_t		bit;
@@ -150,7 +150,7 @@ ps2_send_bit(void)
 	}
 }
 
-inline void
+static inline void
 ps2_inhib(void)
 {
 	clock_set(0);
