@@ -1,6 +1,6 @@
 #include "drv_stepper-motor.h"
 
-#include "hideo.h"
+#include "bitfield.h"
 
 #include <avr/io.h>
 #include <util/delay.h>

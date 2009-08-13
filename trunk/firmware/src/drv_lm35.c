@@ -1,7 +1,7 @@
 #include "drv_lm35.h"
 
 #include <avr/io.h>
-#include "hideo.h"
+#include "bitfield.h"
 
 void
 lm35_init(void)

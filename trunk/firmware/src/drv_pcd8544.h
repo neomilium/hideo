@@ -2,7 +2,7 @@
 #define __LCDNOKIA_H_DRIVER__
 
 #include <avr/io.h>
-#include "hideo.h"
+#include "bitfield.h"
 
 #define _DRV_NOKIA_DDR			DDRA
 #define _DRV_NOKIA_MASK			0b00011111

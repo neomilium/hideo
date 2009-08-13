@@ -1,5 +1,7 @@
 #include "drv_videocontroller.h"
 
+#include "bitfield.h"
+
 #include "windowmanager.h"
 #include "eventmanager.h"
 

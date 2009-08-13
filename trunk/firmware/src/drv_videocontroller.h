@@ -2,7 +2,6 @@
 #define __DRV_VIDEOCONTROLLER_H__
 
 #include <avr/io.h>
-#include "hideo.h"
 
 #include <stdint.h>
 
