@@ -45,7 +45,7 @@ dnl        macro name           value            description
 m4_define([hideo_major],    [0])dnl           major version
 m4_define([hideo_minor],    [9])dnl           minor version
 m4_define([hideo_revision], [1])dnl           revision (dot-dot version)
-m4_define([hideo_reldate],  [20090625])dnl    release date
+m4_define([hideo_reldate],  [20090813])dnl    release date
 dnl end of library versioning data
 
 dnl odd minor number marks a development branch, append date to version there

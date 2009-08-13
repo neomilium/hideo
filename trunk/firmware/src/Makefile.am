@@ -57,7 +57,7 @@ hideo_elf_SOURCES = \
 	drv_ds1307.c	\
 	drv_keyboard.c	\
 	drv_lm35.c	\
-	drv_nokia.c	\
+	drv_pcd8544.c	\
 	drv_ps2.c	\
 	drv_ps2_mouse.c	\
 	drv_pwm.c	\
@@ -99,7 +99,7 @@ hideo_headers = \
 	drv_ds1307.h	\
 	drv_keyboard.h	\
 	drv_lm35.h	\
-	drv_nokia.h	\
+	drv_pcd8544.h	\
 	drv_ps2.h	\
 	drv_ps2_mouse.h	\
 	drv_pwm.h	\
