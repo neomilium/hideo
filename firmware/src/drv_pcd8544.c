@@ -1,11 +1,11 @@
-#include "drv_nokia.h"
+#include "drv_pcd8544.h"
 #include <avr/pgmspace.h>
 #include <util/delay.h>
 
 #include "date.h"
 
-#define _NOK_MODE_NORMAL		0x00
-#define _NOK_MODE_INVERTED		0xFF
+#define _PCD8544_MODE_NORMAL		0x00
+#define _PCD8544_MODE_INVERTED		0xFF
 
 
 const prog_uchar ascii_table[128][5] = {
@@ -102,88 +102,88 @@ const prog_uchar ascii_table[128][5] = {
 	{0x44, 0x64, 0x54, 0x4C, 0x44}	/* z */
 };
 
-static uint8_t	reverse_mode = _NOK_MODE_NORMAL;
-static uint8_t	_nokia_current_x = 0;
+static uint8_t	reverse_mode = _PCD8544_MODE_NORMAL;
+static uint8_t	_pcd8544_current_x = 0;
 
 /**
- * @fn void nokia_init(void)
- * @brief nokia LCD initialisation
+ * @fn void pcd8544_init(void)
+ * @brief pcd8544 LCD initialisation
  */
 void
-nokia_init(void)
+pcd8544_init(void)
 {
 	register_set(_DRV_NOKIA_DDR, 0xFF, _DRV_NOKIA_MASK);
-	NOK_DC = 1;
-	NOK_CS = 1;		/* chip disabled */
+	PCD8544_DC = 1;
+	PCD8544_CS = 1;		/* chip disabled */
 	_delay_us(80);
-	NOK_RES = 0;		/* reset chip during 250ms */
+	PCD8544_RES = 0;		/* reset chip during 250ms */
 	_delay_us(96);		/* max (in us) = 768 / F_CPU (in Mhz) => at
 				 * 8Mhz, 96 us */
-	NOK_RES = 1;
+	PCD8544_RES = 1;
 
 	/**
-	 * @note nokia 3210 LCD use pcd8544 controller with LPH7366-1, LPH7779
+	 * @note pcd8544 3210 LCD use pcd8544 controller with LPH7366-1, LPH7779
 	 * or LPH7677 LCD matrix
 	 */
-	nokia_send_command(0x21);	/* Active the LCD. set extended
+	pcd8544_send_command(0x21);	/* Active the LCD. set extended
 					 * instruction set ; in function set */
-	nokia_send_command(0xC5);	/* Set LCD Vop (Contrast). Vop  was
+	pcd8544_send_command(0xC5);	/* Set LCD Vop (Contrast). Vop  was
 					 * 0xC5 better is 0xa0  ; vop set */
-	nokia_send_command(0x13);	/* LCD bias system 1:48. */
+	pcd8544_send_command(0x13);	/* LCD bias system 1:48. */
 
 	/**
 	 * @note uint8_t s are stored in the display data ram, address
 	 * counter, incremented automatically
 	 */
-	nokia_send_command(0x20);	/* 0x20 for horizontal mode from left
+	pcd8544_send_command(0x20);	/* 0x20 for horizontal mode from left
 					 * to right, X axe are incremented
 					 * automatically, */
 	/* 0x22 for vertical addressing ,back on normal instruction set too */
-	nokia_send_command(0x09);	/* all on ; display control */
+	pcd8544_send_command(0x09);	/* all on ; display control */
 
-	/* nokia_send_command(0x41); ?? */
-	/* nokia_send_command(0x90); ?? */
-	/* nokia_send_command(0x20); ?? */
+	/* pcd8544_send_command(0x41); ?? */
+	/* pcd8544_send_command(0x90); ?? */
+	/* pcd8544_send_command(0x20); ?? */
 
-	nokia_clear();
-	nokia_gotoxy(0, 0);
+	pcd8544_clear();
+	pcd8544_gotoxy(0, 0);
 }
 
 void
-nokia_send_command(const uint8_t command)
+pcd8544_send_command(const uint8_t command)
 {
-	NOK_DC = 0;		/* uint8_t is a command it is read with
+	PCD8544_DC = 0;		/* uint8_t is a command it is read with
 				 * the eight SCLK pulse */
-	NOK_CS = 0;		/* chip enabled */
-	nokia_write(command);
-	NOK_CS = 1;		/* chip disabled */
+	PCD8544_CS = 0;		/* chip enabled */
+	pcd8544_write(command);
+	PCD8544_CS = 1;		/* chip disabled */
 }
 
 void
-nokia_send_data(const uint8_t data)
+pcd8544_send_data(const uint8_t data)
 {
-	NOK_DC = 1;
-	NOK_CS = 0;		/* chip enabled */
-	nokia_write(data ^ reverse_mode);
-	NOK_CS = 1;		/* chip disabled */
+	PCD8544_DC = 1;
+	PCD8544_CS = 0;		/* chip enabled */
+	pcd8544_write(data ^ reverse_mode);
+	PCD8544_CS = 1;		/* chip disabled */
 
-	_nokia_current_x++;
-	_nokia_current_x %= NOK_SCREEN_WIDTH;
+	_pcd8544_current_x++;
+	_pcd8544_current_x %= PCD8544_SCREEN_WIDTH;
 }
 
 void
-nokia_write(uint8_t data)
+pcd8544_write(uint8_t data)
 {
 	uint8_t 	bit;
 	for (bit = 8; bit > 0; bit--) {
-		NOK_SCLK = 0;
+		PCD8544_SCLK = 0;
 
 		if (data & 0x80) {
-			NOK_SDA = 1;
+			PCD8544_SDA = 1;
 		} else {
-			NOK_SDA = 0;
+			PCD8544_SDA = 0;
 		}
-		NOK_SCLK = 1;
+		PCD8544_SCLK = 1;
 		_delay_us(1);
 
 		data = data << 1;
@@ -191,88 +191,88 @@ nokia_write(uint8_t data)
 }
 
 /**
- * @fn void nokia_reset_DDRAM(void)
+ * @fn void pcd8544_reset_DDRAM(void)
  * @brief reset all DDRAM (set all bits to zero)
  */
 void
-nokia_reset_DDRAM(void)
+pcd8544_reset_DDRAM(void)
 {
 	signed char	dch;
 	signed char	dcm;
 	signed char	dcl;
-	NOK_SDA = 0;		/* all data bits will be always set with 0 */
-	NOK_DC = 1;
-	NOK_CS = 0;
+	PCD8544_SDA = 0;		/* all data bits will be always set with 0 */
+	PCD8544_DC = 1;
+	PCD8544_CS = 0;
 	for (dch = 6; dch > 0; dch--) {	/* 6 rows */
-		for (dcm = NOK_SCREEN_WIDTH; dcm > 0; dcm--) {	/* columns */
+		for (dcm = PCD8544_SCREEN_WIDTH; dcm > 0; dcm--) {	/* columns */
 			for (dcl = 8; dcl > 0; dcl--) {	/* 8 pixels */
-				NOK_SCLK = 0;
-				NOK_SCLK = 1;
+				PCD8544_SCLK = 0;
+				PCD8544_SCLK = 1;
 			}
 		}
 	}
-	NOK_CS = 1;
+	PCD8544_CS = 1;
 }
 
 /**
- * @fn void nokia_gotoxy (const uint8_t x, const uint8_t y)
+ * @fn void pcd8544_gotoxy (const uint8_t x, const uint8_t y)
  * @brief Move cursor position to (x,y)
  * @param x x position in pixels
  * @param y y position in lines
  */
 void
-nokia_gotoxy(const uint8_t x, const uint8_t y)
+pcd8544_gotoxy(const uint8_t x, const uint8_t y)
 {				/* Nokia LCD Position cursor */
-	nokia_send_command(0x40 | (y & 0x07)),	/* Y axe initialisation: 0100
+	pcd8544_send_command(0x40 | (y & 0x07)),	/* Y axe initialisation: 0100
 						 * 0yyy	 */
-	nokia_send_command(0x80 | (x & 0x7F));	/* X axe initialisation: 1xxx
+	pcd8544_send_command(0x80 | (x & 0x7F));	/* X axe initialisation: 1xxx
 						 * xxxx */
-	_nokia_current_x = x;
+	_pcd8544_current_x = x;
 }
 
 void
-nokia_display_char(const uint8_t ascii)
+pcd8544_display_char(const uint8_t ascii)
 {
 	uint8_t 	data[5];
 	memcpy_P(data, ascii_table[ascii - 32], 5);
 
-	nokia_send_data(0x00);	/* Display a blank vertical line */
-	nokia_send_data(data[0]);
-	nokia_send_data(data[1]);
-	nokia_send_data(data[2]);
-	nokia_send_data(data[3]);
-	nokia_send_data(data[4]);
+	pcd8544_send_data(0x00);	/* Display a blank vertical line */
+	pcd8544_send_data(data[0]);
+	pcd8544_send_data(data[1]);
+	pcd8544_send_data(data[2]);
+	pcd8544_send_data(data[3]);
+	pcd8544_send_data(data[4]);
 }
 
 void
-nokia_display_string(const char *string)
+pcd8544_display_string(const char *string)
 {
 	char		c;
 	while ((c = pgm_read_byte (string++)))
-		nokia_display_char(c);
+		pcd8544_display_char(c);
 }
 
 void
-nokia_clear(void)
+pcd8544_clear(void)
 {
-	nokia_reset_DDRAM();	/* reset DDRAM, otherwise the lcd is blurred
+	pcd8544_reset_DDRAM();	/* reset DDRAM, otherwise the lcd is blurred
 				 * with random pixels */
 
-	nokia_send_command(0x08);	/* mod control blank change (all off) */
-	nokia_send_command(0x0c);	/* mod control normal change */
-	_nokia_current_x = 0;
+	pcd8544_send_command(0x08);	/* mod control blank change (all off) */
+	pcd8544_send_command(0x0c);	/* mod control normal change */
+	_pcd8544_current_x = 0;
 }
 
 void
-nokia_set_mode(uint8_t mode)
+pcd8544_set_mode(uint8_t mode)
 {
-	reverse_mode = (mode) ? _NOK_MODE_INVERTED : _NOK_MODE_NORMAL;
+	reverse_mode = (mode) ? _PCD8544_MODE_INVERTED : _PCD8544_MODE_NORMAL;
 }
 
 void
-nokia_finish_line(void)
+pcd8544_finish_line(void)
 {
-	while (0 != _nokia_current_x) {
-		nokia_send_data(0x00);
+	while (0 != _pcd8544_current_x) {
+		pcd8544_send_data(0x00);
 	}
 }
