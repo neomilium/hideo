@@ -1,6 +1,6 @@
 #include "drv_dc-motor.h"
 
-#include "hideo.h"
+#include "bitfield.h"
 
 #include "drv_pwm.h"
 

@@ -89,6 +89,7 @@ hideo_headers = \
 	app_status.h	\
 	app_temperature.h	\
 	avrlibdefs.h	\
+	bitfield.h	\
 	buffer.h	\
 	clist.h	\
 	daemon.h	\

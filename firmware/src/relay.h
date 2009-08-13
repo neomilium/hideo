@@ -2,7 +2,7 @@
 #define _RELAY_H_
 
 #include <avr/io.h>
-#include "hideo.h"
+#include "bitfield.h"
 
 #define RELAY0    GET_BIT(PORTD).bit2
 #define RELAY1    GET_BIT(PORTD).bit3
