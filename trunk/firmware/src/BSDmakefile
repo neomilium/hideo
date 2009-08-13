@@ -21,7 +21,7 @@ DRV_SRC=	drv_dc-motor.c \
 		drv_24lcxxx.c \
 		drv_keyboard.c \
 		drv_lm35.c \
-		drv_nokia.c \
+		drv_pcd8544.c \
 		drv_ps2.c \
 		drv_ps2_mouse.c \
 		drv_pwm.c \
