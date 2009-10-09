@@ -42,6 +42,7 @@ OS_SRC=		buffer.c \
 SRCS=		${APP_SRC} ${DRV_SRC} ${OS_SRC} ${CONTRIB_SRC}
 
 CC=		avr-gcc
+MACHINE_ARCH=	arm
 CFLAGS=		-funsigned-bitfields -fpack-struct -fshort-enums -std=gnu99 -mmcu=atmega32 -mcall-prologues -Wall -Os -DF_CPU=8000000UL
 LDFLAGS=	-Wa
 
