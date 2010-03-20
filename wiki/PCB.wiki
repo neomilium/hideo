@@ -1,0 +1,12 @@
+#summary Printed Circuit Boards
+
+Theses PCB have been made with eagle with a freeware license.
+We are interesting in translate them into KiCad format but we don't have enough time for the moment.
+
+
+ * AVR mainboard
+[[Image(avr_mainboard_v004.png)]]
+ * HiDeO board
+[[Image(hideo_board_v003.png)]]
+ * SWITCH board
+[[Image(switch_board_v002.png)]]
