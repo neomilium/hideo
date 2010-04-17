@@ -1,19 +1,11 @@
-
 PROG=		hideo.out
 HEX=		${PROG:R}.hex
 
-APP_SRC=	app_eeprom.c \
-		app_date.c \
-		app_keyboard.c \
-		app_lcd.c \
-		app_display.c \
+APP_SRC=	app_display.c \
 		app_mainmenu.c \
-		app_motor.c \
-		app_mouse.c \
 		app_poweron.c \
 		app_poweroff.c \
 		app_status.c \
-		app_temperature.c \
 		app_hqi.c \
 		display_control.c
 DRV_SRC=	drv_dc-motor.c \
@@ -44,7 +36,7 @@ SRCS=		${APP_SRC} ${DRV_SRC} ${OS_SRC} ${CONTRIB_SRC}
 CC=		avr-gcc
 MACHINE_ARCH=	arm
 CFLAGS=		-funsigned-bitfields -fpack-struct -fshort-enums -std=gnu99 -mmcu=atmega32 -mcall-prologues -Wall -Os -DF_CPU=8000000UL
-LDFLAGS=	-Wa
+LDFLAGS=	-mmcu=atmega32
 
 NO_MAN=
 
